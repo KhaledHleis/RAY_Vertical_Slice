@@ -1,5 +1,5 @@
 local Component = require('Libraries.universal.component')
-local LightWorld = require('Libraries.light.light_world')
+local LightWorld = require('Libraries.light_engine.light_world')
 
 local LightCollider = setmetatable({}, { __index = Component })
 LightCollider.__index = LightCollider

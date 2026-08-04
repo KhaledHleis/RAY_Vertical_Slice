@@ -1,7 +1,7 @@
 local Component = require('Libraries.universal.component')
-local Vector = require('Libraries.universal.vector')
-local RayMath = require('Libraries.light.ray_math')
-local LightWorld = require('Libraries.light.light_world')
+local Vector = require('Libraries.transform.vector')
+local RayMath = require('Libraries.light_engine.utils.ray_math')
+local LightWorld = require('Libraries.light_engine.light_world')
 
 local LightSource = setmetatable({}, { __index = Component })
 LightSource.__index = LightSource
@@ -51,9 +51,10 @@ end
 
 function LightSource:Update()
     local pos = self.object.transform.position
+    local baseAngle = self.object.transform.rotation
     self.fan = {}
     for i = 0, self.rayCount - 1 do
-        local angle = -self.coneAngle / 2 + (self.coneAngle * i / (self.rayCount - 1))
+        local angle = baseAngle - self.coneAngle / 2 + (self.coneAngle * i / (self.rayCount - 1))
         local dir = Vector.new(math.cos(angle), math.sin(angle))
         table.insert(self.fan, self:castRay(pos, dir, 1.0, 0))
     end

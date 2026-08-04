@@ -10,7 +10,7 @@ function GodrayRenderer.new(args)
     return self
 end
 
-function GodrayRenderer:OnAttach()
+function GodrayRenderer:OnAttach()    
     self.lightSource = self.object:GetComponent("LightSource")
 end
 

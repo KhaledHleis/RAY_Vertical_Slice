@@ -1,4 +1,4 @@
-local RayMath = require('Libraries.light.ray_math')
+local RayMath = require('Libraries.light_engine.utils.ray_math')
 
 local LightWorld = {}
 local segments = {}
