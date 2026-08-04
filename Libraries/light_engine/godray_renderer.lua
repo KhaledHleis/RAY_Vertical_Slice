@@ -4,14 +4,16 @@ local GodrayRenderer = setmetatable({}, { __index = Component })
 GodrayRenderer.__index = GodrayRenderer
 
 function GodrayRenderer.new(args)
-    local self = Component.new(args)
+    local self = Component.new()
     setmetatable(self, GodrayRenderer)
     self.lightSource = nil
     return self
 end
-
-function GodrayRenderer:OnAttach()    
-    self.lightSource = self.object:GetComponent("LightSource")
+function GodrayRenderer:__tostring()
+    return "GodrayRenderer"
+end
+function GodrayRenderer:OnAttach(object)
+    self.lightSource = object:GetComponent("LightSource")
 end
 
 function GodrayRenderer:drawQuadPair(nodeA, nodeB)
@@ -32,7 +34,7 @@ function GodrayRenderer:drawQuadPair(nodeA, nodeB)
     self:drawQuadPair(nodeA.refracted, nodeB.refracted)
 end
 
-function GodrayRenderer:Draw()
+function GodrayRenderer:Draw(object)
     if not self.lightSource then return end
     local fan = self.lightSource.fan
     for i = 1, #fan - 1 do

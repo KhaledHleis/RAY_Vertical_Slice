@@ -5,14 +5,18 @@ local LightCollider = setmetatable({}, { __index = Component })
 LightCollider.__index = LightCollider
 
 function LightCollider.new(args)
-    local self = Component.new(args)
+    args = args or {}
+    local self = Component.new()
     setmetatable(self, LightCollider)
     self.localSegments = args.segments or {}
     return self
 end
-
-function LightCollider:OnAttach()
-    local pos = self.object.transform.position
+function LightCollider:__tostring()
+    return "LightCollider"
+end
+function LightCollider:OnAttach(object)
+    self.object = object
+    local pos = object.transform.position
     local worldSegments = {}
     for _, seg in ipairs(self.localSegments) do
         table.insert(worldSegments, {
@@ -24,11 +28,11 @@ function LightCollider:OnAttach()
         })
     end
     self.worldSegments = worldSegments
-    LightWorld.registerSegments(self.object, worldSegments)
+    LightWorld.registerSegments(object, worldSegments)
 end
 
-function LightCollider:OnDestroy()
-    LightWorld.unregisterSegments(self.object)
+function LightCollider:OnDestroy(object)
+    LightWorld.unregisterSegments(object)
 end
 
 return LightCollider

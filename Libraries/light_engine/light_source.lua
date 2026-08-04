@@ -7,7 +7,8 @@ local LightSource = setmetatable({}, { __index = Component })
 LightSource.__index = LightSource
 
 function LightSource.new(args)
-    local self = Component.new(args)
+    args = args or {}
+    local self = Component.new()
     setmetatable(self, LightSource)
     self.rayCount = args.rayCount or 16
     self.coneAngle = args.coneAngle or math.pi * 2
@@ -16,7 +17,9 @@ function LightSource.new(args)
     self.fan = {}
     return self
 end
-
+function LightSource:__tostring()
+    return "LightSource"
+end
 function LightSource:castRay(origin, dir, intensity, depth)
     local node = { origin = origin, dir = dir, intensity = intensity, depth = depth }
 
@@ -49,9 +52,9 @@ function LightSource:castRay(origin, dir, intensity, depth)
     return node
 end
 
-function LightSource:Update()
-    local pos = self.object.transform.position
-    local baseAngle = self.object.transform.rotation
+function LightSource:Update(object, dt)
+    local pos = object.transform.position
+    local baseAngle = object.transform.rotation.angle
     self.fan = {}
     for i = 0, self.rayCount - 1 do
         local angle = baseAngle - self.coneAngle / 2 + (self.coneAngle * i / (self.rayCount - 1))

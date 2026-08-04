@@ -5,17 +5,20 @@ local LightDetector = setmetatable({}, { __index = Component })
 LightDetector.__index = LightDetector
 
 function LightDetector.new(args)
-    local self = Component.new(args)
+    local self = Component.new()
     setmetatable(self, LightDetector)
     self.lit = false
     return self
 end
-
-function LightDetector:OnAttach()
+function LightDetector:__tostring()
+    return "LightDetector"
+end
+function LightDetector:OnAttach(object)
+    self.object = object
     LightWorld.registerDetector(self)
 end
 
-function LightDetector:OnDestroy()
+function LightDetector:OnDestroy(object)
     LightWorld.unregisterDetector(self)
 end
 

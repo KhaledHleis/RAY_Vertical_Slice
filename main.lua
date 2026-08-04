@@ -23,7 +23,7 @@ end
 function love.update(dt)
     World.update(dt)
     scene:Update(dt)
-    LightWorld:resolveDetectors()
+    LightWorld.resolveDetectors()
 end
 
 function love.draw()
