@@ -32,4 +32,24 @@ function Vector.__mul(a, scalar)
     return Vector.new(a.x * scalar, a.y * scalar)
 end
 
+function Vector:dot(other)
+    return self.x * other.x + self.y * other.y
+end
+
+function Vector:cross(other)
+    return self.x * other.y - self.y * other.x
+end
+
+function Vector:length()
+    return math.sqrt(self.x * self.x + self.y * self.y)
+end
+
+function Vector:normalized()
+    local len = self:length()
+    if len == 0 then
+        return Vector.new(0, 0)
+    end
+    return Vector.new(self.x / len, self.y / len)
+end
+
 return Vector
