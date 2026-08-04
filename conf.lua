@@ -1,13 +1,12 @@
 function love.conf(t)
     local GAME_W, GAME_H = 320, 240
 
-
     local isHandheld = (os.getenv("RAY_HANDHELD") == "1")
     local isDesktop  = not isHandheld
 
     t.identity = "raylight"
     t.version  = "11.4"
-    t.console  = false
+    t.console  = true
 
     t.window.title      = "RAY"
     t.window.width      = isDesktop and GAME_W * 3 or GAME_W
