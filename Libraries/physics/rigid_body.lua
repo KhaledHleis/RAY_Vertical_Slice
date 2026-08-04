@@ -1,10 +1,71 @@
-local RigidBody = {}
+local Vector = require('Libraries.transform.vector')
+local World = require('Libraries.physics.world')
+local Component = require('Libraries.universal.component')
+
+local RigidBody = setmetatable({}, { __index = Component })
 RigidBody.__index = RigidBody
 
 function RigidBody.new(args)
-    local self = setmetatable({}, RigidBody)
-    
+    args = args or {}
+    local self = Component.new()
+    self = setmetatable(self, RigidBody)
+
+    self.bodyType = args.bodyType or "dynamic"
+    self.shape = args.shape or "rectangle"
+    self.width = args.width or 16
+    self.height = args.height or 16
+    self.radius = args.radius
+    self.density = args.density or 1
+    self.friction = args.friction or 0.3
+    self.restitution = args.restitution or 0
+    self.fixedRotation = args.fixedRotation or false
+
+    self.body = nil
+    self.fixture = nil
+    self.shapeObj = nil
+
     return self
+end
+
+function RigidBody:OnAttach(object)
+    local world = World.get()
+    local pos = World.toMeters(object.transform.position)
+
+    self.body = love.physics.newBody(world, pos.x, pos.y, self.bodyType)
+    self.body:setAngle(object.transform.rotation.angle)
+    self.body:setFixedRotation(self.fixedRotation)
+
+    if self.shape == "circle" then
+        self.shapeObj = love.physics.newCircleShape(self.radius / World.PIXELS_PER_METER)
+    else
+        self.shapeObj = love.physics.newRectangleShape(self.width / World.PIXELS_PER_METER, self.height / World.PIXELS_PER_METER)
+    end
+
+    self.fixture = love.physics.newFixture(self.body, self.shapeObj, self.density)
+    self.fixture:setFriction(self.friction)
+    self.fixture:setRestitution(self.restitution)
+    self.fixture:setUserData(object)
+end
+
+function RigidBody:AddForce(fx, fy)
+    self.body:applyForce(fx, fy)
+end
+
+function RigidBody:SetVelocity(vx, vy)
+    self.body:setLinearVelocity(vx, vy)
+end
+
+function RigidBody:Update(object, dt)
+    if self.bodyType == "static" then return end
+    local x, y = self.body:getPosition()
+    object.transform.position = World.toPixels(Vector.new(x, y))
+    object.transform.rotation.angle = self.body:getAngle()
+end
+
+function RigidBody:OnDestroy(object)
+    if self.body and not self.body:isDestroyed() then
+        self.body:destroy()
+    end
 end
 
 function RigidBody:__tostring()

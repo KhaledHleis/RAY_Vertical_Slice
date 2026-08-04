@@ -1,20 +1,33 @@
-local Object = require('Libraries.universal.Object')
-local Vector = require('Libraries.transform.vector')
-local Box = require('Frontend.prefabs.tiles.box')
+local World = require('Libraries.physics.world')
+local Scene = require('Libraries.universal.scene')
+local Screen = require('Libraries.renderer.screen')
+local Prefab = require('Libraries.universal.prefab')
+local Level = require('Libraries.universal.level')
+local PrefabDefinitions = require('Frontend.prefabs.definitions')
+
+local scene
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
-    
-    
+
+    Screen.init()
+    World.init(0, 9.81)
+    Prefab.Register(PrefabDefinitions)
+
+    scene = Scene.new()
+    Level.load('Frontend.levels.demo', scene)
 end
 
-
 function love.update(dt)
-    
+    World.update(dt)
+    scene:Update(dt)
 end
 
 function love.draw()
+    Screen.beginDraw()
+    scene:Draw()
+    Screen.endDraw()
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -22,9 +35,9 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.gamepadpressed(joystick, button)
-    
+
 end
 
 function love.resize(w, h)
-    
+    Screen.updateScale()
 end
