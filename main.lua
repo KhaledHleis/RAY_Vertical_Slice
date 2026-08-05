@@ -15,7 +15,7 @@ function love.load()
     Screen.init()
     World.init(0, 9.81)
     Prefab.Register(PrefabDefinitions)
-
+    Prefab.Register(require('Frontend.prefabs.light_test_prefabs'))
     scene = Scene.new()
     Level.load('Frontend.levels.demo', scene)
 end
