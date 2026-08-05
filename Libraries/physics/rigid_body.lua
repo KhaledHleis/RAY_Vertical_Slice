@@ -29,16 +29,19 @@ end
 
 function RigidBody:OnAttach(object)
     local world = World.get()
-    local pos = World.toMeters(object.transform.position)
+
+    -- love.physics is configured with setMeter(World.PIXELS_PER_METER), so it
+    -- expects and returns PIXELS. Pass transform values through unscaled.
+    local pos = object.transform.position
 
     self.body = love.physics.newBody(world, pos.x, pos.y, self.bodyType)
     self.body:setAngle(object.transform.rotation.angle)
     self.body:setFixedRotation(self.fixedRotation)
 
     if self.shape == "circle" then
-        self.shapeObj = love.physics.newCircleShape(self.radius / World.PIXELS_PER_METER)
+        self.shapeObj = love.physics.newCircleShape(self.radius)
     else
-        self.shapeObj = love.physics.newRectangleShape(self.width / World.PIXELS_PER_METER, self.height / World.PIXELS_PER_METER)
+        self.shapeObj = love.physics.newRectangleShape(self.width, self.height)
     end
 
     self.fixture = love.physics.newFixture(self.body, self.shapeObj, self.density)
@@ -57,8 +60,10 @@ end
 
 function RigidBody:Update(object, dt)
     if self.bodyType == "static" then return end
+    -- Already in pixels, thanks to setMeter().
     local x, y = self.body:getPosition()
-    object.transform.position = World.toPixels(Vector.new(x, y))
+    object.transform.position.x = x
+    object.transform.position.y = y
     object.transform.rotation.angle = self.body:getAngle()
 end
 

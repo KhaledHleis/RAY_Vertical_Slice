@@ -29,7 +29,8 @@ function HingeJoint:OnAttach(object)
     assert(bodyA and bodyA.body, "HingeJoint: connectedObject needs a RigidBody attached first")
     assert(bodyB and bodyB.body, "HingeJoint: owning object needs a RigidBody attached before HingeJoint")
 
-    local anchor = World.toMeters(self.anchor)
+    -- Anchor is in world pixels; love.physics converts via setMeter().
+    local anchor = self.anchor
     self.joint = love.physics.newRevoluteJoint(bodyA.body, bodyB.body, anchor.x, anchor.y, anchor.x, anchor.y, false)
 
     if self.enableLimit then
