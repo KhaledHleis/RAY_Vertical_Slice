@@ -44,9 +44,11 @@ function SpriteRenderer:Draw(object)
 
     love.graphics.setColor(self.color)
     if self.quad then
-        love.graphics.draw(self.image, self.quad, pos.x + self.offset.x, pos.y + self.offset.y, angle, self.scale.x, self.scale.y)
+        local ox, oy = self.frameWidth / 2, self.frameHeight / 2
+        love.graphics.draw(self.image, self.quad, pos.x + self.offset.x, pos.y + self.offset.y, angle, self.scale.x, self.scale.y, ox, oy)
     else
-        love.graphics.draw(self.image, pos.x + self.offset.x, pos.y + self.offset.y, angle, self.scale.x, self.scale.y)
+        local iw, ih = self.image:getDimensions()
+        love.graphics.draw(self.image, pos.x + self.offset.x, pos.y + self.offset.y, angle, self.scale.x, self.scale.y, iw / 2, ih / 2)
     end
     love.graphics.setColor(1, 1, 1, 1)
 end

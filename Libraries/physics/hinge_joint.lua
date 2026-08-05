@@ -30,7 +30,7 @@ function HingeJoint:OnAttach(object)
     assert(bodyB and bodyB.body, "HingeJoint: owning object needs a RigidBody attached before HingeJoint")
 
     local anchor = World.toMeters(self.anchor)
-    self.joint = love.physics.newRevoluteJoint(bodyA.body, bodyB.body, anchor.x, anchor.y)
+    self.joint = love.physics.newRevoluteJoint(bodyA.body, bodyB.body, anchor.x, anchor.y, anchor.x, anchor.y, false)
 
     if self.enableLimit then
         self.joint:setLimits(self.lowerAngle, self.upperAngle)

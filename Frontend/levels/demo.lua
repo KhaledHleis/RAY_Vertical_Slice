@@ -24,7 +24,7 @@ return {{
     id = "box",
     prefab = "Box",
     position = {
-        x = 150,
+        x = 80,
         y = 20
     },
     components = {
@@ -63,4 +63,11 @@ return {{
 }, {
     prefab = "LightWall",
     position = Vector.new(100, 250)
+}, {
+    -- Falls under gravity, collides with the floor, and reflects the
+    -- LightCone above it while it falls and after it lands.
+    id = "mirror",
+    prefab = "Mirror",
+    position = Vector.new(200, 40),
+    rotation = math.pi / 6
 }}

@@ -34,8 +34,21 @@ function Object:Update(dt)
 end
 
 function Object:Draw()
+    local deferred = nil
     for _, component in pairs(self.components) do
-        if component.enabled ~= false and component.Draw then component:Draw(self) end
+        if component.enabled ~= false and component.Draw then
+            if component.isDebugOverlay then
+                deferred = deferred or {}
+                table.insert(deferred, component)
+            else
+                component:Draw(self)
+            end
+        end
+    end
+    if deferred then
+        for _, component in ipairs(deferred) do
+            component:Draw(self)
+        end
     end
 end
 
