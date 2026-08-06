@@ -20,607 +20,14 @@
   },
   "nodes": [
     {
-      "label": "demo.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/demo.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_demo",
-      "community": 1,
-      "norm_label": "demo.lua"
-    },
-    {
-      "label": "zone1.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone1.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone1",
-      "community": 2,
-      "norm_label": "zone1.lua"
-    },
-    {
-      "label": "zone10.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone10.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone10",
-      "community": 2,
-      "norm_label": "zone10.lua"
-    },
-    {
-      "label": "zone11.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone11.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone11",
-      "community": 2,
-      "norm_label": "zone11.lua"
-    },
-    {
-      "label": "zone2.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone2.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone2",
-      "community": 2,
-      "norm_label": "zone2.lua"
-    },
-    {
-      "label": "zone3.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone3.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone3",
-      "community": 2,
-      "norm_label": "zone3.lua"
-    },
-    {
-      "label": "zone4.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone4.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone4",
-      "community": 2,
-      "norm_label": "zone4.lua"
-    },
-    {
-      "label": "zone5.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone5.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone5",
-      "community": 2,
-      "norm_label": "zone5.lua"
-    },
-    {
-      "label": "zone6.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone6.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone6",
-      "community": 2,
-      "norm_label": "zone6.lua"
-    },
-    {
-      "label": "zone7.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone7.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone7",
-      "community": 2,
-      "norm_label": "zone7.lua"
-    },
-    {
-      "label": "zone8.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone8.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone8",
-      "community": 2,
-      "norm_label": "zone8.lua"
-    },
-    {
-      "label": "zone9.lua",
-      "file_type": "code",
-      "source_file": "Frontend/levels/zones/zone9.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_levels_zones_zone9",
-      "community": 2,
-      "norm_label": "zone9.lua"
-    },
-    {
-      "label": "definitions.lua",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/definitions.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_prefabs_definitions",
-      "community": 0,
-      "norm_label": "definitions.lua"
-    },
-    {
-      "label": "light_test_prefabs.lua",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/light_test_prefabs.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_prefabs_light_test_prefabs",
-      "community": 2,
-      "norm_label": "light_test_prefabs.lua"
-    },
-    {
-      "label": "anchor.lua",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/pivots/anchor.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_prefabs_pivots_anchor",
-      "community": 4,
-      "norm_label": "anchor.lua"
-    },
-    {
-      "label": "Anchor.new()",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/pivots/anchor.lua",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "frontend_prefabs_pivots_anchor_anchor_new",
-      "community": 4,
-      "norm_label": "anchor.new()"
-    },
-    {
-      "label": "Anchor:__tostring()",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/pivots/anchor.lua",
-      "source_location": "L21",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "frontend_prefabs_pivots_anchor_anchor_tostring",
-      "community": 4,
-      "norm_label": "anchor:__tostring()"
-    },
-    {
-      "label": "box.lua",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/tiles/box.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "frontend_prefabs_tiles_box",
-      "community": 4,
-      "norm_label": "box.lua"
-    },
-    {
-      "label": "Box.new()",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/tiles/box.lua",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "frontend_prefabs_tiles_box_box_new",
-      "community": 4,
-      "norm_label": "box.new()"
-    },
-    {
-      "label": "Box:__tostring()",
-      "file_type": "code",
-      "source_file": "Frontend/prefabs/tiles/box.lua",
-      "source_location": "L35",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "frontend_prefabs_tiles_box_box_tostring",
-      "community": 4,
-      "norm_label": "box:__tostring()"
-    },
-    {
-      "label": "godray_renderer.lua",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/godray_renderer.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "libraries_light_engine_godray_renderer",
-      "community": 3,
-      "norm_label": "godray_renderer.lua"
-    },
-    {
-      "label": "GodrayRenderer.new()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/godray_renderer.lua",
-      "source_location": "L6",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_godray_renderer_godrayrenderer_new",
-      "community": 3,
-      "norm_label": "godrayrenderer.new()"
-    },
-    {
-      "label": "GodrayRenderer:__tostring()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/godray_renderer.lua",
-      "source_location": "L12",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_godray_renderer_godrayrenderer_tostring",
-      "community": 3,
-      "norm_label": "godrayrenderer:__tostring()"
-    },
-    {
-      "label": "GodrayRenderer:OnAttach()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/godray_renderer.lua",
-      "source_location": "L15",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_godray_renderer_godrayrenderer_onattach",
-      "community": 3,
-      "norm_label": "godrayrenderer:onattach()"
-    },
-    {
-      "label": "GodrayRenderer:drawQuadPair()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/godray_renderer.lua",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_godray_renderer_godrayrenderer_drawquadpair",
-      "community": 3,
-      "norm_label": "godrayrenderer:drawquadpair()"
-    },
-    {
-      "label": "GodrayRenderer:Draw()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/godray_renderer.lua",
-      "source_location": "L37",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_godray_renderer_godrayrenderer_draw",
-      "community": 3,
-      "norm_label": "godrayrenderer:draw()"
-    },
-    {
-      "label": "light_collider.lua",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider",
-      "community": 1,
-      "norm_label": "light_collider.lua"
-    },
-    {
-      "label": "LightCollider.new()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider_lightcollider_new",
-      "community": 3,
-      "norm_label": "lightcollider.new()"
-    },
-    {
-      "label": "LightCollider:__tostring()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L23",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider_lightcollider_tostring",
-      "community": 1,
-      "norm_label": "lightcollider:__tostring()"
-    },
-    {
-      "label": "LightCollider:syncSegments()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider_lightcollider_syncsegments",
-      "community": 1,
-      "norm_label": "lightcollider:syncsegments()"
-    },
-    {
-      "label": "LightCollider:OnAttach()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L43",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider_lightcollider_onattach",
-      "community": 1,
-      "norm_label": "lightcollider:onattach()"
-    },
-    {
-      "label": "LightCollider:Update()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L61",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider_lightcollider_update",
-      "community": 1,
-      "norm_label": "lightcollider:update()"
-    },
-    {
-      "label": "LightCollider:OnDestroy()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_collider.lua",
-      "source_location": "L66",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_collider_lightcollider_ondestroy",
-      "community": 1,
-      "norm_label": "lightcollider:ondestroy()"
-    },
-    {
-      "label": "light_detector.lua",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector",
-      "community": 1,
-      "norm_label": "light_detector.lua"
-    },
-    {
-      "label": "LightDetector.new()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector_lightdetector_new",
-      "community": 1,
-      "norm_label": "lightdetector.new()"
-    },
-    {
-      "label": "LightDetector:__tostring()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L13",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector_lightdetector_tostring",
-      "community": 1,
-      "norm_label": "lightdetector:__tostring()"
-    },
-    {
-      "label": "LightDetector:OnAttach()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L16",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector_lightdetector_onattach",
-      "community": 1,
-      "norm_label": "lightdetector:onattach()"
-    },
-    {
-      "label": "LightDetector:OnDestroy()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L21",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector_lightdetector_ondestroy",
-      "community": 1,
-      "norm_label": "lightdetector:ondestroy()"
-    },
-    {
-      "label": "LightDetector:OnHit()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L25",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector_lightdetector_onhit",
-      "community": 1,
-      "norm_label": "lightdetector:onhit()"
-    },
-    {
-      "label": "LightDetector:OnLost()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_detector.lua",
-      "source_location": "L28",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_detector_lightdetector_onlost",
-      "community": 1,
-      "norm_label": "lightdetector:onlost()"
-    },
-    {
-      "label": "light_source.lua",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_source.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_source",
-      "community": 7,
-      "norm_label": "light_source.lua"
-    },
-    {
-      "label": "LightSource.new()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_source.lua",
-      "source_location": "L9",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_source_lightsource_new",
-      "community": 7,
-      "norm_label": "lightsource.new()"
-    },
-    {
-      "label": "LightSource:__tostring()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_source.lua",
-      "source_location": "L20",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_source_lightsource_tostring",
-      "community": 7,
-      "norm_label": "lightsource:__tostring()"
-    },
-    {
-      "label": "LightSource:castRay()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_source.lua",
-      "source_location": "L23",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_source_lightsource_castray",
-      "community": 7,
-      "norm_label": "lightsource:castray()"
-    },
-    {
-      "label": "LightSource:Update()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_source.lua",
-      "source_location": "L55",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_source_lightsource_update",
-      "community": 7,
-      "norm_label": "lightsource:update()"
-    },
-    {
-      "label": "light_world.lua",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world",
-      "community": 1,
-      "norm_label": "light_world.lua"
-    },
-    {
-      "label": "LightWorld.registerSegments()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world_lightworld_registersegments",
-      "community": 1,
-      "norm_label": "lightworld.registersegments()"
-    },
-    {
-      "label": "LightWorld.unregisterSegments()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L15",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world_lightworld_unregistersegments",
-      "community": 1,
-      "norm_label": "lightworld.unregistersegments()"
-    },
-    {
-      "label": "LightWorld.registerDetector()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L23",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world_lightworld_registerdetector",
-      "community": 1,
-      "norm_label": "lightworld.registerdetector()"
-    },
-    {
-      "label": "LightWorld.unregisterDetector()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L27",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world_lightworld_unregisterdetector",
-      "community": 1,
-      "norm_label": "lightworld.unregisterdetector()"
-    },
-    {
-      "label": "LightWorld.raycast()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L35",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world_lightworld_raycast",
-      "community": 7,
-      "norm_label": "lightworld.raycast()"
-    },
-    {
-      "label": "LightWorld.resolveDetectors()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/light_world.lua",
-      "source_location": "L51",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_light_world_lightworld_resolvedetectors",
-      "community": 1,
-      "norm_label": "lightworld.resolvedetectors()"
-    },
-    {
-      "label": "ray_math.lua",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/utils/ray_math.lua",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "libraries_light_engine_utils_ray_math",
-      "community": 7,
-      "norm_label": "ray_math.lua"
-    },
-    {
-      "label": "RayMath.segmentIntersect()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/utils/ray_math.lua",
-      "source_location": "L5",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_utils_ray_math_raymath_segmentintersect",
-      "community": 7,
-      "norm_label": "raymath.segmentintersect()"
-    },
-    {
-      "label": "RayMath.reflect()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/utils/ray_math.lua",
-      "source_location": "L31",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_utils_ray_math_raymath_reflect",
-      "community": 7,
-      "norm_label": "raymath.reflect()"
-    },
-    {
-      "label": "RayMath.refract()",
-      "file_type": "code",
-      "source_file": "Libraries/light_engine/utils/ray_math.lua",
-      "source_location": "L35",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "libraries_light_engine_utils_ray_math_raymath_refract",
-      "community": 7,
-      "norm_label": "raymath.refract()"
-    },
-    {
       "label": "hinge_joint.lua",
       "file_type": "code",
       "source_file": "Libraries/physics/hinge_joint.lua",
       "source_location": "L1",
       "_origin": "ast",
       "id": "libraries_physics_hinge_joint",
-      "community": 6,
+      "community": 4,
+      "community_name": "Component.new",
       "norm_label": "hinge_joint.lua"
     },
     {
@@ -631,7 +38,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_hinge_joint_hingejoint_new",
-      "community": 6,
+      "community": 4,
+      "community_name": "Component.new",
       "norm_label": "hingejoint.new()"
     },
     {
@@ -642,29 +50,32 @@
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_hinge_joint_hingejoint_onattach",
-      "community": 6,
+      "community": 4,
+      "community_name": "Component.new",
       "norm_label": "hingejoint:onattach()"
     },
     {
       "label": "HingeJoint:OnDestroy()",
       "file_type": "code",
       "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L47",
+      "source_location": "L48",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_hinge_joint_hingejoint_ondestroy",
-      "community": 6,
+      "community": 4,
+      "community_name": "Component.new",
       "norm_label": "hingejoint:ondestroy()"
     },
     {
       "label": "HingeJoint:__tostring()",
       "file_type": "code",
       "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L53",
+      "source_location": "L54",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_hinge_joint_hingejoint_tostring",
-      "community": 6,
+      "community": 4,
+      "community_name": "Component.new",
       "norm_label": "hingejoint:__tostring()"
     },
     {
@@ -674,7 +85,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "libraries_physics_rigid_body",
-      "community": 4,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigid_body.lua"
     },
     {
@@ -686,6 +98,7 @@
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_new",
       "community": 4,
+      "community_name": "Component.new",
       "norm_label": "rigidbody.new()"
     },
     {
@@ -697,61 +110,67 @@
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_onattach",
       "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigidbody:onattach()"
     },
     {
       "label": "RigidBody:AddForce()",
       "file_type": "code",
       "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L50",
+      "source_location": "L53",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_addforce",
-      "community": 4,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigidbody:addforce()"
     },
     {
       "label": "RigidBody:SetVelocity()",
       "file_type": "code",
       "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L54",
+      "source_location": "L57",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_setvelocity",
-      "community": 4,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigidbody:setvelocity()"
     },
     {
       "label": "RigidBody:Update()",
       "file_type": "code",
       "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L58",
+      "source_location": "L61",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_update",
-      "community": 2,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigidbody:update()"
     },
     {
       "label": "RigidBody:OnDestroy()",
       "file_type": "code",
       "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L65",
+      "source_location": "L70",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_ondestroy",
-      "community": 4,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigidbody:ondestroy()"
     },
     {
       "label": "RigidBody:__tostring()",
       "file_type": "code",
       "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L71",
+      "source_location": "L76",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_rigid_body_rigidbody_tostring",
-      "community": 4,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "rigidbody:__tostring()"
     },
     {
@@ -762,73 +181,609 @@
       "_origin": "ast",
       "id": "libraries_physics_world",
       "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "world.lua"
     },
     {
       "label": "World.init()",
       "file_type": "code",
       "source_file": "Libraries/physics/world.lua",
-      "source_location": "L8",
+      "source_location": "L20",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_world_world_init",
       "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "world.init()"
     },
     {
       "label": "World.reset()",
       "file_type": "code",
       "source_file": "Libraries/physics/world.lua",
-      "source_location": "L13",
+      "source_location": "L33",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_world_world_reset",
       "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "world.reset()"
     },
     {
       "label": "World.get()",
       "file_type": "code",
       "source_file": "Libraries/physics/world.lua",
-      "source_location": "L20",
+      "source_location": "L40",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_world_world_get",
       "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "world.get()"
     },
     {
       "label": "World.update()",
       "file_type": "code",
       "source_file": "Libraries/physics/world.lua",
-      "source_location": "L25",
+      "source_location": "L45",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_world_world_update",
       "community": 1,
+      "community_name": "light_world.lua",
       "norm_label": "world.update()"
     },
     {
       "label": "World.toMeters()",
       "file_type": "code",
       "source_file": "Libraries/physics/world.lua",
-      "source_location": "L29",
+      "source_location": "L51",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_world_world_tometers",
       "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "world.tometers()"
     },
     {
       "label": "World.toPixels()",
       "file_type": "code",
       "source_file": "Libraries/physics/world.lua",
-      "source_location": "L33",
+      "source_location": "L55",
       "_callable": true,
       "_origin": "ast",
       "id": "libraries_physics_world_world_topixels",
-      "community": 2,
+      "community": 6,
+      "community_name": "rigid_body.lua",
       "norm_label": "world.topixels()"
+    },
+    {
+      "label": "demo.lua",
+      "file_type": "code",
+      "source_file": "Frontend/levels/demo.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "demo.lua",
+      "id": "frontend_levels_demo",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "definitions.lua",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/definitions.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "definitions.lua",
+      "id": "frontend_prefabs_definitions",
+      "community_name": "main.lua"
+    },
+    {
+      "label": "light_test_prefabs.lua",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/light_test_prefabs.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "light_test_prefabs.lua",
+      "id": "frontend_prefabs_light_test_prefabs",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "anchor.lua",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/pivots/anchor.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "anchor.lua",
+      "id": "frontend_prefabs_pivots_anchor",
+      "community_name": "object.lua"
+    },
+    {
+      "label": "Anchor.new()",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/pivots/anchor.lua",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "anchor.new()",
+      "id": "frontend_prefabs_pivots_anchor_anchor_new",
+      "community_name": "object.lua"
+    },
+    {
+      "label": "Anchor:__tostring()",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/pivots/anchor.lua",
+      "source_location": "L21",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "anchor:__tostring()",
+      "id": "frontend_prefabs_pivots_anchor_anchor_tostring",
+      "community_name": "object.lua"
+    },
+    {
+      "label": "box.lua",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/tiles/box.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "box.lua",
+      "id": "frontend_prefabs_tiles_box",
+      "community_name": "Component.new"
+    },
+    {
+      "label": "Box.new()",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/tiles/box.lua",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "box.new()",
+      "id": "frontend_prefabs_tiles_box_box_new",
+      "community_name": "Component.new"
+    },
+    {
+      "label": "Box:__tostring()",
+      "file_type": "code",
+      "source_file": "Frontend/prefabs/tiles/box.lua",
+      "source_location": "L35",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "box:__tostring()",
+      "id": "frontend_prefabs_tiles_box_box_tostring",
+      "community_name": "Component.new"
+    },
+    {
+      "label": "godray_renderer.lua",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/godray_renderer.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "godray_renderer.lua",
+      "id": "libraries_light_engine_godray_renderer",
+      "community_name": "Light Rendering & Components"
+    },
+    {
+      "label": "GodrayRenderer.new()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/godray_renderer.lua",
+      "source_location": "L6",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "godrayrenderer.new()",
+      "id": "libraries_light_engine_godray_renderer_godrayrenderer_new",
+      "community_name": "Light Rendering & Components"
+    },
+    {
+      "label": "GodrayRenderer:__tostring()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/godray_renderer.lua",
+      "source_location": "L12",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "godrayrenderer:__tostring()",
+      "id": "libraries_light_engine_godray_renderer_godrayrenderer_tostring",
+      "community_name": "Light Rendering & Components"
+    },
+    {
+      "label": "GodrayRenderer:OnAttach()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/godray_renderer.lua",
+      "source_location": "L15",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "godrayrenderer:onattach()",
+      "id": "libraries_light_engine_godray_renderer_godrayrenderer_onattach",
+      "community_name": "Light Rendering & Components"
+    },
+    {
+      "label": "GodrayRenderer:drawQuadPair()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/godray_renderer.lua",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "godrayrenderer:drawquadpair()",
+      "id": "libraries_light_engine_godray_renderer_godrayrenderer_drawquadpair",
+      "community_name": "Light Rendering & Components"
+    },
+    {
+      "label": "GodrayRenderer:Draw()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/godray_renderer.lua",
+      "source_location": "L37",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "godrayrenderer:draw()",
+      "id": "libraries_light_engine_godray_renderer_godrayrenderer_draw",
+      "community_name": "Light Rendering & Components"
+    },
+    {
+      "label": "light_collider.lua",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "light_collider.lua",
+      "id": "libraries_light_engine_light_collider",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightCollider.new()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightcollider.new()",
+      "id": "libraries_light_engine_light_collider_lightcollider_new",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightCollider:__tostring()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L23",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightcollider:__tostring()",
+      "id": "libraries_light_engine_light_collider_lightcollider_tostring",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightCollider:syncSegments()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightcollider:syncsegments()",
+      "id": "libraries_light_engine_light_collider_lightcollider_syncsegments",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightCollider:OnAttach()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L43",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightcollider:onattach()",
+      "id": "libraries_light_engine_light_collider_lightcollider_onattach",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightCollider:Update()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L61",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightcollider:update()",
+      "id": "libraries_light_engine_light_collider_lightcollider_update",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightCollider:OnDestroy()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_collider.lua",
+      "source_location": "L66",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightcollider:ondestroy()",
+      "id": "libraries_light_engine_light_collider_lightcollider_ondestroy",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "light_detector.lua",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "light_detector.lua",
+      "id": "libraries_light_engine_light_detector",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightDetector.new()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightdetector.new()",
+      "id": "libraries_light_engine_light_detector_lightdetector_new",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightDetector:__tostring()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L13",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightdetector:__tostring()",
+      "id": "libraries_light_engine_light_detector_lightdetector_tostring",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightDetector:OnAttach()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L16",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightdetector:onattach()",
+      "id": "libraries_light_engine_light_detector_lightdetector_onattach",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightDetector:OnDestroy()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L21",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightdetector:ondestroy()",
+      "id": "libraries_light_engine_light_detector_lightdetector_ondestroy",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightDetector:OnHit()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L25",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightdetector:onhit()",
+      "id": "libraries_light_engine_light_detector_lightdetector_onhit",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightDetector:OnLost()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_detector.lua",
+      "source_location": "L28",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightdetector:onlost()",
+      "id": "libraries_light_engine_light_detector_lightdetector_onlost",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "light_source.lua",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_source.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "light_source.lua",
+      "id": "libraries_light_engine_light_source",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "LightSource.new()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_source.lua",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "lightsource.new()",
+      "id": "libraries_light_engine_light_source_lightsource_new",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "LightSource:__tostring()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_source.lua",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "lightsource:__tostring()",
+      "id": "libraries_light_engine_light_source_lightsource_tostring",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "LightSource:castRay()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_source.lua",
+      "source_location": "L23",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "lightsource:castray()",
+      "id": "libraries_light_engine_light_source_lightsource_castray",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "LightSource:Update()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_source.lua",
+      "source_location": "L55",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "lightsource:update()",
+      "id": "libraries_light_engine_light_source_lightsource_update",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "light_world.lua",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "light_world.lua",
+      "id": "libraries_light_engine_light_world",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightWorld.registerSegments()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightworld.registersegments()",
+      "id": "libraries_light_engine_light_world_lightworld_registersegments",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightWorld.unregisterSegments()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L15",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "lightworld.unregistersegments()",
+      "id": "libraries_light_engine_light_world_lightworld_unregistersegments",
+      "community_name": "light_collider.lua"
+    },
+    {
+      "label": "LightWorld.registerDetector()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L23",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightworld.registerdetector()",
+      "id": "libraries_light_engine_light_world_lightworld_registerdetector",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightWorld.unregisterDetector()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L27",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightworld.unregisterdetector()",
+      "id": "libraries_light_engine_light_world_lightworld_unregisterdetector",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "LightWorld.raycast()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L35",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "lightworld.raycast()",
+      "id": "libraries_light_engine_light_world_lightworld_raycast",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "LightWorld.resolveDetectors()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/light_world.lua",
+      "source_location": "L51",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "lightworld.resolvedetectors()",
+      "id": "libraries_light_engine_light_world_lightworld_resolvedetectors",
+      "community_name": "light_world.lua"
+    },
+    {
+      "label": "ray_math.lua",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/utils/ray_math.lua",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "ray_math.lua",
+      "id": "libraries_light_engine_utils_ray_math",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "RayMath.segmentIntersect()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/utils/ray_math.lua",
+      "source_location": "L5",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "raymath.segmentintersect()",
+      "id": "libraries_light_engine_utils_ray_math_raymath_segmentintersect",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "RayMath.reflect()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/utils/ray_math.lua",
+      "source_location": "L31",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "raymath.reflect()",
+      "id": "libraries_light_engine_utils_ray_math_raymath_reflect",
+      "community_name": "vector.lua"
+    },
+    {
+      "label": "RayMath.refract()",
+      "file_type": "code",
+      "source_file": "Libraries/light_engine/utils/ray_math.lua",
+      "source_location": "L35",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "raymath.refract()",
+      "id": "libraries_light_engine_utils_ray_math_raymath_refract",
+      "community_name": "vector.lua"
     },
     {
       "label": "debug_light_renderer.lua",
@@ -836,9 +791,10 @@
       "source_file": "Libraries/renderer/debug_light_renderer.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_renderer_debug_light_renderer",
       "community": 3,
-      "norm_label": "debug_light_renderer.lua"
+      "norm_label": "debug_light_renderer.lua",
+      "id": "libraries_renderer_debug_light_renderer",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "DebugLightRenderer.new()",
@@ -847,9 +803,10 @@
       "source_location": "L6",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_debug_light_renderer_debuglightrenderer_new",
       "community": 3,
-      "norm_label": "debuglightrenderer.new()"
+      "norm_label": "debuglightrenderer.new()",
+      "id": "libraries_renderer_debug_light_renderer_debuglightrenderer_new",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "DebugLightRenderer:__tostring()",
@@ -858,9 +815,10 @@
       "source_location": "L11",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_debug_light_renderer_debuglightrenderer_tostring",
       "community": 3,
-      "norm_label": "debuglightrenderer:__tostring()"
+      "norm_label": "debuglightrenderer:__tostring()",
+      "id": "libraries_renderer_debug_light_renderer_debuglightrenderer_tostring",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "DebugLightRenderer:Draw()",
@@ -869,9 +827,10 @@
       "source_location": "L15",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_debug_light_renderer_debuglightrenderer_draw",
       "community": 3,
-      "norm_label": "debuglightrenderer:draw()"
+      "norm_label": "debuglightrenderer:draw()",
+      "id": "libraries_renderer_debug_light_renderer_debuglightrenderer_draw",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "screen.lua",
@@ -879,9 +838,10 @@
       "source_file": "Libraries/renderer/screen.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_renderer_screen",
       "community": 0,
-      "norm_label": "screen.lua"
+      "norm_label": "screen.lua",
+      "id": "libraries_renderer_screen",
+      "community_name": "main.lua"
     },
     {
       "label": "Screen.init()",
@@ -890,9 +850,10 @@
       "source_location": "L8",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_screen_screen_init",
       "community": 0,
-      "norm_label": "screen.init()"
+      "norm_label": "screen.init()",
+      "id": "libraries_renderer_screen_screen_init",
+      "community_name": "main.lua"
     },
     {
       "label": "Screen.updateScale()",
@@ -901,9 +862,10 @@
       "source_location": "L14",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_screen_screen_updatescale",
       "community": 0,
-      "norm_label": "screen.updatescale()"
+      "norm_label": "screen.updatescale()",
+      "id": "libraries_renderer_screen_screen_updatescale",
+      "community_name": "main.lua"
     },
     {
       "label": "Screen.beginDraw()",
@@ -912,9 +874,10 @@
       "source_location": "L19",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_screen_screen_begindraw",
       "community": 0,
-      "norm_label": "screen.begindraw()"
+      "norm_label": "screen.begindraw()",
+      "id": "libraries_renderer_screen_screen_begindraw",
+      "community_name": "main.lua"
     },
     {
       "label": "Screen.endDraw()",
@@ -923,9 +886,10 @@
       "source_location": "L24",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_screen_screen_enddraw",
       "community": 0,
-      "norm_label": "screen.enddraw()"
+      "norm_label": "screen.enddraw()",
+      "id": "libraries_renderer_screen_screen_enddraw",
+      "community_name": "main.lua"
     },
     {
       "label": "sprite_renderer.lua",
@@ -933,9 +897,10 @@
       "source_file": "Libraries/renderer/sprite_renderer.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_renderer_sprite_renderer",
       "community": 4,
-      "norm_label": "sprite_renderer.lua"
+      "norm_label": "sprite_renderer.lua",
+      "id": "libraries_renderer_sprite_renderer",
+      "community_name": "Component.new"
     },
     {
       "label": "SpriteRenderer.new()",
@@ -944,9 +909,10 @@
       "source_location": "L6",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_sprite_renderer_spriterenderer_new",
       "community": 4,
-      "norm_label": "spriterenderer.new()"
+      "norm_label": "spriterenderer.new()",
+      "id": "libraries_renderer_sprite_renderer_spriterenderer_new",
+      "community_name": "Component.new"
     },
     {
       "label": "SpriteRenderer:SetFrame()",
@@ -955,9 +921,10 @@
       "source_location": "L34",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_sprite_renderer_spriterenderer_setframe",
       "community": 4,
-      "norm_label": "spriterenderer:setframe()"
+      "norm_label": "spriterenderer:setframe()",
+      "id": "libraries_renderer_sprite_renderer_spriterenderer_setframe",
+      "community_name": "Component.new"
     },
     {
       "label": "SpriteRenderer:Draw()",
@@ -966,9 +933,10 @@
       "source_location": "L39",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_sprite_renderer_spriterenderer_draw",
       "community": 4,
-      "norm_label": "spriterenderer:draw()"
+      "norm_label": "spriterenderer:draw()",
+      "id": "libraries_renderer_sprite_renderer_spriterenderer_draw",
+      "community_name": "Component.new"
     },
     {
       "label": "SpriteRenderer:__tostring()",
@@ -977,9 +945,10 @@
       "source_location": "L54",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_renderer_sprite_renderer_spriterenderer_tostring",
       "community": 4,
-      "norm_label": "spriterenderer:__tostring()"
+      "norm_label": "spriterenderer:__tostring()",
+      "id": "libraries_renderer_sprite_renderer_spriterenderer_tostring",
+      "community_name": "Component.new"
     },
     {
       "label": "rotation.lua",
@@ -987,9 +956,10 @@
       "source_file": "Libraries/transform/rotation.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_transform_rotation",
       "community": 5,
-      "norm_label": "rotation.lua"
+      "norm_label": "rotation.lua",
+      "id": "libraries_transform_rotation",
+      "community_name": "object.lua"
     },
     {
       "label": "Rotation.new()",
@@ -998,9 +968,10 @@
       "source_location": "L6",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_rotation_rotation_new",
       "community": 5,
-      "norm_label": "rotation.new()"
+      "norm_label": "rotation.new()",
+      "id": "libraries_transform_rotation_rotation_new",
+      "community_name": "object.lua"
     },
     {
       "label": "Rotation:Rad2deg()",
@@ -1009,9 +980,10 @@
       "source_location": "L12",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_rotation_rotation_rad2deg",
       "community": 5,
-      "norm_label": "rotation:rad2deg()"
+      "norm_label": "rotation:rad2deg()",
+      "id": "libraries_transform_rotation_rotation_rad2deg",
+      "community_name": "object.lua"
     },
     {
       "label": "Rotation:__tostring()",
@@ -1020,9 +992,10 @@
       "source_location": "L16",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_rotation_rotation_tostring",
       "community": 5,
-      "norm_label": "rotation:__tostring()"
+      "norm_label": "rotation:__tostring()",
+      "id": "libraries_transform_rotation_rotation_tostring",
+      "community_name": "object.lua"
     },
     {
       "label": "transform.lua",
@@ -1030,9 +1003,10 @@
       "source_file": "Libraries/transform/transform.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_transform_transform",
       "community": 5,
-      "norm_label": "transform.lua"
+      "norm_label": "transform.lua",
+      "id": "libraries_transform_transform",
+      "community_name": "object.lua"
     },
     {
       "label": "Transform.new()",
@@ -1041,9 +1015,10 @@
       "source_location": "L7",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_transform_transform_new",
       "community": 5,
-      "norm_label": "transform.new()"
+      "norm_label": "transform.new()",
+      "id": "libraries_transform_transform_transform_new",
+      "community_name": "object.lua"
     },
     {
       "label": "Transform:__tostring()",
@@ -1052,9 +1027,10 @@
       "source_location": "L14",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_transform_transform_tostring",
       "community": 5,
-      "norm_label": "transform:__tostring()"
+      "norm_label": "transform:__tostring()",
+      "id": "libraries_transform_transform_transform_tostring",
+      "community_name": "object.lua"
     },
     {
       "label": "vector.lua",
@@ -1062,9 +1038,10 @@
       "source_file": "Libraries/transform/vector.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_transform_vector",
       "community": 2,
-      "norm_label": "vector.lua"
+      "norm_label": "vector.lua",
+      "id": "libraries_transform_vector",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector.new()",
@@ -1073,9 +1050,10 @@
       "source_location": "L5",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_new",
       "community": 2,
-      "norm_label": "vector.new()"
+      "norm_label": "vector.new()",
+      "id": "libraries_transform_vector_vector_new",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector:__tostring()",
@@ -1084,9 +1062,10 @@
       "source_location": "L19",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_tostring",
       "community": 2,
-      "norm_label": "vector:__tostring()"
+      "norm_label": "vector:__tostring()",
+      "id": "libraries_transform_vector_vector_tostring",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector.__add()",
@@ -1095,9 +1074,10 @@
       "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_add",
       "community": 2,
-      "norm_label": "vector.__add()"
+      "norm_label": "vector.__add()",
+      "id": "libraries_transform_vector_vector_add",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector.__sub()",
@@ -1106,9 +1086,10 @@
       "source_location": "L27",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_sub",
       "community": 2,
-      "norm_label": "vector.__sub()"
+      "norm_label": "vector.__sub()",
+      "id": "libraries_transform_vector_vector_sub",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector.__mul()",
@@ -1117,9 +1098,10 @@
       "source_location": "L31",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_mul",
       "community": 2,
-      "norm_label": "vector.__mul()"
+      "norm_label": "vector.__mul()",
+      "id": "libraries_transform_vector_vector_mul",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector:dot()",
@@ -1128,9 +1110,10 @@
       "source_location": "L35",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_dot",
       "community": 2,
-      "norm_label": "vector:dot()"
+      "norm_label": "vector:dot()",
+      "id": "libraries_transform_vector_vector_dot",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector:cross()",
@@ -1139,9 +1122,10 @@
       "source_location": "L39",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_cross",
       "community": 2,
-      "norm_label": "vector:cross()"
+      "norm_label": "vector:cross()",
+      "id": "libraries_transform_vector_vector_cross",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector:length()",
@@ -1150,9 +1134,10 @@
       "source_location": "L43",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_length",
       "community": 2,
-      "norm_label": "vector:length()"
+      "norm_label": "vector:length()",
+      "id": "libraries_transform_vector_vector_length",
+      "community_name": "vector.lua"
     },
     {
       "label": "Vector:normalized()",
@@ -1161,9 +1146,10 @@
       "source_location": "L47",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_transform_vector_vector_normalized",
       "community": 2,
-      "norm_label": "vector:normalized()"
+      "norm_label": "vector:normalized()",
+      "id": "libraries_transform_vector_vector_normalized",
+      "community_name": "vector.lua"
     },
     {
       "label": "component.lua",
@@ -1171,9 +1157,10 @@
       "source_file": "Libraries/universal/component.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_universal_component",
       "community": 3,
-      "norm_label": "component.lua"
+      "norm_label": "component.lua",
+      "id": "libraries_universal_component",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "Component.new()",
@@ -1182,9 +1169,10 @@
       "source_location": "L4",
       "_callable": true,
       "_origin": "ast",
+      "community": 4,
+      "norm_label": "component.new()",
       "id": "libraries_universal_component_component_new",
-      "community": 3,
-      "norm_label": "component.new()"
+      "community_name": "Component.new"
     },
     {
       "label": "Component:OnAttach()",
@@ -1193,9 +1181,10 @@
       "source_location": "L10",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_component_component_onattach",
       "community": 3,
-      "norm_label": "component:onattach()"
+      "norm_label": "component:onattach()",
+      "id": "libraries_universal_component_component_onattach",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "Component:Update()",
@@ -1204,9 +1193,10 @@
       "source_location": "L11",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_component_component_update",
       "community": 3,
-      "norm_label": "component:update()"
+      "norm_label": "component:update()",
+      "id": "libraries_universal_component_component_update",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "Component:Draw()",
@@ -1215,9 +1205,10 @@
       "source_location": "L12",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_component_component_draw",
       "community": 3,
-      "norm_label": "component:draw()"
+      "norm_label": "component:draw()",
+      "id": "libraries_universal_component_component_draw",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "Component:OnDestroy()",
@@ -1226,9 +1217,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_component_component_ondestroy",
       "community": 3,
-      "norm_label": "component:ondestroy()"
+      "norm_label": "component:ondestroy()",
+      "id": "libraries_universal_component_component_ondestroy",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "Component:__tostring()",
@@ -1237,9 +1229,10 @@
       "source_location": "L15",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_component_component_tostring",
       "community": 3,
-      "norm_label": "component:__tostring()"
+      "norm_label": "component:__tostring()",
+      "id": "libraries_universal_component_component_tostring",
+      "community_name": "Light Rendering & Components"
     },
     {
       "label": "component_registry.lua",
@@ -1247,9 +1240,10 @@
       "source_file": "Libraries/universal/component_registry.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_universal_component_registry",
       "community": 0,
-      "norm_label": "component_registry.lua"
+      "norm_label": "component_registry.lua",
+      "id": "libraries_universal_component_registry",
+      "community_name": "main.lua"
     },
     {
       "label": "level.lua",
@@ -1257,9 +1251,10 @@
       "source_file": "Libraries/universal/level.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_universal_level",
       "community": 0,
-      "norm_label": "level.lua"
+      "norm_label": "level.lua",
+      "id": "libraries_universal_level",
+      "community_name": "main.lua"
     },
     {
       "label": "toVector()",
@@ -1268,9 +1263,10 @@
       "source_location": "L7",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_level_tovector",
       "community": 0,
-      "norm_label": "tovector()"
+      "norm_label": "tovector()",
+      "id": "libraries_universal_level_tovector",
+      "community_name": "main.lua"
     },
     {
       "label": "Level.load()",
@@ -1279,9 +1275,10 @@
       "source_location": "L12",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_level_level_load",
       "community": 0,
-      "norm_label": "level.load()"
+      "norm_label": "level.load()",
+      "id": "libraries_universal_level_level_load",
+      "community_name": "main.lua"
     },
     {
       "label": "object.lua",
@@ -1289,9 +1286,10 @@
       "source_file": "Libraries/universal/object.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_universal_object",
       "community": 5,
-      "norm_label": "object.lua"
+      "norm_label": "object.lua",
+      "id": "libraries_universal_object",
+      "community_name": "object.lua"
     },
     {
       "label": "Object.new()",
@@ -1300,9 +1298,10 @@
       "source_location": "L9",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_new",
       "community": 5,
-      "norm_label": "object.new()"
+      "norm_label": "object.new()",
+      "id": "libraries_universal_object_object_new",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:AddComponent()",
@@ -1311,9 +1310,10 @@
       "source_location": "L16",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_addcomponent",
       "community": 5,
-      "norm_label": "object:addcomponent()"
+      "norm_label": "object:addcomponent()",
+      "id": "libraries_universal_object_object_addcomponent",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:GetComponent()",
@@ -1322,9 +1322,10 @@
       "source_location": "L22",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_getcomponent",
       "community": 5,
-      "norm_label": "object:getcomponent()"
+      "norm_label": "object:getcomponent()",
+      "id": "libraries_universal_object_object_getcomponent",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:RemoveComponent()",
@@ -1333,9 +1334,10 @@
       "source_location": "L26",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_removecomponent",
       "community": 5,
-      "norm_label": "object:removecomponent()"
+      "norm_label": "object:removecomponent()",
+      "id": "libraries_universal_object_object_removecomponent",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:Update()",
@@ -1344,9 +1346,10 @@
       "source_location": "L30",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_update",
       "community": 5,
-      "norm_label": "object:update()"
+      "norm_label": "object:update()",
+      "id": "libraries_universal_object_object_update",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:Draw()",
@@ -1355,9 +1358,10 @@
       "source_location": "L36",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_draw",
       "community": 5,
-      "norm_label": "object:draw()"
+      "norm_label": "object:draw()",
+      "id": "libraries_universal_object_object_draw",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:Destroy()",
@@ -1366,9 +1370,10 @@
       "source_location": "L42",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_destroy",
       "community": 5,
-      "norm_label": "object:destroy()"
+      "norm_label": "object:destroy()",
+      "id": "libraries_universal_object_object_destroy",
+      "community_name": "object.lua"
     },
     {
       "label": "Object:__tostring()",
@@ -1377,9 +1382,10 @@
       "source_location": "L49",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_object_object_tostring",
       "community": 5,
-      "norm_label": "object:__tostring()"
+      "norm_label": "object:__tostring()",
+      "id": "libraries_universal_object_object_tostring",
+      "community_name": "object.lua"
     },
     {
       "label": "prefab.lua",
@@ -1387,9 +1393,10 @@
       "source_file": "Libraries/universal/prefab.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "libraries_universal_prefab",
       "community": 0,
-      "norm_label": "prefab.lua"
+      "norm_label": "prefab.lua",
+      "id": "libraries_universal_prefab",
+      "community_name": "main.lua"
     },
     {
       "label": "Prefab.Register()",
@@ -1398,9 +1405,10 @@
       "source_location": "L7",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_prefab_prefab_register",
       "community": 0,
-      "norm_label": "prefab.register()"
+      "norm_label": "prefab.register()",
+      "id": "libraries_universal_prefab_prefab_register",
+      "community_name": "main.lua"
     },
     {
       "label": "mergeArgs()",
@@ -1409,9 +1417,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_prefab_mergeargs",
       "community": 0,
-      "norm_label": "mergeargs()"
+      "norm_label": "mergeargs()",
+      "id": "libraries_universal_prefab_mergeargs",
+      "community_name": "main.lua"
     },
     {
       "label": "Prefab.Instantiate()",
@@ -1420,9 +1429,10 @@
       "source_location": "L20",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_prefab_prefab_instantiate",
       "community": 0,
-      "norm_label": "prefab.instantiate()"
+      "norm_label": "prefab.instantiate()",
+      "id": "libraries_universal_prefab_prefab_instantiate",
+      "community_name": "main.lua"
     },
     {
       "label": "scene.lua",
@@ -1430,9 +1440,10 @@
       "source_file": "Libraries/universal/scene.lua",
       "source_location": "L1",
       "_origin": "ast",
+      "community": 10,
+      "norm_label": "scene.lua",
       "id": "libraries_universal_scene",
-      "community": 0,
-      "norm_label": "scene.lua"
+      "community_name": "scene.lua"
     },
     {
       "label": "Scene.new()",
@@ -1441,9 +1452,10 @@
       "source_location": "L4",
       "_callable": true,
       "_origin": "ast",
-      "id": "libraries_universal_scene_scene_new",
       "community": 0,
-      "norm_label": "scene.new()"
+      "norm_label": "scene.new()",
+      "id": "libraries_universal_scene_scene_new",
+      "community_name": "main.lua"
     },
     {
       "label": "Scene:Spawn()",
@@ -1452,9 +1464,10 @@
       "source_location": "L11",
       "_callable": true,
       "_origin": "ast",
+      "community": 10,
+      "norm_label": "scene:spawn()",
       "id": "libraries_universal_scene_scene_spawn",
-      "community": 0,
-      "norm_label": "scene:spawn()"
+      "community_name": "scene.lua"
     },
     {
       "label": "Scene:Destroy()",
@@ -1463,9 +1476,10 @@
       "source_location": "L16",
       "_callable": true,
       "_origin": "ast",
+      "community": 10,
+      "norm_label": "scene:destroy()",
       "id": "libraries_universal_scene_scene_destroy",
-      "community": 0,
-      "norm_label": "scene:destroy()"
+      "community_name": "scene.lua"
     },
     {
       "label": "Scene:Update()",
@@ -1474,9 +1488,10 @@
       "source_location": "L20",
       "_callable": true,
       "_origin": "ast",
+      "community": 10,
+      "norm_label": "scene:update()",
       "id": "libraries_universal_scene_scene_update",
-      "community": 0,
-      "norm_label": "scene:update()"
+      "community_name": "scene.lua"
     },
     {
       "label": "Scene:Draw()",
@@ -1485,9 +1500,10 @@
       "source_location": "L27",
       "_callable": true,
       "_origin": "ast",
+      "community": 10,
+      "norm_label": "scene:draw()",
       "id": "libraries_universal_scene_scene_draw",
-      "community": 0,
-      "norm_label": "scene:draw()"
+      "community_name": "scene.lua"
     },
     {
       "label": "Scene:_flushDestroyed()",
@@ -1496,9 +1512,10 @@
       "source_location": "L33",
       "_callable": true,
       "_origin": "ast",
+      "community": 10,
+      "norm_label": "scene:_flushdestroyed()",
       "id": "libraries_universal_scene_scene_flushdestroyed",
-      "community": 0,
-      "norm_label": "scene:_flushdestroyed()"
+      "community_name": "scene.lua"
     },
     {
       "label": "conf.lua",
@@ -1506,9 +1523,10 @@
       "source_file": "conf.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "conf",
       "community": 8,
-      "norm_label": "conf.lua"
+      "norm_label": "conf.lua",
+      "id": "conf",
+      "community_name": "LOVE Config"
     },
     {
       "label": "love.conf()",
@@ -1517,9 +1535,10 @@
       "source_location": "L1",
       "_callable": true,
       "_origin": "ast",
-      "id": "conf_love_conf",
       "community": 8,
-      "norm_label": "love.conf()"
+      "norm_label": "love.conf()",
+      "id": "conf_love_conf",
+      "community_name": "LOVE Config"
     },
     {
       "label": "main.lua",
@@ -1527,9 +1546,10 @@
       "source_file": "main.lua",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "main",
       "community": 0,
-      "norm_label": "main.lua"
+      "norm_label": "main.lua",
+      "id": "main",
+      "community_name": "main.lua"
     },
     {
       "label": "love.load()",
@@ -1538,9 +1558,10 @@
       "source_location": "L11",
       "_callable": true,
       "_origin": "ast",
-      "id": "main_love_load",
       "community": 0,
-      "norm_label": "love.load()"
+      "norm_label": "love.load()",
+      "id": "main_love_load",
+      "community_name": "main.lua"
     },
     {
       "label": "love.update()",
@@ -1549,9 +1570,10 @@
       "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
-      "id": "main_love_update",
       "community": 1,
-      "norm_label": "love.update()"
+      "norm_label": "love.update()",
+      "id": "main_love_update",
+      "community_name": "light_world.lua"
     },
     {
       "label": "love.draw()",
@@ -1560,9 +1582,10 @@
       "source_location": "L29",
       "_callable": true,
       "_origin": "ast",
-      "id": "main_love_draw",
       "community": 0,
-      "norm_label": "love.draw()"
+      "norm_label": "love.draw()",
+      "id": "main_love_draw",
+      "community_name": "main.lua"
     },
     {
       "label": "love.keypressed()",
@@ -1571,9 +1594,10 @@
       "source_location": "L37",
       "_callable": true,
       "_origin": "ast",
-      "id": "main_love_keypressed",
       "community": 0,
-      "norm_label": "love.keypressed()"
+      "norm_label": "love.keypressed()",
+      "id": "main_love_keypressed",
+      "community_name": "main.lua"
     },
     {
       "label": "love.gamepadpressed()",
@@ -1582,9 +1606,10 @@
       "source_location": "L41",
       "_callable": true,
       "_origin": "ast",
-      "id": "main_love_gamepadpressed",
       "community": 0,
-      "norm_label": "love.gamepadpressed()"
+      "norm_label": "love.gamepadpressed()",
+      "id": "main_love_gamepadpressed",
+      "community_name": "main.lua"
     },
     {
       "label": "love.resize()",
@@ -1593,9 +1618,10 @@
       "source_location": "L45",
       "_callable": true,
       "_origin": "ast",
-      "id": "main_love_resize",
       "community": 0,
-      "norm_label": "love.resize()"
+      "norm_label": "love.resize()",
+      "id": "main_love_resize",
+      "community_name": "main.lua"
     },
     {
       "label": "RAY_Vertical_Slice",
@@ -1606,9 +1632,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_ray_vertical_slice",
       "community": 9,
-      "norm_label": "ray_vertical_slice"
+      "norm_label": "ray_vertical_slice",
+      "_origin": "semantic",
+      "id": "readme_ray_vertical_slice",
+      "community_name": "Project README"
     },
     {
       "label": "Box Sprite",
@@ -1619,9 +1647,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "community": 7,
+      "norm_label": "box sprite",
+      "_origin": "semantic",
       "id": "resources_sprites_test_box_box_sprite",
-      "community": 1,
-      "norm_label": "box sprite"
+      "community_name": "light_collider.lua"
     },
     {
       "label": "Lens Test Sprite",
@@ -1632,9 +1662,11 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "community": 7,
+      "norm_label": "lens test sprite",
+      "_origin": "semantic",
       "id": "resources_sprites_test_lense_lens_sprite",
-      "community": 1,
-      "norm_label": "lens test sprite"
+      "community_name": "light_collider.lua"
     },
     {
       "label": "Mirror Test Sprite",
@@ -1645,12 +1677,381 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "community": 7,
+      "norm_label": "mirror test sprite",
+      "_origin": "semantic",
       "id": "resources_sprites_test_mirror_mirror_sprite",
-      "community": 1,
-      "norm_label": "mirror test sprite"
+      "community_name": "light_collider.lua"
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/hinge_joint.lua",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_hinge_joint",
+      "target": "libraries_physics_hinge_joint_hingejoint_new",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/hinge_joint.lua",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_hinge_joint",
+      "target": "libraries_physics_hinge_joint_hingejoint_onattach",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/hinge_joint.lua",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_hinge_joint",
+      "target": "libraries_physics_hinge_joint_hingejoint_ondestroy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/hinge_joint.lua",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_hinge_joint",
+      "target": "libraries_physics_hinge_joint_hingejoint_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Libraries/physics/hinge_joint.lua",
+      "source_location": "1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_hinge_joint",
+      "target": "libraries_physics_world"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Libraries/physics/hinge_joint.lua",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_hinge_joint_hingejoint_new",
+      "target": "libraries_universal_component_component_new"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Frontend/prefabs/pivots/anchor.lua",
+      "source_location": "2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_prefabs_pivots_anchor",
+      "target": "libraries_physics_rigid_body"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Frontend/prefabs/tiles/box.lua",
+      "source_location": "3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_prefabs_tiles_box",
+      "target": "libraries_physics_rigid_body"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_addforce",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_new",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_onattach",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_ondestroy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_setvelocity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_tostring",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_rigid_body_rigidbody_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body",
+      "target": "libraries_physics_world"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Frontend/prefabs/pivots/anchor.lua",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_prefabs_pivots_anchor_anchor_new",
+      "target": "libraries_physics_rigid_body_rigidbody_new"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Frontend/prefabs/tiles/box.lua",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "frontend_prefabs_tiles_box_box_new",
+      "target": "libraries_physics_rigid_body_rigidbody_new"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body_rigidbody_new",
+      "target": "libraries_universal_component_component_new"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Libraries/physics/rigid_body.lua",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_rigid_body_rigidbody_onattach",
+      "target": "libraries_physics_world_world_get"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world",
+      "target": "libraries_physics_world_world_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world",
+      "target": "libraries_physics_world_world_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world",
+      "target": "libraries_physics_world_world_reset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world",
+      "target": "libraries_physics_world_world_tometers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world",
+      "target": "libraries_physics_world_world_topixels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world",
+      "target": "libraries_physics_world_world_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.lua",
+      "source_location": "1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "main",
+      "target": "libraries_physics_world"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world_world_reset",
+      "target": "libraries_physics_world_world_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.lua",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "main_love_load",
+      "target": "libraries_physics_world_world_init"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.lua",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "main_love_update",
+      "target": "libraries_physics_world_world_update"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world_world_tometers",
+      "target": "libraries_transform_vector_vector_new"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "Libraries/physics/world.lua",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "libraries_physics_world_world_topixels",
+      "target": "libraries_transform_vector_vector_new"
+    },
     {
       "relation": "imports",
       "context": "import",
@@ -1670,140 +2071,9 @@
       "source_file": "Resources/sprites/test/lense.png",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "resources_sprites_test_lense_lens_sprite",
       "target": "frontend_levels_demo"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone1.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone1",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone10.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone10",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone11.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone11",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone2.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone2",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone3.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone3",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone4.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone4",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone5.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone5",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone6.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone6",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone7.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone7",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone8.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone8",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Frontend/levels/zones/zone9.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_levels_zones_zone9",
-      "target": "libraries_transform_vector"
     },
     {
       "relation": "imports",
@@ -1848,9 +2118,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "frontend_prefabs_pivots_anchor",
-      "target": "frontend_prefabs_pivots_anchor_anchor_new",
-      "confidence_score": 1.0
+      "target": "frontend_prefabs_pivots_anchor_anchor_new"
     },
     {
       "relation": "contains",
@@ -1859,21 +2129,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "frontend_prefabs_pivots_anchor",
-      "target": "frontend_prefabs_pivots_anchor_anchor_tostring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "Frontend/prefabs/pivots/anchor.lua",
-      "source_location": "2",
-      "weight": 1.0,
-      "_origin": "ast",
       "source": "frontend_prefabs_pivots_anchor",
-      "target": "libraries_physics_rigid_body"
+      "target": "frontend_prefabs_pivots_anchor_anchor_tostring"
     },
     {
       "relation": "imports",
@@ -1886,18 +2144,6 @@
       "_origin": "ast",
       "source": "frontend_prefabs_pivots_anchor",
       "target": "libraries_universal_object"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Frontend/prefabs/pivots/anchor.lua",
-      "source_location": "L12",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_prefabs_pivots_anchor_anchor_new",
-      "target": "libraries_physics_rigid_body_rigidbody_new"
     },
     {
       "relation": "calls",
@@ -1918,9 +2164,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "frontend_prefabs_tiles_box",
-      "target": "frontend_prefabs_tiles_box_box_new",
-      "confidence_score": 1.0
+      "target": "frontend_prefabs_tiles_box_box_new"
     },
     {
       "relation": "contains",
@@ -1929,21 +2175,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "frontend_prefabs_tiles_box",
-      "target": "frontend_prefabs_tiles_box_box_tostring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "Frontend/prefabs/tiles/box.lua",
-      "source_location": "3",
-      "weight": 1.0,
-      "_origin": "ast",
       "source": "frontend_prefabs_tiles_box",
-      "target": "libraries_physics_rigid_body"
+      "target": "frontend_prefabs_tiles_box_box_tostring"
     },
     {
       "relation": "imports",
@@ -1968,18 +2202,6 @@
       "_origin": "ast",
       "source": "frontend_prefabs_tiles_box",
       "target": "libraries_universal_object"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Frontend/prefabs/tiles/box.lua",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "frontend_prefabs_tiles_box_box_new",
-      "target": "libraries_physics_rigid_body_rigidbody_new"
     },
     {
       "relation": "calls",
@@ -2012,9 +2234,9 @@
       "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_godray_renderer",
-      "target": "libraries_light_engine_godray_renderer_godrayrenderer_draw",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_godray_renderer_godrayrenderer_draw"
     },
     {
       "relation": "contains",
@@ -2023,9 +2245,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_godray_renderer",
-      "target": "libraries_light_engine_godray_renderer_godrayrenderer_drawquadpair",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_godray_renderer_godrayrenderer_drawquadpair"
     },
     {
       "relation": "contains",
@@ -2034,9 +2256,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_godray_renderer",
-      "target": "libraries_light_engine_godray_renderer_godrayrenderer_new",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_godray_renderer_godrayrenderer_new"
     },
     {
       "relation": "contains",
@@ -2045,9 +2267,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_godray_renderer",
-      "target": "libraries_light_engine_godray_renderer_godrayrenderer_onattach",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_godray_renderer_godrayrenderer_onattach"
     },
     {
       "relation": "contains",
@@ -2056,9 +2278,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_godray_renderer",
-      "target": "libraries_light_engine_godray_renderer_godrayrenderer_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_godray_renderer_godrayrenderer_tostring"
     },
     {
       "relation": "imports",
@@ -2091,9 +2313,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_collider",
-      "target": "libraries_light_engine_light_collider_lightcollider_new",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_collider_lightcollider_new"
     },
     {
       "relation": "contains",
@@ -2102,9 +2324,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_collider",
-      "target": "libraries_light_engine_light_collider_lightcollider_onattach",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_collider_lightcollider_onattach"
     },
     {
       "relation": "contains",
@@ -2113,9 +2335,9 @@
       "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_collider",
-      "target": "libraries_light_engine_light_collider_lightcollider_ondestroy",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_collider_lightcollider_ondestroy"
     },
     {
       "relation": "contains",
@@ -2124,9 +2346,9 @@
       "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_collider",
-      "target": "libraries_light_engine_light_collider_lightcollider_syncsegments",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_collider_lightcollider_syncsegments"
     },
     {
       "relation": "contains",
@@ -2135,9 +2357,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_collider",
-      "target": "libraries_light_engine_light_collider_lightcollider_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_collider_lightcollider_tostring"
     },
     {
       "relation": "contains",
@@ -2146,9 +2368,9 @@
       "source_location": "L61",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_collider",
-      "target": "libraries_light_engine_light_collider_lightcollider_update",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_collider_lightcollider_update"
     },
     {
       "relation": "imports",
@@ -2193,6 +2415,7 @@
       "source_file": "Resources/sprites/test/box.png",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "resources_sprites_test_box_box_sprite",
       "target": "libraries_light_engine_light_collider"
     },
@@ -2203,6 +2426,7 @@
       "source_file": "Resources/sprites/test/lense.png",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "resources_sprites_test_lense_lens_sprite",
       "target": "libraries_light_engine_light_collider"
     },
@@ -2273,9 +2497,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_detector",
-      "target": "libraries_light_engine_light_detector_lightdetector_new",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_detector_lightdetector_new"
     },
     {
       "relation": "contains",
@@ -2284,9 +2508,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_detector",
-      "target": "libraries_light_engine_light_detector_lightdetector_onattach",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_detector_lightdetector_onattach"
     },
     {
       "relation": "contains",
@@ -2295,9 +2519,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_detector",
-      "target": "libraries_light_engine_light_detector_lightdetector_ondestroy",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_detector_lightdetector_ondestroy"
     },
     {
       "relation": "contains",
@@ -2306,9 +2530,9 @@
       "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_detector",
-      "target": "libraries_light_engine_light_detector_lightdetector_onhit",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_detector_lightdetector_onhit"
     },
     {
       "relation": "contains",
@@ -2317,9 +2541,9 @@
       "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_detector",
-      "target": "libraries_light_engine_light_detector_lightdetector_onlost",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_detector_lightdetector_onlost"
     },
     {
       "relation": "contains",
@@ -2328,9 +2552,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_detector",
-      "target": "libraries_light_engine_light_detector_lightdetector_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_detector_lightdetector_tostring"
     },
     {
       "relation": "imports",
@@ -2399,9 +2623,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_source",
-      "target": "libraries_light_engine_light_source_lightsource_castray",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_source_lightsource_castray"
     },
     {
       "relation": "contains",
@@ -2410,9 +2634,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_source",
-      "target": "libraries_light_engine_light_source_lightsource_new",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_source_lightsource_new"
     },
     {
       "relation": "contains",
@@ -2421,9 +2645,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_source",
-      "target": "libraries_light_engine_light_source_lightsource_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_source_lightsource_tostring"
     },
     {
       "relation": "contains",
@@ -2432,9 +2656,9 @@
       "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_source",
-      "target": "libraries_light_engine_light_source_lightsource_update",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_source_lightsource_update"
     },
     {
       "relation": "imports",
@@ -2551,9 +2775,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_world",
-      "target": "libraries_light_engine_light_world_lightworld_raycast",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_world_lightworld_raycast"
     },
     {
       "relation": "contains",
@@ -2562,9 +2786,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_world",
-      "target": "libraries_light_engine_light_world_lightworld_registerdetector",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_world_lightworld_registerdetector"
     },
     {
       "relation": "contains",
@@ -2573,9 +2797,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_world",
-      "target": "libraries_light_engine_light_world_lightworld_registersegments",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_world_lightworld_registersegments"
     },
     {
       "relation": "contains",
@@ -2584,9 +2808,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_world",
-      "target": "libraries_light_engine_light_world_lightworld_resolvedetectors",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_world_lightworld_resolvedetectors"
     },
     {
       "relation": "contains",
@@ -2595,9 +2819,9 @@
       "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_world",
-      "target": "libraries_light_engine_light_world_lightworld_unregisterdetector",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_world_lightworld_unregisterdetector"
     },
     {
       "relation": "contains",
@@ -2606,9 +2830,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_light_world",
-      "target": "libraries_light_engine_light_world_lightworld_unregistersegments",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_light_world_lightworld_unregistersegments"
     },
     {
       "relation": "imports",
@@ -2665,9 +2889,9 @@
       "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_utils_ray_math",
-      "target": "libraries_light_engine_utils_ray_math_raymath_reflect",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_utils_ray_math_raymath_reflect"
     },
     {
       "relation": "contains",
@@ -2676,9 +2900,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_utils_ray_math",
-      "target": "libraries_light_engine_utils_ray_math_raymath_refract",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_utils_ray_math_raymath_refract"
     },
     {
       "relation": "contains",
@@ -2687,9 +2911,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_light_engine_utils_ray_math",
-      "target": "libraries_light_engine_utils_ray_math_raymath_segmentintersect",
-      "confidence_score": 1.0
+      "target": "libraries_light_engine_utils_ray_math_raymath_segmentintersect"
     },
     {
       "relation": "imports",
@@ -2718,428 +2942,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint",
-      "target": "libraries_physics_hinge_joint_hingejoint_new",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint",
-      "target": "libraries_physics_hinge_joint_hingejoint_onattach",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L47",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint",
-      "target": "libraries_physics_hinge_joint_hingejoint_ondestroy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L53",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint",
-      "target": "libraries_physics_hinge_joint_hingejoint_tostring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint",
-      "target": "libraries_physics_world"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "2",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint",
-      "target": "libraries_universal_component"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint_hingejoint_new",
-      "target": "libraries_universal_component_component_new"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/hinge_joint.lua",
-      "source_location": "L32",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_hinge_joint_hingejoint_onattach",
-      "target": "libraries_physics_world_world_tometers"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L50",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_addforce",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_new",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L30",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_onattach",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L65",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_ondestroy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L54",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_setvelocity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L71",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_tostring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L58",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_rigid_body_rigidbody_update",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "2",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_physics_world"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body",
-      "target": "libraries_universal_component"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body_rigidbody_new",
-      "target": "libraries_universal_component_component_new"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L31",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body_rigidbody_onattach",
-      "target": "libraries_physics_world_world_get"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L32",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body_rigidbody_onattach",
-      "target": "libraries_physics_world_world_tometers"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L61",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body_rigidbody_update",
-      "target": "libraries_physics_world_world_topixels"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/rigid_body.lua",
-      "source_location": "L61",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_rigid_body_rigidbody_update",
-      "target": "libraries_transform_vector_vector_new"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L20",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_physics_world_world_get",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_physics_world_world_init",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_physics_world_world_reset",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_physics_world_world_tometers",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L33",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_physics_world_world_topixels",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L25",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_physics_world_world_update",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world",
-      "target": "libraries_transform_vector"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "main.lua",
-      "source_location": "1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "main",
-      "target": "libraries_physics_world"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world_world_reset",
-      "target": "libraries_physics_world_world_init",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.lua",
-      "source_location": "L16",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "main_love_load",
-      "target": "libraries_physics_world_world_init"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.lua",
-      "source_location": "L24",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "main_love_update",
-      "target": "libraries_physics_world_world_update"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L30",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world_world_tometers",
-      "target": "libraries_transform_vector_vector_new"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "Libraries/physics/world.lua",
-      "source_location": "L34",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "libraries_physics_world_world_topixels",
-      "target": "libraries_transform_vector_vector_new"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "Libraries/renderer/debug_light_renderer.lua",
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_debug_light_renderer",
-      "target": "libraries_renderer_debug_light_renderer_debuglightrenderer_draw",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_debug_light_renderer_debuglightrenderer_draw"
     },
     {
       "relation": "contains",
@@ -3148,9 +2957,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_debug_light_renderer",
-      "target": "libraries_renderer_debug_light_renderer_debuglightrenderer_new",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_debug_light_renderer_debuglightrenderer_new"
     },
     {
       "relation": "contains",
@@ -3159,9 +2968,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_debug_light_renderer",
-      "target": "libraries_renderer_debug_light_renderer_debuglightrenderer_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_debug_light_renderer_debuglightrenderer_tostring"
     },
     {
       "relation": "imports",
@@ -3194,9 +3003,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_screen",
-      "target": "libraries_renderer_screen_screen_begindraw",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_screen_screen_begindraw"
     },
     {
       "relation": "contains",
@@ -3205,9 +3014,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_screen",
-      "target": "libraries_renderer_screen_screen_enddraw",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_screen_screen_enddraw"
     },
     {
       "relation": "contains",
@@ -3216,9 +3025,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_screen",
-      "target": "libraries_renderer_screen_screen_init",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_screen_screen_init"
     },
     {
       "relation": "contains",
@@ -3227,9 +3036,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_screen",
-      "target": "libraries_renderer_screen_screen_updatescale",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_screen_screen_updatescale"
     },
     {
       "relation": "imports",
@@ -3251,9 +3060,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_screen_screen_init",
-      "target": "libraries_renderer_screen_screen_updatescale",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_screen_screen_updatescale"
     },
     {
       "relation": "calls",
@@ -3310,9 +3119,9 @@
       "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_sprite_renderer",
-      "target": "libraries_renderer_sprite_renderer_spriterenderer_draw",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_sprite_renderer_spriterenderer_draw"
     },
     {
       "relation": "contains",
@@ -3321,9 +3130,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_sprite_renderer",
-      "target": "libraries_renderer_sprite_renderer_spriterenderer_new",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_sprite_renderer_spriterenderer_new"
     },
     {
       "relation": "contains",
@@ -3332,9 +3141,9 @@
       "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_sprite_renderer",
-      "target": "libraries_renderer_sprite_renderer_spriterenderer_setframe",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_sprite_renderer_spriterenderer_setframe"
     },
     {
       "relation": "contains",
@@ -3343,9 +3152,9 @@
       "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_renderer_sprite_renderer",
-      "target": "libraries_renderer_sprite_renderer_spriterenderer_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_renderer_sprite_renderer_spriterenderer_tostring"
     },
     {
       "relation": "imports",
@@ -3378,9 +3187,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_rotation",
-      "target": "libraries_transform_rotation_rotation_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_rotation_rotation_new"
     },
     {
       "relation": "contains",
@@ -3389,9 +3198,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_rotation",
-      "target": "libraries_transform_rotation_rotation_rad2deg",
-      "confidence_score": 1.0
+      "target": "libraries_transform_rotation_rotation_rad2deg"
     },
     {
       "relation": "contains",
@@ -3400,9 +3209,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_rotation",
-      "target": "libraries_transform_rotation_rotation_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_transform_rotation_rotation_tostring"
     },
     {
       "relation": "imports",
@@ -3447,9 +3256,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_transform",
-      "target": "libraries_transform_transform_transform_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_transform_transform_new"
     },
     {
       "relation": "contains",
@@ -3458,9 +3267,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_transform",
-      "target": "libraries_transform_transform_transform_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_transform_transform_transform_tostring"
     },
     {
       "relation": "imports",
@@ -3517,9 +3326,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_add",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_add"
     },
     {
       "relation": "contains",
@@ -3528,9 +3337,9 @@
       "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_cross",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_cross"
     },
     {
       "relation": "contains",
@@ -3539,9 +3348,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_dot",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_dot"
     },
     {
       "relation": "contains",
@@ -3550,9 +3359,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_length",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_length"
     },
     {
       "relation": "contains",
@@ -3561,9 +3370,9 @@
       "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_mul",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_mul"
     },
     {
       "relation": "contains",
@@ -3572,9 +3381,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_new"
     },
     {
       "relation": "contains",
@@ -3583,9 +3392,9 @@
       "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_normalized",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_normalized"
     },
     {
       "relation": "contains",
@@ -3594,9 +3403,9 @@
       "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_sub",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_sub"
     },
     {
       "relation": "contains",
@@ -3605,9 +3414,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector",
-      "target": "libraries_transform_vector_vector_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_tostring"
     },
     {
       "relation": "imports",
@@ -3641,9 +3450,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector_vector_add",
-      "target": "libraries_transform_vector_vector_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_new"
     },
     {
       "relation": "calls",
@@ -3653,9 +3462,9 @@
       "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector_vector_mul",
-      "target": "libraries_transform_vector_vector_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_new"
     },
     {
       "relation": "calls",
@@ -3665,9 +3474,9 @@
       "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector_vector_normalized",
-      "target": "libraries_transform_vector_vector_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_new"
     },
     {
       "relation": "calls",
@@ -3677,9 +3486,9 @@
       "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_transform_vector_vector_sub",
-      "target": "libraries_transform_vector_vector_new",
-      "confidence_score": 1.0
+      "target": "libraries_transform_vector_vector_new"
     },
     {
       "relation": "calls",
@@ -3700,9 +3509,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_component",
-      "target": "libraries_universal_component_component_draw",
-      "confidence_score": 1.0
+      "target": "libraries_universal_component_component_draw"
     },
     {
       "relation": "contains",
@@ -3711,9 +3520,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_component",
-      "target": "libraries_universal_component_component_new",
-      "confidence_score": 1.0
+      "target": "libraries_universal_component_component_new"
     },
     {
       "relation": "contains",
@@ -3722,9 +3531,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_component",
-      "target": "libraries_universal_component_component_onattach",
-      "confidence_score": 1.0
+      "target": "libraries_universal_component_component_onattach"
     },
     {
       "relation": "contains",
@@ -3733,9 +3542,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_component",
-      "target": "libraries_universal_component_component_ondestroy",
-      "confidence_score": 1.0
+      "target": "libraries_universal_component_component_ondestroy"
     },
     {
       "relation": "contains",
@@ -3744,9 +3553,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_component",
-      "target": "libraries_universal_component_component_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_universal_component_component_tostring"
     },
     {
       "relation": "contains",
@@ -3755,9 +3564,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_component",
-      "target": "libraries_universal_component_component_update",
-      "confidence_score": 1.0
+      "target": "libraries_universal_component_component_update"
     },
     {
       "relation": "imports",
@@ -3790,9 +3599,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_level",
-      "target": "libraries_universal_level_level_load",
-      "confidence_score": 1.0
+      "target": "libraries_universal_level_level_load"
     },
     {
       "relation": "contains",
@@ -3801,9 +3610,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_level",
-      "target": "libraries_universal_level_tovector",
-      "confidence_score": 1.0
+      "target": "libraries_universal_level_tovector"
     },
     {
       "relation": "imports",
@@ -3837,9 +3646,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_level_level_load",
-      "target": "libraries_universal_level_tovector",
-      "confidence_score": 1.0
+      "target": "libraries_universal_level_tovector"
     },
     {
       "relation": "calls",
@@ -3872,9 +3681,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_addcomponent",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_addcomponent"
     },
     {
       "relation": "contains",
@@ -3883,9 +3692,9 @@
       "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_destroy",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_destroy"
     },
     {
       "relation": "contains",
@@ -3894,9 +3703,9 @@
       "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_draw",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_draw"
     },
     {
       "relation": "contains",
@@ -3905,9 +3714,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_getcomponent",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_getcomponent"
     },
     {
       "relation": "contains",
@@ -3916,9 +3725,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_new",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_new"
     },
     {
       "relation": "contains",
@@ -3927,9 +3736,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_removecomponent",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_removecomponent"
     },
     {
       "relation": "contains",
@@ -3938,9 +3747,9 @@
       "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_tostring",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_tostring"
     },
     {
       "relation": "contains",
@@ -3949,9 +3758,9 @@
       "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_object",
-      "target": "libraries_universal_object_object_update",
-      "confidence_score": 1.0
+      "target": "libraries_universal_object_object_update"
     },
     {
       "relation": "imports",
@@ -3984,9 +3793,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_prefab",
-      "target": "libraries_universal_prefab_mergeargs",
-      "confidence_score": 1.0
+      "target": "libraries_universal_prefab_mergeargs"
     },
     {
       "relation": "contains",
@@ -3995,9 +3804,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_prefab",
-      "target": "libraries_universal_prefab_prefab_instantiate",
-      "confidence_score": 1.0
+      "target": "libraries_universal_prefab_prefab_instantiate"
     },
     {
       "relation": "contains",
@@ -4006,9 +3815,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_prefab",
-      "target": "libraries_universal_prefab_prefab_register",
-      "confidence_score": 1.0
+      "target": "libraries_universal_prefab_prefab_register"
     },
     {
       "relation": "imports",
@@ -4042,9 +3851,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_prefab_prefab_instantiate",
-      "target": "libraries_universal_prefab_mergeargs",
-      "confidence_score": 1.0
+      "target": "libraries_universal_prefab_mergeargs"
     },
     {
       "relation": "contains",
@@ -4053,9 +3862,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_scene",
-      "target": "libraries_universal_scene_scene_destroy",
-      "confidence_score": 1.0
+      "target": "libraries_universal_scene_scene_destroy"
     },
     {
       "relation": "contains",
@@ -4064,9 +3873,9 @@
       "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_scene",
-      "target": "libraries_universal_scene_scene_draw",
-      "confidence_score": 1.0
+      "target": "libraries_universal_scene_scene_draw"
     },
     {
       "relation": "contains",
@@ -4075,9 +3884,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_scene",
-      "target": "libraries_universal_scene_scene_flushdestroyed",
-      "confidence_score": 1.0
+      "target": "libraries_universal_scene_scene_flushdestroyed"
     },
     {
       "relation": "contains",
@@ -4086,9 +3895,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_scene",
-      "target": "libraries_universal_scene_scene_new",
-      "confidence_score": 1.0
+      "target": "libraries_universal_scene_scene_new"
     },
     {
       "relation": "contains",
@@ -4097,9 +3906,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_scene",
-      "target": "libraries_universal_scene_scene_spawn",
-      "confidence_score": 1.0
+      "target": "libraries_universal_scene_scene_spawn"
     },
     {
       "relation": "contains",
@@ -4108,9 +3917,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "libraries_universal_scene",
-      "target": "libraries_universal_scene_scene_update",
-      "confidence_score": 1.0
+      "target": "libraries_universal_scene_scene_update"
     },
     {
       "relation": "imports",
@@ -4143,9 +3952,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "conf",
-      "target": "conf_love_conf",
-      "confidence_score": 1.0
+      "target": "conf_love_conf"
     },
     {
       "relation": "contains",
@@ -4154,9 +3963,9 @@
       "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "main",
-      "target": "main_love_draw",
-      "confidence_score": 1.0
+      "target": "main_love_draw"
     },
     {
       "relation": "contains",
@@ -4165,9 +3974,9 @@
       "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "main",
-      "target": "main_love_gamepadpressed",
-      "confidence_score": 1.0
+      "target": "main_love_gamepadpressed"
     },
     {
       "relation": "contains",
@@ -4176,9 +3985,9 @@
       "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "main",
-      "target": "main_love_keypressed",
-      "confidence_score": 1.0
+      "target": "main_love_keypressed"
     },
     {
       "relation": "contains",
@@ -4187,9 +3996,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "main",
-      "target": "main_love_load",
-      "confidence_score": 1.0
+      "target": "main_love_load"
     },
     {
       "relation": "contains",
@@ -4198,9 +4007,9 @@
       "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "main",
-      "target": "main_love_resize",
-      "confidence_score": 1.0
+      "target": "main_love_resize"
     },
     {
       "relation": "contains",
@@ -4209,9 +4018,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "main",
-      "target": "main_love_update",
-      "confidence_score": 1.0
+      "target": "main_love_update"
     },
     {
       "relation": "semantically_similar_to",
@@ -4220,6 +4029,7 @@
       "source_file": "Resources/sprites/test/box.png",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "resources_sprites_test_box_box_sprite",
       "target": "resources_sprites_test_lense_lens_sprite"
     },
@@ -4230,6 +4040,7 @@
       "source_file": "Resources/sprites/test/box.png",
       "source_location": null,
       "weight": 1.0,
+      "_origin": "semantic",
       "source": "resources_sprites_test_box_box_sprite",
       "target": "resources_sprites_test_mirror_mirror_sprite"
     }
@@ -4249,5 +4060,5 @@
       "source_file": "Resources/sprites/test/box.png"
     }
   ],
-  "built_at_commit": "a63f6783507cdd6d66a2013c10b301a2554298ca"
+  "built_at_commit": "4b177e698b06296bcb246d193e6f56b2754d09d9"
 }

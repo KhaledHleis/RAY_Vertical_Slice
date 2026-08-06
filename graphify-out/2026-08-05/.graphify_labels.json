@@ -1,1 +1,13 @@
-{"0": "Scene & Prefab Bootstrap", "1": "Light Engine Runtime", "2": "Level Zones & Vector Math", "3": "Light Rendering & Components", "4": "Tile Prefabs & Sprite Rendering", "5": "Transform & Object Core", "6": "Physics World & Joints", "7": "Ray Casting & Optics Math", "8": "LOVE Config", "9": "Project README"}
+{
+  "0": "main.lua",
+  "1": "light_world.lua",
+  "2": "vector.lua",
+  "3": "Light Rendering & Components",
+  "4": "Component.new",
+  "5": "object.lua",
+  "6": "rigid_body.lua",
+  "7": "light_collider.lua",
+  "8": "LOVE Config",
+  "9": "Project README",
+  "10": "scene.lua"
+}

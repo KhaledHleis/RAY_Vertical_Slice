@@ -1,3 +1,5 @@
+local EventBus = require('Libraries.universal.event_bus')
+
 local Scene = {}
 Scene.__index = Scene
 
@@ -10,6 +12,9 @@ end
 
 function Scene:Spawn(object)
     table.insert(self.objects, object)
+    -- Fires after the object is in self.objects, so anything reacting to
+    -- this (a spawn counter, a minimap) can safely query the scene.
+    EventBus.publish("scene:spawned", object)
     return object
 end
 
@@ -41,6 +46,9 @@ function Scene:_flushDestroyed()
                 break
             end
         end
+        -- Fires after Object:Destroy (and its own component teardown/
+        -- UnsubscribeAll), and after removal from self.objects.
+        EventBus.publish("scene:destroyed", object)
     end
 
     self.pendingDestroy = {}

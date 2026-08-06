@@ -1,4 +1,5 @@
 local RayMath = require('Libraries.light_engine.utils.ray_math')
+local EventBus = require('Libraries.universal.event_bus')
 
 local LightWorld = {}
 local segments = {}
@@ -61,9 +62,14 @@ function LightWorld.resolveDetectors()
         if hits and not detector.lit then
             detector.lit = true
             detector:OnHit(hits)
+            -- Lets anything else (a door, a UI cue, a puzzle manager) react
+            -- to this specific detector lighting up without needing to be a
+            -- LightDetector subclass or hold a reference to it.
+            EventBus.publish("light:hit", detector, hits)
         elseif not hits and detector.lit then
             detector.lit = false
             detector:OnLost()
+            EventBus.publish("light:lost", detector)
         end
     end
 

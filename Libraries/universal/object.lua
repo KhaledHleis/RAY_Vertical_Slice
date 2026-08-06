@@ -55,6 +55,9 @@ end
 function Object:Destroy()
     for _, component in pairs(self.components) do
         if component.OnDestroy then component:OnDestroy(self) end
+        -- Tears down any EventBus subscriptions made via Component:Subscribe,
+        -- regardless of whether the component overrode OnDestroy.
+        if component.UnsubscribeAll then component:UnsubscribeAll() end
     end
     self.components = {}
 end

@@ -1,4 +1,5 @@
 local Vector = require('Libraries.transform.vector')
+local EventBus = require('Libraries.universal.event_bus')
 
 local World = {}
 
@@ -16,6 +17,20 @@ World.PIXELS_PER_METER = 64
 
 local instance = nil
 
+-- Box2D contact callbacks. Fixtures get their userData set to the owning
+-- Object in RigidBody:OnAttach, so we can publish the Objects on each side
+-- of the contact rather than raw fixtures. Published on the EventBus
+-- instead of dispatched directly so gameplay code (a spike that damages on
+-- contact, a pressure plate, a landing sound) can react without RigidBody
+-- itself knowing anything about gameplay.
+local function beginContact(fixtureA, fixtureB, contact)
+    EventBus.publish("physics:collisionBegin", fixtureA:getUserData(), fixtureB:getUserData(), contact)
+end
+
+local function endContact(fixtureA, fixtureB, contact)
+    EventBus.publish("physics:collisionEnd", fixtureA:getUserData(), fixtureB:getUserData(), contact)
+end
+
 -- gx, gy are in metres/second^2 (so 9.81 is real-world gravity).
 function World.init(gx, gy)
     gx = gx or 0
@@ -27,6 +42,7 @@ function World.init(gx, gy)
         gy * World.PIXELS_PER_METER,
         true
     )
+    instance:setCallbacks(beginContact, endContact)
     return instance
 end
 
