@@ -29,6 +29,7 @@ return {
         position = { x = 160, y = 88 },
         components = {
             RigidBody = {
+                bodyType = "kinematic",
                 restitution = 0.3,
             },
         },
@@ -94,6 +95,7 @@ return {
                 scale = { x = 1, y = 1 },
             },
             RigidBody = {
+                bodyType = "kinematic",
                 width = 16,
                 height = 16,
             },

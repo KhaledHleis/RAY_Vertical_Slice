@@ -1,0 +1,234 @@
+"""The single source of truth for what a component looks like.
+
+Every entry here mirrors a `Component.new(args)` signature in the engine. This
+one table drives the Add Component menu, the property inspector widgets, the
+default values, the "is this field still default" check used by the writer, and
+the lint rules. Adding a new engine component means adding one entry below and
+touching no UI code at all.
+
+Keep the field defaults identical to the `args.x or <default>` fallbacks in the
+Lua source -- the writer relies on them to decide what it can leave out.
+"""
+
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass, field
+from typing import Any, Callable, Optional
+
+from ..luaio.types import Vec2
+
+# Field kinds understood by the inspector widget factory.
+NUMBER = "number"
+INTEGER = "integer"
+BOOLEAN = "boolean"
+STRING = "string"
+PATH = "path"
+ENUM = "enum"
+VEC2 = "vec2"
+COLOR = "color"
+SEGMENTS = "segments"
+
+# Gizmo kinds understood by the viewport.
+GIZMO_SPRITE = "sprite"
+GIZMO_BODY = "body"
+GIZMO_SEGMENTS = "segments"
+GIZMO_LIGHT = "light"
+GIZMO_DETECTOR = "detector"
+
+
+@dataclass
+class Field:
+    name: str
+    kind: str
+    default: Any = None
+    label: Optional[str] = None
+    minimum: Optional[float] = None
+    maximum: Optional[float] = None
+    step: float = 1.0
+    decimals: int = 3
+    options: Optional[list] = None
+    suffix: str = ""
+    tooltip: str = ""
+    visible_if: Optional[Callable[[dict], bool]] = None
+    optional: bool = False
+
+    def display_label(self):
+        return self.label or self.name
+
+    def is_visible(self, args):
+        return self.visible_if is None or self.visible_if(args)
+
+    def make_default(self):
+        if isinstance(self.default, Vec2):
+            return self.default.copy()
+        if isinstance(self.default, list):
+            return list(self.default)
+        return self.default
+
+
+@dataclass
+class ComponentSpec:
+    name: str
+    fields: list = field(default_factory=list)
+    gizmos: list = field(default_factory=list)
+    allowed_in_prefab: bool = True
+    reason: str = ""
+    doc: str = ""
+
+    def field_map(self):
+        return {f.name: f for f in self.fields}
+
+    def defaults(self):
+        return {f.name: f.make_default() for f in self.fields}
+
+
+def _is_rectangle(args):
+    return args.get("shape", "rectangle") != "circle"
+
+
+def _is_circle(args):
+    return args.get("shape", "rectangle") == "circle"
+
+
+def _uses_atlas(args):
+    return args.get("frameWidth") is not None or args.get("frameHeight") is not None
+
+
+SEGMENT_FIELDS = [
+    Field("a", VEC2, Vec2(-32.0, 0.0), label="Start",
+          tooltip="Local-space endpoint, relative to the object origin."),
+    Field("b", VEC2, Vec2(32.0, 0.0), label="End",
+          tooltip="Local-space endpoint, relative to the object origin."),
+    Field("reflective", NUMBER, 0.0, minimum=0.0, maximum=1.0, step=0.05,
+          tooltip="Fraction of remaining intensity bounced off this surface."),
+    Field("refractiveIndex", NUMBER, 1.0, minimum=0.1, maximum=4.0, step=0.05,
+          label="Refractive index",
+          tooltip="1.0 disables refraction entirely. Glass is around 1.5."),
+    Field("absorption", NUMBER, 0.0, minimum=0.0, maximum=1.0, step=0.05,
+          tooltip="Fraction of intensity swallowed on contact."),
+]
+
+
+COMPONENTS = {
+    "SpriteRenderer": ComponentSpec(
+        name="SpriteRenderer",
+        doc="Draws an image centred on the transform, rotated by its angle.",
+        gizmos=[GIZMO_SPRITE],
+        fields=[
+            Field("path", PATH, None, tooltip="Path relative to the project root."),
+            Field("offset", VEC2, Vec2(0.0, 0.0),
+                  tooltip="Shifts the drawn image away from the transform origin."),
+            Field("scale", VEC2, Vec2(1.0, 1.0), step=0.5,
+                  tooltip="Pixel-art sprites are usually scaled by a whole number."),
+            Field("color", COLOR, [1.0, 1.0, 1.0, 1.0], label="Tint"),
+            Field("frameWidth", INTEGER, None, optional=True, minimum=1,
+                  label="Frame width", tooltip="Set both frame sizes to use a sprite atlas."),
+            Field("frameHeight", INTEGER, None, optional=True, minimum=1,
+                  label="Frame height"),
+            Field("frameX", INTEGER, 0, minimum=0, label="Frame column",
+                  visible_if=_uses_atlas),
+            Field("frameY", INTEGER, 0, minimum=0, label="Frame row",
+                  visible_if=_uses_atlas),
+        ],
+    ),
+    "RigidBody": ComponentSpec(
+        name="RigidBody",
+        doc="A Box2D body plus one fixture. Sizes are in game pixels.",
+        gizmos=[GIZMO_BODY],
+        fields=[
+            Field("bodyType", ENUM, "dynamic", label="Body type",
+                  options=["static", "dynamic", "kinematic"]),
+            Field("shape", ENUM, "rectangle", options=["rectangle", "circle"]),
+            Field("width", NUMBER, 16.0, minimum=0.0, suffix=" px",
+                  visible_if=_is_rectangle),
+            Field("height", NUMBER, 16.0, minimum=0.0, suffix=" px",
+                  visible_if=_is_rectangle),
+            Field("radius", NUMBER, None, minimum=0.0, suffix=" px", optional=True,
+                  visible_if=_is_circle,
+                  tooltip="Required when shape is circle; there is no fallback."),
+            Field("offset", VEC2, Vec2(0.0, 0.0),
+                  tooltip="Moves the collider inside the body, away from the sprite pivot."),
+            Field("angle", NUMBER, 0.0, suffix=" rad", step=0.05,
+                  tooltip="Tilts the collider inside the body. Rectangles only."),
+            Field("density", NUMBER, 1.0, minimum=0.0),
+            Field("friction", NUMBER, 0.3, minimum=0.0, maximum=1.0, step=0.05),
+            Field("restitution", NUMBER, 0.0, minimum=0.0, maximum=1.0, step=0.05,
+                  label="Restitution", tooltip="Bounciness. 0 is a dead stop."),
+            Field("fixedRotation", BOOLEAN, False, label="Fixed rotation",
+                  tooltip="Locks the angle permanently. No torque can ever turn it."),
+        ],
+    ),
+    "LightCollider": ComponentSpec(
+        name="LightCollider",
+        doc="Line segments that light can reflect off, refract through or be absorbed by.",
+        gizmos=[GIZMO_SEGMENTS],
+        fields=[
+            Field("dynamic", BOOLEAN, False,
+                  tooltip="Recompute world segments every frame. Required if the object moves."),
+            Field("segments", SEGMENTS, []),
+        ],
+    ),
+    "LightSource": ComponentSpec(
+        name="LightSource",
+        doc="Casts a fan of rays, recursing through reflections and refractions.",
+        gizmos=[GIZMO_LIGHT],
+        fields=[
+            Field("rayCount", INTEGER, 16, minimum=2, maximum=256, label="Ray count"),
+            Field("coneAngle", NUMBER, 2.0 * math.pi, minimum=0.0,
+                  maximum=2.0 * math.pi, step=0.05, suffix=" rad", label="Cone angle"),
+            Field("maxDepth", INTEGER, 4, minimum=1, maximum=16, label="Max bounces"),
+            Field("minIntensity", NUMBER, 0.05, minimum=0.0, maximum=1.0, step=0.01,
+                  label="Min intensity", tooltip="Rays dimmer than this stop propagating."),
+        ],
+    ),
+    "LightDetector": ComponentSpec(
+        name="LightDetector",
+        doc="Fires OnHit/OnLost when the owner's light segments are struck.",
+        gizmos=[GIZMO_DETECTOR],
+        fields=[],
+    ),
+    "GodrayRenderer": ComponentSpec(
+        name="GodrayRenderer",
+        doc="Fills the volume between adjacent rays of a LightSource on the same object.",
+        fields=[],
+    ),
+    "CollisionRenderer": ComponentSpec(
+        name="CollisionRenderer",
+        doc="Debug overlay drawing the RigidBody outline and light segments.",
+        fields=[],
+    ),
+    "DebugLightRenderer": ComponentSpec(
+        name="DebugLightRenderer",
+        doc="Debug overlay colouring segments by material and drawing raw ray lines.",
+        fields=[],
+    ),
+    "HingeJoint": ComponentSpec(
+        name="HingeJoint",
+        allowed_in_prefab=False,
+        reason=(
+            "HingeJoint needs a live object reference (connectedObject), which only "
+            "Level.load resolves from extraComponents + connectedObjectId. A prefab-level "
+            "HingeJoint fails the assert in OnAttach. Add it to the level instead."
+        ),
+        doc="Revolute joint pinning this body to another.",
+        fields=[
+            Field("anchor", VEC2, Vec2(0.0, 0.0)),
+            Field("enableLimit", BOOLEAN, False, label="Enable limit"),
+            Field("lowerAngle", NUMBER, 0.0, suffix=" rad", label="Lower angle"),
+            Field("upperAngle", NUMBER, 0.0, suffix=" rad", label="Upper angle"),
+            Field("enableMotor", BOOLEAN, False, label="Enable motor"),
+            Field("motorSpeed", NUMBER, 0.0, label="Motor speed"),
+            Field("maxMotorTorque", NUMBER, 0.0, label="Max motor torque"),
+        ],
+    ),
+}
+
+
+def spec_for(component_type):
+    return COMPONENTS.get(component_type)
+
+
+def prefab_component_types():
+    """Component types that may legally appear inside a prefab definition."""
+    return [name for name, spec in COMPONENTS.items() if spec.allowed_in_prefab]
