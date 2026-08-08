@@ -1,102 +1,84 @@
--- Level definition, loaded by Level.load('Frontend.levels.<name>', scene).
---
--- Edited with Tools/level_editor. The list order is the draw order: Scene:Draw
--- walks it with ipairs, so later entries paint over earlier ones.
-
 local Vector = require('Libraries.transform.vector')
-local math = require('math')
 
-return {
-    {
-        id = "floor",
-        prefab = "Box",
-        position = { x = 160, y = 220 },
-        components = {
-            SpriteRenderer = {
-                scale = { x = 20, y = 1 },
-            },
-            RigidBody = {
-                bodyType = "static",
-                width = 320,
-                height = 16,
-            },
+return {{
+    id = "floor",
+    prefab = "Box",
+    position = {
+        x = 160,
+        y = 220
+    },
+    components = {
+        SpriteRenderer = {
+            scale = {
+                x = 20,
+                y = 1
+            }
         },
+        RigidBody = {
+            bodyType = "static",
+            width = 320,
+            height = 16
+        }
+    }
+}, {
+    id = "box",
+    prefab = "Box",
+    position = {
+        x = 80,
+        y = 20
     },
-
-    {
-        id = "box",
-        prefab = "Box",
-        position = { x = 160, y = 88 },
-        components = {
-            RigidBody = {
-                restitution = 0.3,
-            },
-        },
+    components = {
+        RigidBody = {
+            restitution = 0.3
+        }
+    }
+}, {
+    -- Spawn point is wherever the object starts; falling off the bottom of
+    -- the screen returns you here.
+    id = "player",
+    prefab = "Player",
+    position = Vector.new(40, 200)
+}, {
+    -- Hold down + jump to drop through this one.
+    id = "ledge",
+    prefab = "OneWayPlatform",
+    position = Vector.new(60, 170)
+}, {
+    id = "ceiling",
+    prefab = "Anchor",
+    position = {
+        x = 260,
+        y = 20
+    }
+}, {
+    id = "lamp",
+    prefab = "Box",
+    position = {
+        x = 300,
+        y = 60
     },
-
-    {
-        id = "ceiling",
-        prefab = "Anchor",
-        position = { x = 296, y = 16 },
-    },
-
-    {
-        id = "lamp",
-        prefab = "Box",
-        position = { x = 296, y = 64 },
-        extraComponents = {
-            {
-                type = "HingeJoint",
-                args = {
-                    connectedObjectId = "ceiling",
-                    anchor = { x = 296, y = 16 },
-                },
-            },
-        },
-    },
-
-    {
-        prefab = "LightCone",
-        position = Vector.new(100, 100),
-        rotation = math.pi / 2,
-    },
-
-    {
-        prefab = "LightWall",
-        position = Vector.new(72, 200),
-        rotation = 0,
-    },
-
-    {
-        -- Falls under gravity, collides with the floor, and reflects the
-        -- LightCone above it while it falls and after it lands.
-        id = "mirror",
-        prefab = "Mirror",
-        position = Vector.new(56, 8),
-        rotation = math.pi / 6,
-        components = {
-            RigidBody = {
-                fixedRotation = false,
-            },
-        },
-    },
-
-    {
-        prefab = "LightWall",
-        position = { x = -24, y = -32 },
-    },
-
-    {
-        prefab = "Box",
-        position = { x = 272, y = 8 },
-        components = {
-            SpriteRenderer = {
-                scale = { x = 1, y = 1 },
-            },
-            RigidBody = {
-                width = 16,
-                height = 16,
-            },
-        },
-    },
-}
+    extraComponents = {{
+        type = "HingeJoint",
+        args = {
+            connectedObjectId = "ceiling",
+            anchor = {
+                x = 260,
+                y = 20
+            }
+        }
+    }}
+}, {
+    prefab = "LightCone",
+    position = Vector.new(100, 100),
+    rotation = math.pi / 2
+}, {
+    prefab = "LightWall",
+    position = Vector.new(100, 250)
+}, {
+    -- Falls under gravity, collides with the floor, and reflects the
+    -- LightCone above it while it falls and after it lands.
+    id = "mirror",
+    prefab = "Mirror",
+    position = Vector.new(200, 40),
+    rotation = math.pi / 6
+}}

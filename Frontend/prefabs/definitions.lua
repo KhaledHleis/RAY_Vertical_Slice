@@ -24,6 +24,75 @@ return {
         }}
     },
 
+    -- RigidBody must come first: PlayerController grabs it in OnAttach, and
+    -- prefab components are attached in declaration order.
+    --
+    -- The player is 6x12 at 8px-tile scale, which is what the Tune defaults
+    -- were dialled in against. Density is well above the crates' so pushing
+    -- actually moves them; friction is forced to 0 by the controller.
+    Player = {
+        components = {{
+            type = "RigidBody",
+            args = {
+                bodyType = "dynamic",
+                width = 6,
+                height = 12,
+                density = 10,
+                friction = 0,
+                restitution = 0,
+                fixedRotation = true,
+                bullet = true,
+                gravityScale = 0
+            }
+        }, {
+            type = "PlayerController",
+            args = {}
+        }, {
+            type = "PlayerRenderer",
+            args = {}
+        }, {
+            -- Casts a shadow in the light engine. Segments trace the hitbox,
+            -- absorption 1 so the player blocks rather than bounces light.
+            type = "LightCollider",
+            args = {
+                dynamic = true,
+                segments = {{
+                    a = Vector.new(-3, -6),
+                    b = Vector.new(3, -6),
+                    absorption = 1
+                }, {
+                    a = Vector.new(3, -6),
+                    b = Vector.new(3, 6),
+                    absorption = 1
+                }, {
+                    a = Vector.new(3, 6),
+                    b = Vector.new(-3, 6),
+                    absorption = 1
+                }, {
+                    a = Vector.new(-3, 6),
+                    b = Vector.new(-3, -6),
+                    absorption = 1
+                }}
+            }
+        }}
+    },
+
+    -- Drop through by holding down and pressing jump.
+    OneWayPlatform = {
+        components = {{
+            type = "RigidBody",
+            args = {
+                bodyType = "static",
+                width = 64,
+                height = 4,
+                oneWay = true
+            }
+        }, {
+            type = "CollisionRenderer",
+            args = {}
+        }}
+    },
+
     Anchor = {
         components = {{
             type = "RigidBody",

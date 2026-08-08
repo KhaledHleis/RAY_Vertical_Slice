@@ -7,4 +7,6 @@ return {
     LightDetector = require('Libraries.light_engine.light_detector'),
     GodrayRenderer = require('Libraries.light_engine.godray_renderer'),
     CollisionRenderer = require('Libraries.renderer.collision_renderer'),
+    PlayerController = require('Libraries.gameplay.player_controller'),
+    PlayerRenderer = require('Libraries.gameplay.player_renderer'),
 }

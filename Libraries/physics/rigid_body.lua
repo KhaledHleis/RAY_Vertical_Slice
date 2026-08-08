@@ -19,6 +19,14 @@ function RigidBody.new(args)
     self.friction = args.friction or 0.3
     self.restitution = args.restitution or 0
     self.fixedRotation = args.fixedRotation or false
+    -- Multiplier on world gravity for this body. PlayerController sets it to
+    -- 0 so it can integrate its own gravity curve.
+    self.gravityScale = args.gravityScale or 1
+    -- Continuous collision detection: needed for anything small and fast that
+    -- would otherwise tunnel through thin geometry.
+    self.bullet = args.bullet or false
+    -- Only stops bodies arriving from above. Honoured by World's preSolve.
+    self.oneWay = args.oneWay or false
 
     self.body = nil
     self.fixture = nil
@@ -37,6 +45,8 @@ function RigidBody:OnAttach(object)
     self.body = love.physics.newBody(world, pos.x, pos.y, self.bodyType)
     self.body:setAngle(object.transform.rotation.angle)
     self.body:setFixedRotation(self.fixedRotation)
+    self.body:setGravityScale(self.gravityScale)
+    self.body:setBullet(self.bullet)
 
     if self.shape == "circle" then
         self.shapeObj = love.physics.newCircleShape(self.radius)

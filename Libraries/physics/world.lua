@@ -31,6 +31,52 @@ local function endContact(fixtureA, fixtureB, contact)
     EventBus.publish("physics:collisionEnd", fixtureA:getUserData(), fixtureB:getUserData(), contact)
 end
 
+local function rigidBodyOf(object)
+    if not (object and object.GetComponent) then return nil end
+    return object:GetComponent("RigidBody")
+end
+
+-- One-way platforms. A RigidBody declared with oneWay = true only stops
+-- bodies that arrive from above, and lets anything holding a drop-through
+-- (PlayerController.dropThrough) fall straight past.
+--
+-- This has to live in preSolve rather than in the gameplay component: by the
+-- time a contact reaches beginContact, Box2D has already decided to solve it.
+-- preSolve runs before the solver each step, so disabling the contact there
+-- is what actually lets the body through.
+local function preSolve(fixtureA, fixtureB, contact)
+    local objectA, objectB = fixtureA:getUserData(), fixtureB:getUserData()
+    local platformRB = rigidBodyOf(objectA)
+    local moverObject, moverRB = objectB, rigidBodyOf(objectB)
+
+    if not (platformRB and platformRB.oneWay) then
+        platformRB = rigidBodyOf(objectB)
+        moverObject, moverRB = objectA, rigidBodyOf(objectA)
+        if not (platformRB and platformRB.oneWay) then return end
+    end
+    if not moverRB then return end
+    -- Two one-ways touching each other: leave the contact alone.
+    if moverRB.oneWay then return end
+
+    local _, platformY = platformRB.body:getPosition()
+    local _, moverY = moverRB.body:getPosition()
+    local _, moverVY = moverRB.body:getLinearVelocity()
+
+    local top = platformY - platformRB.height / 2
+    local bottom = moverY + moverRB.height / 2
+
+    -- Slop scales with fall speed: a fast lander is already a few pixels past
+    -- the lip on the frame the contact appears, and should still be caught.
+    local slop = math.max(4, math.abs(moverVY) / 50)
+
+    local controller = moverObject.GetComponent and moverObject:GetComponent("PlayerController")
+    local dropping = controller and controller.dropThrough
+
+    if dropping or moverVY < 0 or bottom > top + slop then
+        contact:setEnabled(false)
+    end
+end
+
 -- gx, gy are in metres/second^2 (so 9.81 is real-world gravity).
 function World.init(gx, gy)
     gx = gx or 0
@@ -42,7 +88,7 @@ function World.init(gx, gy)
         gy * World.PIXELS_PER_METER,
         true
     )
-    instance:setCallbacks(beginContact, endContact)
+    instance:setCallbacks(beginContact, endContact, preSolve)
     return instance
 end
 
