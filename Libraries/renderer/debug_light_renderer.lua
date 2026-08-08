@@ -34,9 +34,13 @@ function DebugLightRenderer:Draw(object)
     if source and source.fan then
         love.graphics.setLineWidth(1)
         local function drawNode(node)
-            if not (node and node.hitPoint) then return end
-            love.graphics.setColor(1, 1, 0.6, 0.6)
-            love.graphics.line(node.origin.x, node.origin.y, node.hitPoint.x, node.hitPoint.y)
+            if not (node and node.endPoint) then return end
+            if node.escaped then
+                love.graphics.setColor(1, 0.6, 0.6, 0.4)   -- hit nothing: dim red
+            else
+                love.graphics.setColor(1, 1, 0.6, 0.6)
+            end
+            love.graphics.line(node.origin.x, node.origin.y, node.endPoint.x, node.endPoint.y)
             drawNode(node.reflected)
             drawNode(node.refracted)
         end
