@@ -3,10 +3,10 @@
 #
 # Produces this tree on the target:
 #
-#   <dest>\ports\LightCone.sh          launcher, generated with LF endings
-#   <dest>\ports\lightcone\game.love   the packaged game
-#   <dest>\ports\lightcone\love        aarch64 engine   (from .\runtime, if present)
-#   <dest>\ports\lightcone\libs\       engine libraries (from .\runtime, if present)
+#   <dest>\ports\RAY.sh          launcher, generated with LF endings
+#   <dest>\ports\ray\game.love   the packaged game
+#   <dest>\ports\ray\love        aarch64 engine   (from .\runtime, if present)
+#   <dest>\ports\ray\libs\       engine libraries (from .\runtime, if present)
 #
 # You then copy the whole `ports` folder onto the card's roms partition
 # and let it merge with what is already there.
@@ -20,8 +20,8 @@
 
 param(
     [string]$Destination,
-    [string]$PortName   = "lightcone",     # folder name under ports\
-    [string]$ScriptName = "LightCone.sh",  # launcher name shown in the menu
+    [string]$PortName   = "ray",     # folder name under ports\
+    [string]$ScriptName = "RAY.sh",  # launcher name shown in the menu
     [string]$PortsPath  = "ports",         # subfolder on the target
     [string]$Runtime    = "runtime",       # local folder holding love + libs\
     [switch]$Clean,                        # wipe the port folder first
