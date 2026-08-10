@@ -55,6 +55,7 @@ def lint_level(level, library=None, project=None):
         _check_overrides(obj, index, library, issues)
         _check_extra_components(level, obj, index, library, registered, issues)
         _check_bounds(obj, index, screen, issues)
+        _check_parent(level, obj, index, library, issues)
 
         resolved = level_model.resolve(obj, library) if library else None
         if resolved is not None:
@@ -85,6 +86,50 @@ def _check_ids(level, issues):
             ))
         else:
             seen[obj.id] = index
+
+
+def _check_parent(level, obj, index, library, issues):
+    """The three ways parenting goes wrong, all caught before the game runs."""
+    if not obj.parent:
+        return
+
+    parent = level.find_by_id(obj.parent)
+    if parent is None:
+        issues.append(Issue(
+            ERROR, f"unknown parent id '{obj.parent}'", index, obj,
+            hint="Level.load asserts on this; the level will not load.",
+        ))
+        return
+
+    if parent is obj:
+        issues.append(Issue(ERROR, "object is its own parent", index, obj))
+        return
+
+    # Walk up and see whether we come back round.
+    seen = {id(obj)}
+    node = parent
+    while node is not None:
+        if id(node) in seen:
+            issues.append(Issue(
+                ERROR, f"parent cycle through '{node.id or node.prefab}'", index, obj,
+                hint="Transform:SetParent rejects cycles at load.",
+            ))
+            return
+        seen.add(id(node))
+        node = node.parent_object()
+
+    # The rule: a child may not have a RigidBody. Box2D writes the transform of
+    # anything with a body every frame, so a parented body has two writers.
+    if library is not None:
+        definition = library.find(obj.prefab)
+        if definition is not None and definition.has("RigidBody"):
+            issues.append(Issue(
+                ERROR,
+                f"'{obj.prefab}' has a RigidBody and cannot be a child",
+                index, obj,
+                hint="Box2D owns its transform. Use a HingeJoint to attach one "
+                     "body to another, as the lamp does.",
+            ))
 
 
 def _check_prefab(level, obj, index, library, issues):

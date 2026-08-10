@@ -152,6 +152,13 @@ def _convert_value(value, field_spec):
     if kind == schema.SEGMENTS:
         return _convert_segments(value)
 
+    if kind == schema.STRING_LIST:
+        if isinstance(value, LuaTable):
+            return [str(item) for item in value.array if isinstance(item, str)]
+        if isinstance(value, list):
+            return [str(item) for item in value]
+        return field_spec.make_default()
+
     if kind == schema.BOOLEAN:
         return bool(value)
 

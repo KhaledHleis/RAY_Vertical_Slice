@@ -12,6 +12,10 @@ end
 
 function Component:OnAttach(object) end
 function Component:Update(object, dt) end
+-- Runs after every object's Update. Use it for anything that must read a
+-- transform that other components wrote this frame -- by LateUpdate all of
+-- them have settled, so there is no ordering assumption to get wrong.
+function Component:LateUpdate(object, dt) end
 function Component:Draw(object) end
 function Component:OnDestroy(object) end
 

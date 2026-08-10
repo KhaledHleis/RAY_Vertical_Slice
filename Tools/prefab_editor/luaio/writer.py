@@ -151,6 +151,10 @@ def _emit_args(lines, component, indent):
         kind = field_spec.kind if field_spec else None
         if kind == schema.SEGMENTS:
             _emit_segments(lines, value, inner)
+        elif kind == schema.STRING_LIST:
+            items = ", ".join(format_string(item) for item in value)
+            lines.append(f"{inner}{name} = {{ {items} }}," if items
+                         else f"{inner}{name} = {{}},")
         elif kind == schema.COLOR:
             lines.append(f"{inner}{name} = {format_color(value)},")
         elif isinstance(value, Vec2):

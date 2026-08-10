@@ -65,6 +65,8 @@ def _walk_values(level):
         yield obj.position
         if obj.rotation is not None:
             yield obj.rotation
+        if obj.scale is not None:
+            yield obj.scale
         for bucket in obj.overrides.values():
             for value in bucket.values():
                 yield value
@@ -242,6 +244,14 @@ def write_level(level):
         if obj.rotation is not None:
             _emit_comment(lines, note("rotation"), body)
             emit_value(lines, "rotation", obj.rotation, body)
+        # Omitted when 1: uniform scale defaults to 1 in Transform.new, and a
+        # level full of `scale = 1` is noise.
+        if obj.scale is not None and float(obj.scale) != 1.0:
+            _emit_comment(lines, note("scale"), body)
+            emit_value(lines, "scale", obj.scale, body)
+        if obj.parent:
+            _emit_comment(lines, note("parent"), body)
+            lines.append(f"{body}parent = {format_string(obj.parent)},")
 
         for key, value in obj.extra_keys.items():
             _emit_comment(lines, note(key), body)

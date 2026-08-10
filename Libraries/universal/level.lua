@@ -18,12 +18,31 @@ function Level.load(modulePath, scene)
         local object = Prefab.Instantiate(entry.prefab, {
             position = toVector(entry.position),
             rotation = entry.rotation,
+            scale = entry.scale,
             components = entry.components,
         })
 
         scene:Spawn(object)
         if entry.id then objectsById[entry.id] = object end
         table.insert(instances, { object = object, def = entry })
+    end
+
+    -- Parenting resolves here, in the same second pass as connectedObjectId,
+    -- so a parent may appear anywhere in the file relative to its children.
+    --
+    -- `position`, `rotation` and `scale` on a parented entry are LOCAL to the
+    -- parent, matching what Unity's inspector shows. They were applied as-is
+    -- during the first pass, which is exactly right: setting the parent here
+    -- keeps the local transform and lets the world position fall out of it.
+    for _, instance in ipairs(instances) do
+        local parentId = instance.def.parent
+        if parentId then
+            local parent = objectsById[parentId]
+            assert(parent, "Level.load: unknown parent id '" .. tostring(parentId)
+                .. "' on '" .. tostring(instance.def.id or instance.def.prefab) .. "'")
+            -- Object:SetParent carries the RigidBody assert and the cycle check.
+            instance.object:SetParent(parent)
+        end
     end
 
     for _, instance in ipairs(instances) do

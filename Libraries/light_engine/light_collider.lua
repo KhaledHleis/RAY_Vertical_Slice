@@ -28,15 +28,23 @@ end
 -- rotating each local segment endpoint by the object's rotation angle and
 -- translating it by the object's position.
 function LightCollider:syncSegments(object)
-    local pos = object.transform.position
-    local angle = (object.transform.rotation and object.transform.rotation.angle) or 0
+    -- Transform:World() once and compose by hand rather than calling
+    -- TransformPoint per endpoint: this runs for every segment of every
+    -- dynamic collider every frame, and TransformPoint would re-walk the
+    -- parent chain each time.
+    --
+    -- Scale falls out for free here, unlike RigidBody -- these segments are
+    -- our own geometry, rebuilt every frame, with no Box2D fixture to replace.
+    local wx, wy, angle, scale = object.transform:World()
     local c, s = math.cos(angle), math.sin(angle)
 
     for i, seg in ipairs(self.worldSegments) do
         local localA = self.localSegments[i].a
         local localB = self.localSegments[i].b
-        seg.a = Vector.new(pos.x + localA.x * c - localA.y * s, pos.y + localA.x * s + localA.y * c)
-        seg.b = Vector.new(pos.x + localB.x * c - localB.y * s, pos.y + localB.x * s + localB.y * c)
+        local ax, ay = localA.x * scale, localA.y * scale
+        local bx, by = localB.x * scale, localB.y * scale
+        seg.a = Vector.new(wx + ax * c - ay * s, wy + ax * s + ay * c)
+        seg.b = Vector.new(wx + bx * c - by * s, wy + bx * s + by * c)
     end
 end
 
@@ -56,15 +64,15 @@ function LightCollider:OnAttach(object)
 
     self:syncSegments(object)
     LightWorld.registerSegments(object, self.worldSegments)
+    if self.dynamic then LightWorld.registerCollider(self) end
 end
 
-function LightCollider:Update(object, dt)
-    if not self.dynamic then return end
-    self:syncSegments(object)
-end
+-- No Update: LightWorld.syncColliders drives dynamic colliders in one pass
+-- between Scene:Update and Scene:LateUpdate. See the note in light_world.lua.
 
 function LightCollider:OnDestroy(object)
     LightWorld.unregisterSegments(object)
+    LightWorld.unregisterCollider(self)
 end
 
 return LightCollider

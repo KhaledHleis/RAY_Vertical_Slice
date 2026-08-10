@@ -28,6 +28,7 @@ ENUM = "enum"
 VEC2 = "vec2"
 COLOR = "color"
 SEGMENTS = "segments"
+STRING_LIST = "string_list"
 
 # Gizmo kinds understood by the viewport.
 GIZMO_SPRITE = "sprite"
@@ -202,6 +203,22 @@ COMPONENTS = {
         name="DebugLightRenderer",
         doc="Debug overlay colouring segments by material and drawing raw ray lines.",
         fields=[],
+    ),
+    "AnimationPlayer": ComponentSpec(
+        name="AnimationPlayer",
+        doc=("Advances a clip and writes frames into a sibling renderer. "
+             "Declare the renderer first -- the target is resolved on attach."),
+        fields=[
+            Field("clips", STRING_LIST, [], label="Clips",
+                  tooltip="Clip names from Frontend/animations/definitions.lua, "
+                          "resolved up front so a missing sheet fails on load."),
+            Field("autoPlay", STRING, None, label="Auto play",
+                  tooltip="Clip to start on attach. Leave empty to start stopped."),
+            Field("target", STRING, "SpriteRenderer",
+                  tooltip="Sibling component receiving frames. Needs SetSheet and SetFrame."),
+            Field("speed", NUMBER, 1.0, minimum=0.0, step=0.1,
+                  tooltip="Playback multiplier, on top of the clip's own speed."),
+        ],
     ),
     "HingeJoint": ComponentSpec(
         name="HingeJoint",

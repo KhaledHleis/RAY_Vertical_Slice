@@ -31,6 +31,25 @@ function SpriteRenderer.new(args)
     return self
 end
 
+-- Swaps the atlas this renderer draws from and rebuilds the quad against the
+-- new dimensions. AnimationPlayer calls this every frame, so the no-op case
+-- has to be cheap: a quad's reference dimensions are baked in at creation, so
+-- a new image means a new quad, but the same image means no work at all.
+function SpriteRenderer:SetSheet(image, frameWidth, frameHeight)
+    if not image then return end
+    if self.image == image
+        and self.frameWidth == frameWidth
+        and self.frameHeight == frameHeight
+        and self.quad then
+        return
+    end
+
+    self.image = image
+    self.frameWidth = frameWidth
+    self.frameHeight = frameHeight
+    self.quad = love.graphics.newQuad(0, 0, frameWidth, frameHeight, image:getDimensions())
+end
+
 function SpriteRenderer:SetFrame(col, row)
     if not self.quad then return end
     self.quad:setViewport(col * self.frameWidth, row * self.frameHeight, self.frameWidth, self.frameHeight)
@@ -39,16 +58,21 @@ end
 function SpriteRenderer:Draw(object)
     if not self.visible or not self.image then return end
 
-    local pos = object.transform.position
-    local angle = object.transform.rotation and object.transform.rotation.angle or 0
+    -- World, so a parented sprite follows its parent. The transform's uniform
+    -- scale multiplies this component's own per-axis scale rather than
+    -- replacing it: one is "how big is this object", the other is "how is this
+    -- particular image stretched onto it".
+    local x, y, angle, scale = object.transform:World()
+    local sx, sy = self.scale.x * scale, self.scale.y * scale
+    local ox, oy = x + self.offset.x * scale, y + self.offset.y * scale
 
     love.graphics.setColor(self.color)
     if self.quad then
-        local ox, oy = self.frameWidth / 2, self.frameHeight / 2
-        love.graphics.draw(self.image, self.quad, pos.x + self.offset.x, pos.y + self.offset.y, angle, self.scale.x, self.scale.y, ox, oy)
+        love.graphics.draw(self.image, self.quad, ox, oy, angle, sx, sy,
+                           self.frameWidth / 2, self.frameHeight / 2)
     else
         local iw, ih = self.image:getDimensions()
-        love.graphics.draw(self.image, pos.x + self.offset.x, pos.y + self.offset.y, angle, self.scale.x, self.scale.y, iw / 2, ih / 2)
+        love.graphics.draw(self.image, ox, oy, angle, sx, sy, iw / 2, ih / 2)
     end
     love.graphics.setColor(1, 1, 1, 1)
 end

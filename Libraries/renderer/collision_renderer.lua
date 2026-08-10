@@ -18,11 +18,13 @@ function CollisionRenderer:drawRigidBody(object)
     local rigidBody = object:GetComponent("RigidBody")
     if not rigidBody then return end
 
-    local pos = object.transform.position
-    local angle = object.transform.rotation and object.transform.rotation.angle or 0
+    -- No scale here on purpose: RigidBody bakes world scale into its width,
+    -- height and radius when the fixture is built, so these are already world
+    -- sizes. Scaling them again would draw the outline at scale squared.
+    local x, y, angle = object.transform:World()
 
     love.graphics.push()
-    love.graphics.translate(pos.x, pos.y)
+    love.graphics.translate(x, y)
     love.graphics.rotate(angle)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.setLineWidth(1)

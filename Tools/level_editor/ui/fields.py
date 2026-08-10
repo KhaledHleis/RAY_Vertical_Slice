@@ -197,7 +197,10 @@ class StringField(FieldWidget):
         self._updating = False
 
     def value(self):
-        return self.edit.text()
+        # Empty means absent, not "". Otherwise an untouched optional string
+        # field is written out as `autoPlay = ""`, which the engine then tries
+        # to resolve as a clip name.
+        return self.edit.text() or None
 
 
 class PathField(FieldWidget):
@@ -341,6 +344,34 @@ class ColorField(FieldWidget):
         return [float(box.value()) for box in self.channels]
 
 
+class StringListField(FieldWidget):
+    """A list of names typed as comma-separated text.
+
+    `clips` on AnimationPlayer is a list of strings, which no existing widget
+    covers. A full list editor would be nicer, but a line edit round-trips the
+    value exactly and keeps the Lua terse -- these lists are two or three
+    entries in practice.
+    """
+
+    def __init__(self, field, parent=None):
+        super().__init__(field, parent)
+        self.edit = QLineEdit()
+        self.edit.setPlaceholderText("ClipOne, ClipTwo")
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.edit)
+        self.edit.textChanged.connect(lambda _t: self._emit(self.value()))
+        self.edit.editingFinished.connect(self.editingCommitted.emit)
+
+    def set_value(self, value):
+        self._updating = True
+        self.edit.setText(", ".join(str(item) for item in (value or [])))
+        self._updating = False
+
+    def value(self):
+        return [part.strip() for part in self.edit.text().split(",") if part.strip()]
+
+
 def build_field(field, project=None):
     kind = field.kind
     if kind == schema.NUMBER:
@@ -363,4 +394,6 @@ def build_field(field, project=None):
         return ColorField(field)
     if kind == schema.STRING:
         return StringField(field)
+    if kind == schema.STRING_LIST:
+        return StringListField(field)
     return None

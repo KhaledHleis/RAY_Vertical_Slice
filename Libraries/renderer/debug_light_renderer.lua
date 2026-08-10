@@ -54,7 +54,8 @@ function DebugLightRenderer:Draw(object)
         else
             love.graphics.setColor(0.4, 0.4, 0.4, 1)
         end
-        love.graphics.circle("fill", object.transform.position.x, object.transform.position.y, 6)
+        local x, y = object.transform:World()
+        love.graphics.circle("fill", x, y, 6)
     end
 
     love.graphics.setColor(1, 1, 1, 1)

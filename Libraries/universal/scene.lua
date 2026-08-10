@@ -18,13 +18,28 @@ function Scene:Spawn(object)
     return object
 end
 
+-- Queues the object and every descendant. Destroying a parent destroys its
+-- children, as in Unity; the subtree is collected now rather than at flush
+-- time so a reparent in between cannot orphan half of it.
 function Scene:Destroy(object)
-    table.insert(self.pendingDestroy, object)
+    for _, member in ipairs(object:GetSubtree()) do
+        table.insert(self.pendingDestroy, member)
+    end
 end
 
 function Scene:Update(dt)
     for _, object in ipairs(self.objects) do
         object:Update(dt)
+    end
+end
+
+-- Separate pass so components that read world transforms see them settled.
+-- Kept out of Update because Update is where transforms are *written* --
+-- physics readback, Spinner, PlayerController -- and a child reading its
+-- parent mid-pass would be a frame behind depending on level file order.
+function Scene:LateUpdate(dt)
+    for _, object in ipairs(self.objects) do
+        object:LateUpdate(dt)
     end
     self:_flushDestroyed()
 end

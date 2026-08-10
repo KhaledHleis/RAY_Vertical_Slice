@@ -203,11 +203,13 @@ def cast_fan(segments, position, base_angle, ray_count=16,
     return fan
 
 
-def world_segments(prefab, position=V(0.0, 0.0), rotation=0.0):
+def world_segments(prefab, position=V(0.0, 0.0), rotation=0.0, scale=1.0):
     """Build world-space Segments from a prefab's LightCollider component.
 
-    Mirrors LightCollider:syncSegments -- rotate each local endpoint by the
-    object's angle, then translate by its position.
+    Mirrors LightCollider:syncSegments -- scale each local endpoint by the
+    object's world scale, rotate it by the object's angle, then translate by
+    its position. Unlike RigidBody, light segments are rebuilt every frame, so
+    scale reaches them with no baking involved.
     """
     from ..model import schema  # local import keeps this module UI-free
 
@@ -219,7 +221,7 @@ def world_segments(prefab, position=V(0.0, 0.0), rotation=0.0):
     defaults = {f.name: f.default for f in schema.SEGMENT_FIELDS}
 
     def to_world(vec):
-        x, y = float(vec.x), float(vec.y)
+        x, y = float(vec.x) * scale, float(vec.y) * scale
         return V(position.x + x * cos_a - y * sin_a,
                  position.y + x * sin_a + y * cos_a)
 

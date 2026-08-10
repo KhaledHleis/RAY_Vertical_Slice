@@ -406,14 +406,17 @@ class Viewport(QWidget):
         if pixmap is None:
             return
 
+        # The transform's uniform scale multiplies the sprite's own per-axis
+        # scale, matching SpriteRenderer:Draw.
+        world_scale = obj.world_scale()
         scale = sprite.get("scale")
-        scale_x = float(scale.x) if scale is not None else 1.0
-        scale_y = float(scale.y) if scale is not None else 1.0
+        scale_x = (float(scale.x) if scale is not None else 1.0) * world_scale
+        scale_y = (float(scale.y) if scale is not None else 1.0) * world_scale
         offset = sprite.get("offset")
         # SpriteRenderer:Draw adds offset in world space, before the rotation,
         # so the offset does not orbit the object origin.
-        centre = V(obj.x + (float(offset.x) if offset else 0.0),
-                   obj.y + (float(offset.y) if offset else 0.0))
+        centre = V(obj.x + (float(offset.x) if offset else 0.0) * world_scale,
+                   obj.y + (float(offset.y) if offset else 0.0) * world_scale)
 
         color = sprite.get("color") or [1, 1, 1, 1]
         opacity = max(0.0, min(1.0, float(color[3]) if len(color) > 3 else 1.0))
@@ -459,9 +462,12 @@ class Viewport(QWidget):
         pen = QPen(STATIC_COLOR if is_static else BODY_COLOR, 1.2)
         fill = QBrush(STATIC_FILL if is_static else BODY_FILL)
 
+        # RigidBody bakes world scale into its size at attach, so the gizmo
+        # has to scale to match what the running game will build.
+        world_scale = obj.world_scale()
         offset = body.get("offset")
-        local = V(float(offset.x) if offset else 0.0,
-                  float(offset.y) if offset else 0.0)
+        local = V((float(offset.x) if offset else 0.0) * world_scale,
+                  (float(offset.y) if offset else 0.0) * world_scale)
         centre = _rotate(local, obj.angle())
         centre = V(obj.x + centre.x, obj.y + centre.y)
         screen_centre = self.world_to_screen(centre)
@@ -470,11 +476,11 @@ class Viewport(QWidget):
         painter.setBrush(fill)
 
         if body.get("shape", "rectangle") == "circle":
-            radius = float(body.get("radius") or 0) * self.zoom
+            radius = float(body.get("radius") or 0) * world_scale * self.zoom
             painter.drawEllipse(screen_centre, radius, radius)
         else:
-            half_w = float(body.get("width") or 0) / 2.0 * self.zoom
-            half_h = float(body.get("height") or 0) / 2.0 * self.zoom
+            half_w = float(body.get("width") or 0) * world_scale / 2.0 * self.zoom
+            half_h = float(body.get("height") or 0) * world_scale / 2.0 * self.zoom
             angle = obj.angle() + float(body.get("angle") or 0)
             painter.save()
             painter.translate(screen_centre)

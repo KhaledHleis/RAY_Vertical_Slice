@@ -5,6 +5,7 @@ local LightWorld = {}
 local segments = {}
 local detectors = {}
 local frameHits = {}
+local dynamicColliders = {}
 
 function LightWorld.registerSegments(owner, segmentList)
     for _, seg in ipairs(segmentList) do
@@ -18,6 +19,37 @@ function LightWorld.unregisterSegments(owner)
         if segments[i].owner == owner then
             table.remove(segments, i)
         end
+    end
+end
+
+-- Dynamic colliders are synced here, in one pass, rather than from each
+-- collider's Update. Two reasons, and the second is the important one.
+--
+-- Scene:Update walks objects in level-file order, so a collider that syncs
+-- during Update bakes whatever the transform held at that moment. A source
+-- appearing earlier in the file then casts against last frame's segments --
+-- a lag that depends on file order and shows up as light lagging behind a
+-- moving mirror. And with parenting, a child collider whose parent appears
+-- later in the file has the same problem one level up.
+--
+-- Syncing all of them between Update and LateUpdate removes both: every
+-- transform has settled, and every source casts afterwards.
+function LightWorld.registerCollider(collider)
+    table.insert(dynamicColliders, collider)
+end
+
+function LightWorld.unregisterCollider(collider)
+    for i = #dynamicColliders, 1, -1 do
+        if dynamicColliders[i] == collider then
+            table.remove(dynamicColliders, i)
+        end
+    end
+end
+
+function LightWorld.syncColliders()
+    for i = 1, #dynamicColliders do
+        local collider = dynamicColliders[i]
+        if collider.object then collider:syncSegments(collider.object) end
     end
 end
 

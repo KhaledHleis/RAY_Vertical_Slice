@@ -51,7 +51,8 @@ def collect_segments(level, library):
         resolved = level_model.resolve(obj, library)
         if resolved is None or resolved.find("LightCollider") is None:
             continue
-        owned = world_segments(resolved, V(obj.x, obj.y), obj.angle())
+        owned = world_segments(resolved, V(obj.x, obj.y), obj.angle(),
+                               obj.world_scale())
         for segment in owned:
             # world_segments tags the prefab; the viewport wants the instance,
             # so it can highlight the segments of the selected object.

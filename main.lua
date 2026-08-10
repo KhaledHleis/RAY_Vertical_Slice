@@ -4,6 +4,8 @@ local Screen = require('Libraries.renderer.screen')
 local Prefab = require('Libraries.universal.prefab')
 local Level = require('Libraries.universal.level')
 local PrefabDefinitions = require('Frontend.prefabs.definitions')
+local Clip = require('Libraries.animation.clip')
+local ClipDefinitions = require('Frontend.animations.definitions')
 local LightWorld = require('Libraries.light_engine.light_world')
 local Input = require('Libraries.universal.input')
 local Tune = require('Libraries.universal.tune')
@@ -18,6 +20,9 @@ function love.load()
     Screen.init()
     World.init(0, 9.81)
     Prefab.Register(PrefabDefinitions)
+    -- Before any prefab is instantiated: AnimationPlayer resolves its clips
+    -- by name in OnAttach, so they have to be registered by then.
+    Clip.Register(ClipDefinitions)
 
     Tune.load()
     Input.init()
@@ -33,8 +38,15 @@ function love.update(dt)
     Input.update(dt)
     Tune.update(dt, love.keyboard.isDown("left"), love.keyboard.isDown("right"))
 
+    -- Three phases, in this order, and the order is the whole point:
+    --   Update        transforms move (physics readback, Spinner, controller)
+    --   syncColliders light geometry rebuilt from settled transforms
+    --   LateUpdate    LightSource casts against that geometry
+    -- Anything reading a world transform in LateUpdate is order-independent.
     World.update(dt)
     scene:Update(dt)
+    LightWorld.syncColliders()
+    scene:LateUpdate(dt)
     LightWorld.resolveDetectors()
 end
 

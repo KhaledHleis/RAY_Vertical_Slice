@@ -78,7 +78,8 @@ def lint_prefab(prefab, registered=None, pixels_per_meter=64.0, project=None):
     if light is not None:
         _check_light_collider(prefab, light, body, issues)
     if sprite is not None:
-        _check_sprite(prefab, sprite, body, project, issues)
+        _check_sprite(prefab, sprite, body, project, issues,
+                      animated=_targets_sprite_renderer(prefab))
     if source is not None:
         _check_light_source(prefab, source, issues)
     _check_cross_component(prefab, body, light, source, issues)
@@ -86,6 +87,14 @@ def lint_prefab(prefab, registered=None, pixels_per_meter=64.0, project=None):
 
 
 # ---------------------------------------------------------------------------
+
+
+def _targets_sprite_renderer(prefab):
+    """Is an AnimationPlayer feeding this prefab's SpriteRenderer?"""
+    animation = prefab.find("AnimationPlayer")
+    if animation is None:
+        return False
+    return animation.get("target", "SpriteRenderer") == "SpriteRenderer"
 
 
 def _check_component_set(prefab, registered, issues):
@@ -258,9 +267,14 @@ def _check_light_collider(prefab, light, body, issues):
         ))
 
 
-def _check_sprite(prefab, sprite, body, project, issues):
+def _check_sprite(prefab, sprite, body, project, issues, animated=False):
     path = sprite.get("path")
     if not path:
+        # An AnimationPlayer pushes the sheet in on the first frame, so a
+        # pathless SpriteRenderer is correct there rather than broken -- the
+        # clip owns the image and the frame size.
+        if animated:
+            return
         issues.append(Issue(
             ERROR, prefab.name,
             "SpriteRenderer has no path, so nothing is drawn.",

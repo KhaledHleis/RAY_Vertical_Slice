@@ -271,4 +271,25 @@ return {
             },
         },
     },
+
+    -- SpriteRenderer first: AnimationPlayer looks its target up in OnAttach,
+    -- and prefab components attach in declaration order. The renderer needs
+    -- no path or frame size -- the clip supplies both on the first frame.
+    AnimatedCoin = {
+        components = {
+            {
+                type = "SpriteRenderer",
+                args = {
+                    scale = { x = 1, y = 1 },
+                },
+            },
+            {
+                type = "AnimationPlayer",
+                args = {
+                    clips = { "CoinSpin" },
+                    autoPlay = "CoinSpin",
+                },
+            },
+        },
+    },
 }

@@ -31,6 +31,8 @@ function RigidBody.new(args)
     self.body = nil
     self.fixture = nil
     self.shapeObj = nil
+    -- World scale at the moment the fixture was built. See OnAttach.
+    self.bakedScale = 1
 
     return self
 end
@@ -40,10 +42,26 @@ function RigidBody:OnAttach(object)
 
     -- love.physics is configured with setMeter(World.PIXELS_PER_METER), so it
     -- expects and returns PIXELS. Pass transform values through unscaled.
-    local pos = object.transform.position
+    --
+    -- World, not local: an object with a RigidBody can never be a child (see
+    -- Object:SetParent), so these are the same numbers today. Reading the
+    -- world values anyway means this line stays correct if that rule is ever
+    -- relaxed.
+    local x, y, angle, scale = object.transform:World()
 
-    self.body = love.physics.newBody(world, pos.x, pos.y, self.bodyType)
-    self.body:setAngle(object.transform.rotation.angle)
+    -- Scale is baked into the fixture here and never again: Box2D cannot
+    -- resize a shape, only replace it. Changing transform.scale after this
+    -- point moves the sprite and leaves the collider behind. The authored
+    -- width/height are overwritten with the effective world size, so
+    -- PlayerController's probes and CollisionRenderer's outline -- both of
+    -- which work in world pixels -- stay correct with no changes.
+    self.bakedScale = scale
+    self.width = self.width * scale
+    self.height = self.height * scale
+    if self.radius then self.radius = self.radius * scale end
+
+    self.body = love.physics.newBody(world, x, y, self.bodyType)
+    self.body:setAngle(angle)
     self.body:setFixedRotation(self.fixedRotation)
     self.body:setGravityScale(self.gravityScale)
     self.body:setBullet(self.bullet)

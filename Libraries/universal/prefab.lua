@@ -22,7 +22,10 @@ function Prefab.Instantiate(name, overrides)
     local def = definitions[name]
     assert(def, "Prefab.Instantiate: unknown prefab '" .. tostring(name) .. "'")
 
-    local object = Object.new(overrides.position, overrides.rotation)
+    -- Scale is applied before any component attaches: RigidBody bakes the
+    -- world scale into its fixture size in OnAttach and cannot resize
+    -- afterwards.
+    local object = Object.new(overrides.position, overrides.rotation, overrides.scale)
     object.prefab = name
 
     local componentOverrides = overrides.components or {}

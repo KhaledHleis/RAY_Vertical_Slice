@@ -90,9 +90,12 @@ function LightSource:castRay(origin, dir, intensity, depth, travel)
     return node
 end
 
-function LightSource:Update(object, dt)
-    local pos = object.transform.position
-    local baseAngle = object.transform.rotation.angle
+-- LateUpdate, not Update: every transform has settled and every dynamic
+-- collider has re-synced by the time this runs, so a cast is never against
+-- stale geometry regardless of the order objects appear in the level file.
+function LightSource:LateUpdate(object, dt)
+    local px, py, baseAngle = object.transform:World()
+    local pos = Vector.new(px, py)
     self.fan = {}
     -- Guard the single-ray case: rayCount - 1 would be a divide by zero.
     local spread = (self.rayCount > 1) and (self.coneAngle / (self.rayCount - 1)) or 0

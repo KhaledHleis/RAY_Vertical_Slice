@@ -9,5 +9,6 @@ return {
     CollisionRenderer = require('Libraries.renderer.collision_renderer'),
     PlayerController = require('Libraries.gameplay.player_controller'),
     PlayerRenderer = require('Libraries.gameplay.player_renderer'),
-    Spinner = require('Libraries.transform.spinner')
+    Spinner = require('Libraries.transform.spinner'),
+    AnimationPlayer = require('Libraries.animation.animation_player')
 }

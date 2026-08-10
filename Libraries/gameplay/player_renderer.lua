@@ -11,17 +11,35 @@
 -- With no image it falls back to the original's plain rectangle, so the
 -- controller is playable and tunable before any art exists.
 --
--- Animations are declared per state:
---   animations = {
---       idle = { row = 0, frames = 4,  fps = 6 },
---       run  = { row = 1, frames = 8,  fps = 12, steps = { 0, 4 } },
---       jump = { row = 2, frames = 1,  fps = 1, loop = false },
---   }
--- `steps` lists the frame indices that fire "player:step" -- the original's
--- "play a footstep on specific frames" trick, without the manual latch.
+-- What changed with AnimationPlayer:
+--
+-- The frame timer, the fps stepping and the `steps` footstep latch used to
+-- live here. They are gone -- an AnimationPlayer on the same object owns the
+-- playhead now and pushes frames in through SetSheet/SetFrame, exactly as it
+-- does for a SpriteRenderer. What stays here is the part that is genuinely
+-- about the player: the foot-anchored draw, and the mapping from a controller
+-- state to a clip name:
+--
+--   { type = "PlayerRenderer", args = {
+--         animations = {
+--             idle = "PlayerIdle",
+--             run  = "PlayerRun",
+--             jump = "PlayerJump",
+--             fall = "PlayerFall",
+--         },
+--   }},
+--   { type = "AnimationPlayer", args = { target = "PlayerRenderer" } },
+--
+-- Footsteps are now declared on the clip itself (`events = { { at = 1, name =
+-- "player:step" } }`) rather than as a `steps` list here, so the same clip
+-- fires them however it is played.
+--
+-- That `animations` table is a one-state-one-clip map: no conditions, no
+-- transitions, no blending. It is the seed of the Animator -- when the state
+-- machine lands, this table lifts out of here unchanged and becomes its
+-- state -> clip column, and PlayerRenderer goes back to being purely a draw.
 
 local Component = require('Libraries.universal.component')
-local EventBus  = require('Libraries.universal.event_bus')
 
 local PlayerRenderer = setmetatable({}, { __index = Component })
 PlayerRenderer.__index = PlayerRenderer
@@ -31,10 +49,8 @@ function PlayerRenderer.new(args)
     local self = Component.new()
     setmetatable(self, PlayerRenderer)
 
-    self.image = args.image or (args.path and love.graphics.newImage(args.path))
-    self.frameWidth  = args.frameWidth
-    self.frameHeight = args.frameHeight
-    self.animations  = args.animations
+    -- state name -> clip name
+    self.animations = args.animations
 
     -- nudge sprite alignment vs hitbox
     self.artOX = args.artOX or 0
@@ -42,15 +58,18 @@ function PlayerRenderer.new(args)
 
     self.color = args.color or { 0.95, 0.78, 0.25 }
 
-    self.frame = 0
-    self.timer = 0
-    self.currentState = nil
-    self.quad = nil
+    -- Written by AnimationPlayer through SetSheet/SetFrame.
+    self.image       = args.image or (args.path and love.graphics.newImage(args.path))
+    self.frameWidth  = args.frameWidth
+    self.frameHeight = args.frameHeight
+    self.quad        = nil
 
     if self.image and self.frameWidth and self.frameHeight then
         self.quad = love.graphics.newQuad(0, 0, self.frameWidth, self.frameHeight,
                                           self.image:getDimensions())
     end
+
+    self.currentState = nil
 
     return self
 end
@@ -62,40 +81,64 @@ end
 function PlayerRenderer:OnAttach(object)
     self.controller = object:GetComponent("PlayerController")
     self.rigidBody  = object:GetComponent("RigidBody")
+    self.animator   = object:GetComponent("AnimationPlayer")
+
+    if not self.animations then return end
+
+    -- PlayerController publishes this the frame a state actually changes, so
+    -- reacting to it means no lag waiting for our own Update -- components
+    -- update in an unspecified order, and the controller may well run after
+    -- us. Update still polls as a safety net; a matching state makes it a
+    -- no-op.
+    self:Subscribe("player:state", function(target, state)
+        if target == object then self:_playState(object, state) end
+    end)
+end
+
+-- Same contract as SpriteRenderer:SetSheet -- see the note there about why a
+-- new image needs a new quad.
+function PlayerRenderer:SetSheet(image, frameWidth, frameHeight)
+    if not image then return end
+    if self.image == image
+        and self.frameWidth == frameWidth
+        and self.frameHeight == frameHeight
+        and self.quad then
+        return
+    end
+
+    self.image = image
+    self.frameWidth = frameWidth
+    self.frameHeight = frameHeight
+    self.quad = love.graphics.newQuad(0, 0, frameWidth, frameHeight, image:getDimensions())
+end
+
+function PlayerRenderer:SetFrame(col, row)
+    if not self.quad then return end
+    self.quad:setViewport(col * self.frameWidth, row * self.frameHeight,
+                          self.frameWidth, self.frameHeight)
+end
+
+function PlayerRenderer:_playState(object, state)
+    if not self.animations then return end
+
+    -- AnimationPlayer may attach after us, depending on prefab order.
+    self.animator = self.animator or object:GetComponent("AnimationPlayer")
+    if not self.animator then return end
+
+    local clip = self.animations[state] or self.animations.idle
+    if not clip then return end
+
+    self.currentState = state
+    self.animator:Play(clip)
 end
 
 function PlayerRenderer:Update(object, dt)
-    if not (self.animations and self.quad) then return end
+    if not self.animations then return end
 
     local state = (self.controller and self.controller.state) or "idle"
-    local anim = self.animations[state] or self.animations.idle
-    if not anim then return end
-
     if state ~= self.currentState then
-        self.currentState = state
-        self.frame, self.timer = 0, 0
+        self:_playState(object, state)
     end
-
-    local step = 1 / (anim.fps or 8)
-    self.timer = self.timer + dt
-    while self.timer >= step do
-        self.timer = self.timer - step
-        local next = self.frame + 1
-        if next >= anim.frames then
-            next = (anim.loop == false) and (anim.frames - 1) or 0
-        end
-        self.frame = next
-
-        if anim.steps then
-            for _, f in ipairs(anim.steps) do
-                if f == self.frame then EventBus.publish("player:step", object) end
-            end
-        end
-    end
-
-    self.quad:setViewport(self.frame * self.frameWidth, (anim.row or 0) * self.frameHeight,
-                          self.frameWidth, self.frameHeight,
-                          self.image:getDimensions())
 end
 
 function PlayerRenderer:Draw(object)
@@ -104,26 +147,31 @@ function PlayerRenderer:Draw(object)
     local sy = pc and pc.sy or 1
     local facing = pc and pc.facing or 1
 
-    local pos = object.transform.position
+    -- The player always has a RigidBody, so it is always a root and world is
+    -- local. Read it through World() anyway to pick up scale, and so nothing
+    -- here needs revisiting if the player is ever spawned scaled.
+    local px, py, _, scale = object.transform:World()
     local halfH = self.rigidBody and (self.rigidBody.height / 2) or 0
 
     if self.image and self.quad then
         -- Round to whole pixels: the game renders into a 320x240 canvas, and
         -- a half-pixel offset here shows up as a shimmering sprite.
-        local drawX = math.floor(pos.x + self.artOX + 0.5)
-        local drawY = math.floor(pos.y + halfH + self.artOY + 0.5)
+        -- artOX/artOY scale with the object or the art drifts off the hitbox.
+        local drawX = math.floor(px + self.artOX * scale + 0.5)
+        local drawY = math.floor(py + halfH + self.artOY * scale + 0.5)
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(self.image, self.quad, drawX, drawY, 0,
-                           facing * sx, sy,
+                           facing * sx * scale, sy * scale,
                            self.frameWidth / 2, self.frameHeight)
     else
         -- fallback rectangle (art not loaded)
         local rb = self.rigidBody
-        local w = (rb and rb.width or 6) * sx
-        local h = (rb and rb.height or 12) * sy
-        local by = pos.y + halfH
+        -- rb.width/height are already world sizes; RigidBody baked scale in.
+        local w = (rb and rb.width or 6 * scale) * sx
+        local h = (rb and rb.height or 12 * scale) * sy
+        local by = py + halfH
         love.graphics.setColor(self.color)
-        love.graphics.rectangle("fill", pos.x - w / 2, by - h, w, h)
+        love.graphics.rectangle("fill", px - w / 2, by - h, w, h)
     end
 
     love.graphics.setColor(1, 1, 1, 1)
