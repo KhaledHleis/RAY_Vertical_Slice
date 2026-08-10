@@ -234,41 +234,4 @@ return {
             },
         },
     },
-
-    SmallBox = {
-        components = {
-            {
-                type = "SpriteRenderer",
-                args = {
-                    path = "Resources/sprites/test/box.png",
-                    scale = { x = 1, y = 1 },
-                },
-            },
-            {
-                type = "RigidBody",
-                args = {
-                    bodyType = "dynamic",
-                    width = 16,
-                    height = 16,
-                    offset = { x = 0, y = 0 },
-                },
-            },
-            {
-                type = "CollisionRenderer",
-                args = {},
-            },
-            {
-                type = "LightCollider",
-                args = {
-                    dynamic = true,
-                    segments = {
-                        { a = Vector.new(-8, -8), b = Vector.new(8, -8), reflective = 0, refractiveIndex = 1, absorption = 1 },
-                        { a = Vector.new(-8, -8), b = Vector.new(-8, 8), reflective = 0, refractiveIndex = 1, absorption = 1 },
-                        { a = Vector.new(-8, 8), b = Vector.new(8, 8), reflective = 0, refractiveIndex = 1, absorption = 1 },
-                        { a = Vector.new(8, 8), b = Vector.new(8, -8), reflective = 0, refractiveIndex = 1, absorption = 1 },
-                    },
-                },
-            },
-        },
-    },
 }

@@ -13,6 +13,8 @@
 local Tune = require('Libraries.universal.tune')
 
 local Input = {}
+local wasJumpDown = false
+local wasQuitDown = false
 
 Input.state = {
     moveX       = 0,
@@ -20,6 +22,7 @@ Input.state = {
     down        = false,
     jumpDown    = false,
     jumpPressed = false,
+    quitPressed = false,
 }
 
 -- Rebindable. Any key in the list counts.
@@ -29,6 +32,7 @@ Input.keys = {
     up    = { "up",    "w" },
     down  = { "down",  "s" },
     jump  = { "space", "z", "c", "k" },
+    quit = {"escape"}
 }
 
 -- Gamepad equivalents, for the handheld build.
@@ -38,6 +42,7 @@ Input.pad = {
     up    = "dpup",
     down  = "dpdown",
     jump  = { "a", "b" },
+    quit = {"back","start"}
 }
 
 Input.deadzone = 0.35
@@ -62,6 +67,14 @@ local function padDown(button)
     end
     return joystick:isGamepadDown(button)
 end
+-- Every button in the list must be held, unlike padDown's "any of".
+local function padCombo(buttons)
+    if not (joystick and joystick:isGamepad()) then return false end
+    for _, b in ipairs(buttons) do
+        if not joystick:isGamepadDown(b) then return false end
+    end
+    return true
+end
 
 local function padAxis()
     if not (joystick and joystick:isGamepad()) then return 0 end
@@ -85,6 +98,14 @@ end
 function Input.update(dt)
     local s = Input.state
 
+    -- Checked before the Tune early-return so the panel can't trap you.
+    local quit = anyKey(Input.keys.quit) or padCombo(Input.pad.quit)
+    s.quitPressed = quit and not wasQuitDown
+    wasQuitDown   = quit
+    if s.quitPressed then
+        love.event.quit()
+    end
+    
     -- While the tuning panel owns the arrow keys, the player should not also
     -- be running around underneath it.
     if Tune.isOpen() then
