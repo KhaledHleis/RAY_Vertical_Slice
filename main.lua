@@ -1,27 +1,25 @@
-local World = require('Libraries.physics.world')
-local Scene = require('Libraries.universal.scene')
 local Screen = require('Libraries.renderer.screen')
 local Prefab = require('Libraries.universal.prefab')
-local Level = require('Libraries.universal.level')
 local PrefabDefinitions = require('Frontend.prefabs.definitions')
 local Clip = require('Libraries.animation.clip')
 local ClipDefinitions = require('Frontend.animations.definitions')
-local LightWorld = require('Libraries.light_engine.light_world')
 local Input = require('Libraries.universal.input')
 local Tune = require('Libraries.universal.tune')
-local splash_screen = require("Libraries.splash_screen.splash_screen")
+local LevelManager = require('Libraries.universal.level_manager')
 
-local scene
+-- The boot chain. The splash is a script level that hands over to whatever
+-- nextLevel it is given, so changing the first playable level is one string.
+local SPLASH_LEVEL = 'Libraries.splash_screen.splash_level'
+local FIRST_LEVEL  = 'Frontend.levels.demo'
+
 local tuneFont
 
 function love.load()
-    splash_screen:init()
-
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
 
     Screen.init()
-    World.init(0, 9.81)
+
     Prefab.Register(PrefabDefinitions)
     -- Before any prefab is instantiated: AnimationPlayer resolves its clips
     -- by name in OnAttach, so they have to be registered by then.
@@ -31,35 +29,30 @@ function love.load()
     Input.init()
     tuneFont = love.graphics.newFont(8)
 
-    scene = Scene.new()
-    Level.load('Frontend.levels.demo', scene)
+    -- Creates the Box2D world; components grab it in OnAttach, so it has to
+    -- exist before the first level loads.
+    LevelManager.init({ gravityX = 0, gravityY = 9.81 })
+    LevelManager.load(SPLASH_LEVEL, { nextLevel = FIRST_LEVEL })
 end
 
 function love.update(dt)
-    splash_screen:update(dt)
-    -- Before the scene: PlayerController reads Input.state during its Update,
-    -- and jumpPressed is a single-frame edge that has to be fresh.
+    -- Input and Tune are not level state: they keep running across a switch,
+    -- so they stay here rather than inside the manager.
+    --
+    -- Input first, because PlayerController reads Input.state during its
+    -- Update and jumpPressed is a single-frame edge that has to be fresh.
     Input.update(dt)
     Tune.update(dt, love.keyboard.isDown("left"), love.keyboard.isDown("right"))
 
-    -- Three phases, in this order, and the order is the whole point:
-    --   Update        transforms move (physics readback, Spinner, controller)
-    --   syncColliders light geometry rebuilt from settled transforms
-    --   LateUpdate    LightSource casts against that geometry
-    -- Anything reading a world transform in LateUpdate is order-independent.
-    World.update(dt)
-    scene:Update(dt)
-    LightWorld.syncColliders()
-    scene:LateUpdate(dt)
-    LightWorld.resolveDetectors()
+    -- Applies any queued level switch, then runs the frame: physics, Update,
+    -- light sync, LateUpdate, detectors. The ordering rationale lives in
+    -- level_manager.lua next to the code that depends on it.
+    LevelManager.update(dt)
 end
 
 function love.draw()
-    if not splash_screen:isDone() then
-        splash_screen:draw()
-    end
     Screen.beginDraw()
-    scene:Draw()
+    LevelManager.draw()
     -- Inside the canvas so the panel scales with the game and stays crisp.
     Tune.draw(tuneFont, Screen.WIDTH, Screen.HEIGHT)
     Screen.endDraw()
@@ -69,6 +62,12 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
     if key == "escape" then print("quit game"); love.event.quit() end
+
+    -- Reloads the level from disk: with LevelManager's unloadModules on, the
+    -- level file is re-read, so edits from Tools/level_editor land without a
+    -- restart.
+    if key == "f6" then LevelManager.reload() return end
+
     -- tab toggles the panel, f5 dumps, f9 resets; arrows drive it while open.
     if Tune.keypressed(key) then
         if key == "tab" and not Tune.isOpen() then Tune.save() end

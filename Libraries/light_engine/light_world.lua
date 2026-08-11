@@ -108,4 +108,24 @@ function LightWorld.resolveDetectors()
     frameHits = {}
 end
 
+-- Registration counts: segments, detectors, dynamic colliders. Nothing in the
+-- render path uses these -- they exist so a level switch can be leak-checked
+-- from a test or a debug overlay, where "all three are zero after unload" is
+-- the whole assertion.
+function LightWorld.stats()
+    return #segments, #detectors, #dynamicColliders
+end
+
+-- Drops every registration in one go. Colliders, detectors and segments all
+-- unregister themselves from OnDestroy, so this is not the normal path -- it
+-- is the level-switch path, where "almost everything unregistered" is not
+-- good enough. A single segment left behind holds a reference to its owner
+-- Object, which holds its components, which holds the level.
+function LightWorld.clear()
+    segments = {}
+    detectors = {}
+    frameHits = {}
+    dynamicColliders = {}
+end
+
 return LightWorld

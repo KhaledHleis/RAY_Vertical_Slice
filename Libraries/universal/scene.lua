@@ -50,6 +50,36 @@ function Scene:Draw()
     end
 end
 
+-- Empties the scene: every object destroyed, both lists dropped. This is the
+-- teardown path LevelManager uses between levels, and it is deliberately not
+-- the same as destroying each object through Destroy().
+--
+-- Two differences, both intentional:
+--
+--   * It does not publish scene:destroyed. During a wholesale teardown the
+--     listeners are themselves being destroyed, in an order nothing controls,
+--     so half of them would hear about it and half would not. LevelManager
+--     publishes level:unloading / level:unloaded around this instead, which
+--     is the event anything outside the level actually wants.
+--
+--   * It walks self.objects directly rather than subtrees. Level.load spawns
+--     children into the same list as their parents, so every object is here
+--     exactly once; Object:Destroy detaches from the parent as it goes, and a
+--     second Destroy on an already-empty object is a no-op either way.
+function Scene:Clear()
+    -- Anything already queued is about to be destroyed below anyway.
+    self.pendingDestroy = {}
+
+    -- Backwards, so removing as we go cannot skip an entry.
+    for i = #self.objects, 1, -1 do
+        local object = self.objects[i]
+        self.objects[i] = nil
+        object:Destroy()
+    end
+
+    self.objects = {}
+end
+
 function Scene:_flushDestroyed()
     if #self.pendingDestroy == 0 then return end
 
