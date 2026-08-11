@@ -9,11 +9,14 @@ local ClipDefinitions = require('Frontend.animations.definitions')
 local LightWorld = require('Libraries.light_engine.light_world')
 local Input = require('Libraries.universal.input')
 local Tune = require('Libraries.universal.tune')
+local splash_screen = require("Libraries.splash_screen.splash_screen")
 
 local scene
 local tuneFont
 
 function love.load()
+    splash_screen:init()
+
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
 
@@ -33,6 +36,7 @@ function love.load()
 end
 
 function love.update(dt)
+    splash_screen:update(dt)
     -- Before the scene: PlayerController reads Input.state during its Update,
     -- and jumpPressed is a single-frame edge that has to be fresh.
     Input.update(dt)
@@ -51,6 +55,9 @@ function love.update(dt)
 end
 
 function love.draw()
+    if not splash_screen:isDone() then
+        splash_screen:draw()
+    end
     Screen.beginDraw()
     scene:Draw()
     -- Inside the canvas so the panel scales with the game and stays crisp.
