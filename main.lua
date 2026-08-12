@@ -19,7 +19,9 @@ function love.load()
     love.graphics.setLineStyle("rough")
 
     Screen.init()
-
+    -- shader option
+    -- crtShader = love.graphics.newShader("Libraries/shaders/crt_advanced.glsl")
+    -- gameCanvas = love.graphics.newCanvas(Screen.WIDTH, Screen.HEIGHT)
     Prefab.Register(PrefabDefinitions)
     -- Before any prefab is instantiated: AnimationPlayer resolves its clips
     -- by name in OnAttach, so they have to be registered by then.
@@ -53,9 +55,11 @@ end
 function love.draw()
     Screen.beginDraw()
     LevelManager.draw()
-    -- Inside the canvas so the panel scales with the game and stays crisp.
     Tune.draw(tuneFont, Screen.WIDTH, Screen.HEIGHT)
+
+    -- love.graphics.setShader(crtShader)
     Screen.endDraw()
+    -- love.graphics.setShader()
 
     love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
 end

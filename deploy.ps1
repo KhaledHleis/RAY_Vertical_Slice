@@ -272,11 +272,40 @@ Write-Host "Next: copy '$portsDir' onto the card's roms partition," -ForegroundC
 Write-Host "merging with the existing ports folder, then refresh the game list." -ForegroundColor White
 
 if ($Eject) {
+    Write-Step "ejecting $Destination"
     try {
-        $shell = New-Object -ComObject Shell.Application
-        $letter = $Destination.Substring(0, 2)
-        $shell.Namespace(17).ParseName($letter).InvokeVerb("Eject")
-        Write-Ok "ejected $letter"
+        $letter = $Destination.Substring(0, 2)   # e.g. "E:"
+        $shell  = New-Object -ComObject Shell.Application
+        $item   = $shell.Namespace(17).ParseName($letter)   # 17 = My Computer
+
+        if (-not $item) {
+            throw "drive $letter not found in My Computer - already removed?"
+        }
+
+        # Verb text is locale/version-dependent ("Eject", "E&ject", ...).
+        # Hardcoding "Eject" silently no-ops when it doesn't match exactly.
+        $verb = $item.Verbs() | Where-Object { ($_.Name -replace '&', '') -ieq 'Eject' } |
+                Select-Object -First 1
+
+        if (-not $verb) {
+            throw "no Eject verb exposed for $letter (unsupported device, or still in use)"
+        }
+
+        $verb.DoIt()
+
+        # DoIt() is fire-and-forget - it queues the request but doesn't
+        # report success. Poll for the drive to actually vanish.
+        $removed = $false
+        for ($i = 0; $i -lt 10; $i++) {
+            Start-Sleep -Milliseconds 300
+            if (-not (Test-Path $letter)) { $removed = $true; break }
+        }
+
+        if ($removed) {
+            Write-Ok "ejected $letter"
+        } else {
+            Write-Warn "$letter still present after eject request - close any open files/Explorer windows on it and try again"
+        }
     } catch {
         Write-Warn "could not eject: $($_.Exception.Message)"
     }
