@@ -38,17 +38,10 @@ function love.load()
 end
 
 function love.update(dt)
-    -- Input and Tune are not level state: they keep running across a switch,
-    -- so they stay here rather than inside the manager.
-    --
-    -- Input first, because PlayerController reads Input.state during its
-    -- Update and jumpPressed is a single-frame edge that has to be fresh.
+
     Input.update(dt)
     Tune.update(dt, love.keyboard.isDown("left"), love.keyboard.isDown("right"))
 
-    -- Applies any queued level switch, then runs the frame: physics, Update,
-    -- light sync, LateUpdate, detectors. The ordering rationale lives in
-    -- level_manager.lua next to the code that depends on it.
     LevelManager.update(dt)
 end
 
@@ -67,9 +60,6 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if key == "escape" then print("quit game"); love.event.quit() end
 
-    -- Reloads the level from disk: with LevelManager's unloadModules on, the
-    -- level file is re-read, so edits from Tools/level_editor land without a
-    -- restart.
     if key == "f6" then LevelManager.reload() return end
 
     -- tab toggles the panel, f5 dumps, f9 resets; arrows drive it while open.

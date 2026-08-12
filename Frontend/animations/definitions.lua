@@ -18,7 +18,7 @@
 --   speed        baked-in multiplier, on top of AnimationPlayer's
 --   events       { { at = <1-based frame position>, name = "some:event" } }
 --
--- See Libraries/animation/clip.lua for the full contract.
+-- See Libraries/animation/clip.lua.
 
 return {
     -- coin.png is 64x16: one row of four 16x16 cells, so the frame size is
@@ -27,6 +27,7 @@ return {
         path   = "Resources/sprites/test/coin.png",
         fps    = 10,
         frames = { 0, 1, 2, 3 },
+        mode = "pingpong",
         events = {
             -- Fires as the coin turns edge-on -- something for audio or a
             -- light flicker to hang off later.
@@ -34,38 +35,36 @@ return {
         },
     },
 
-    -- Player clips. Uncomment once there is a sheet, then hand PlayerRenderer
-    -- its state map and add an AnimationPlayer targeting it:
-    --
-    --   { type = "PlayerRenderer",  args = { animations = {
-    --         idle = "PlayerIdle", run = "PlayerRun",
-    --         jump = "PlayerJump", fall = "PlayerFall",
-    --   } } },
-    --   { type = "AnimationPlayer", args = { target = "PlayerRenderer" } },
-    --
+
     -- Until then PlayerRenderer draws its fallback rectangle exactly as
     -- before, so the controller stays playable with no art.
     --
-    -- PlayerIdle = {
-    --     path = "Resources/sprites/player.png",
-    --     frameWidth = 16, frameHeight = 16,
-    --     fps = 6, row = 0, count = 4,
-    -- },
-    --
-    -- PlayerRun = {
-    --     path = "Resources/sprites/player.png",
-    --     frameWidth = 16, frameHeight = 16,
-    --     fps = 12, row = 1, count = 8,
-    --     -- the old PlayerRenderer `steps = { 0, 4 }`, now owned by the clip
-    --     events = {
-    --         { at = 1, name = "player:step" },
-    --         { at = 5, name = "player:step" },
-    --     },
-    -- },
-    --
-    -- PlayerJump = {
-    --     path = "Resources/sprites/player.png",
-    --     frameWidth = 16, frameHeight = 16,
-    --     row = 2, count = 1, mode = "once",
-    -- },
+    PlayerIdle = {
+        path = "Resources/sprites/player/ray_idle.png",
+        frameWidth = 32, frameHeight = 32,
+        fps = 6, row = 0, count = 3,
+    },
+    
+    PlayerRun = {
+        path = "Resources/sprites/player/ray_walk.png",
+        frameWidth = 32, frameHeight = 32,
+        fps = 12, row = 0, count = 6,
+        -- the old PlayerRenderer `steps = { 0, 4 }`, now owned by the clip
+        events = {
+            { at = 1, name = "player:step" },
+            { at = 5, name = "player:step" },
+        },
+    },
+    
+    PlayerJump = {
+        path = "Resources/sprites/player/ray_jump.png",
+        frameWidth = 32, frameHeight = 32,
+        row = 0, count = 2, mode = "once",
+    },
+
+    PlayerFall = {
+        path = "Resources/sprites/player/ray_jump.png",
+        frameWidth = 32, frameHeight = 32,
+        row = 0, count = 1, mode = "once",
+    }
 }
