@@ -152,6 +152,9 @@ def _convert_value(value, field_spec):
     if kind == schema.SEGMENTS:
         return _convert_segments(value)
 
+    if kind == schema.TILES:
+        return _convert_tiles(value)
+
     if kind == schema.STRING_LIST:
         if isinstance(value, LuaTable):
             return [str(item) for item in value.array if isinstance(item, str)]
@@ -163,6 +166,21 @@ def _convert_value(value, field_spec):
         return bool(value)
 
     return value
+
+
+def _convert_tiles(value):
+    """A flat row-major grid of tile ids.
+
+    Kept as plain ints rather than `Num`: a tile id has no expression worth
+    preserving, and a few thousand `Num` instances per map is real memory in a
+    snapshot-based undo stack.
+    """
+    if isinstance(value, LuaTable):
+        return [int(item) for item in value.array
+                if isinstance(item, (int, float)) and not isinstance(item, bool)]
+    if isinstance(value, list):
+        return [int(item) for item in value]
+    return []
 
 
 def _convert_segments(value):

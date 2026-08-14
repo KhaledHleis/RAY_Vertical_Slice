@@ -1,22 +1,7 @@
--- transform.lua
---
+
 -- Position, rotation and uniform scale, optionally parented to another
 -- transform.
 --
--- Two rules shape everything here:
---
---   * Scale is a single number, never a pair. Uniform scale means TRS
---     composes exactly, so there is no matrix anywhere in this file -- the
---     whole of World() is four lines of arithmetic.
---
---   * World values are computed on demand, never cached. Several components
---     write `object.transform.position.x` in place (rigid_body,
---     player_controller), and a cache would need those writes to invalidate
---     it -- which means __newindex on Vector, which is used everywhere as
---     plain data including as a general 2D maths type in ray_math. Walking
---     the parent chain on read costs a handful of multiplies at depth 2-3
---     and buys order-independence: nothing has to update before anything
---     else for a read to be correct.
 --
 -- position, rotation and scale are LOCAL to the parent. For an unparented
 -- transform -- which is every object in the game until someone sets a parent
@@ -110,10 +95,8 @@ end
 
 -- Reparents, keeping the LOCAL transform. The object therefore moves in world
 -- space to wherever the new parent puts it, which is the predictable default;
--- Unity's worldPositionStays behaviour is deliberately not implemented.
 --
--- The RigidBody rule is enforced one level up, in Object:SetParent -- a
--- Transform has no idea what components exist.
+-- The RigidBody rule is enforced one level up, in Object:SetParent
 function Transform:SetParent(parent)
     assert(parent ~= self, "Transform:SetParent: cannot parent a transform to itself")
     assert(not (parent and parent:IsDescendantOf(self)),

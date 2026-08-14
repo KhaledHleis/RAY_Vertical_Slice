@@ -1,5 +1,6 @@
 return {
     SpriteRenderer = require('Libraries.renderer.sprite_renderer'),
+    Tilemap = require('Libraries.renderer.tilemap'),
     RigidBody = require('Libraries.physics.rigid_body'),
     HingeJoint = require('Libraries.physics.hinge_joint'),
     LightCollider = require('Libraries.light_engine.light_collider'),

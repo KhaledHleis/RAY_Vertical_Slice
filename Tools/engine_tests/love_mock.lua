@@ -5,9 +5,11 @@ local mock = {}
 
 local liveBodies, liveJoints, liveWorlds = 0, 0, 0
 local liveImages = 0
+local liveBatches = 0
 
 function mock.counts()
-    return { bodies = liveBodies, joints = liveJoints, worlds = liveWorlds, images = liveImages }
+    return { bodies = liveBodies, joints = liveJoints, worlds = liveWorlds,
+             images = liveImages, batches = liveBatches }
 end
 
 local function noop() end
@@ -31,10 +33,28 @@ end
 local quad = {}
 quad.__index = quad
 function quad.setViewport() end
+function quad.release() end
+
+-- Counted, because Tilemap allocates one batch per map and LevelManager's
+-- teardown test asserts that a level switch leaves nothing behind.
+local function newSpriteBatch()
+    liveBatches = liveBatches + 1
+    local batch = { sprites = 0, released = false }
+    function batch:add() self.sprites = self.sprites + 1 end
+    function batch:clear() self.sprites = 0 end
+    function batch:getCount() return self.sprites end
+    function batch:release()
+        if self.released then return end
+        self.released = true
+        liveBatches = liveBatches - 1
+    end
+    return batch
+end
 
 local graphics = {
     newImage = newImage,
     newQuad = function() return setmetatable({}, quad) end,
+    newSpriteBatch = newSpriteBatch,
     newFont = function() return { getHeight = function() return 8 end,
                                   getWidth = function() return 8 end } end,
     newCanvas = function() return { setFilter = noop } end,

@@ -29,6 +29,7 @@ VEC2 = "vec2"
 COLOR = "color"
 SEGMENTS = "segments"
 STRING_LIST = "string_list"
+TILES = "tiles"
 
 # Gizmo kinds understood by the viewport.
 GIZMO_SPRITE = "sprite"
@@ -36,6 +37,7 @@ GIZMO_BODY = "body"
 GIZMO_SEGMENTS = "segments"
 GIZMO_LIGHT = "light"
 GIZMO_DETECTOR = "detector"
+GIZMO_TILEMAP = "tilemap"
 
 
 @dataclass
@@ -131,6 +133,36 @@ COMPONENTS = {
                   visible_if=_uses_atlas),
             Field("frameY", INTEGER, 0, minimum=0, label="Frame row",
                   visible_if=_uses_atlas),
+        ],
+    ),
+    "Tilemap": ComponentSpec(
+        name="Tilemap",
+        doc=("A grid of tiles from one tileset, drawn as a single SpriteBatch. "
+             "The transform position is the TOP-LEFT of cell (0, 0), not the "
+             "centre -- a map that grew from the middle would move every tile "
+             "in it each time you widened it. Registers nothing with the "
+             "physics world or LightWorld: collision and light segments stay "
+             "hand-placed."),
+        gizmos=[GIZMO_TILEMAP],
+        fields=[
+            Field("tileset", PATH, None, label="Tileset",
+                  tooltip="Tileset image, project-relative."),
+            Field("tileWidth", INTEGER, 16, minimum=1, label="Tile width",
+                  suffix=" px"),
+            Field("tileHeight", INTEGER, 16, minimum=1, label="Tile height",
+                  suffix=" px"),
+            Field("columns", INTEGER, None, optional=True, minimum=1,
+                  label="Tileset columns",
+                  tooltip="Tiles per row in the source image. Derived from the "
+                          "image width when empty; set it only for a sheet with "
+                          "padding."),
+            Field("width", INTEGER, 0, minimum=0, label="Map width",
+                  suffix=" tiles"),
+            Field("height", INTEGER, 0, minimum=0, label="Map height",
+                  suffix=" tiles"),
+            Field("color", COLOR, [1.0, 1.0, 1.0, 1.0], label="Tint"),
+            Field("tiles", TILES, [],
+                  tooltip="Row-major, 0 = empty, 1 = first tile in the sheet."),
         ],
     ),
     "RigidBody": ComponentSpec(

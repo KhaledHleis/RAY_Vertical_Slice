@@ -201,6 +201,20 @@ class ComponentCard(QFrame):
                 form.addRow("Segments", note)
                 continue
 
+            if field.kind == schema.TILES:
+                # Deliberately not editable here. A grid is painted, not typed,
+                # and a text field holding a few hundred integers is a way to
+                # corrupt a map rather than a way to fix one.
+                tiles = self.obj.overrides.get(component.type, {}).get(field.name)
+                if tiles is None:
+                    tiles = component.get(field.name) or []
+                painted = sum(1 for t in tiles if t)
+                note = QLabel(f"{painted} of {len(tiles)} cells painted "
+                              "-- paint in the Tiles panel")
+                note.setObjectName("muted")
+                form.addRow("Tiles", note)
+                continue
+
             widget = build_field(field, project)
             if widget is None:
                 continue

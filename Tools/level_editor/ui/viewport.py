@@ -28,6 +28,7 @@ from PyQt6.QtWidgets import QWidget
 
 from ..model import level as level_model
 from ..model import sprites
+from ..model import tilemap as tilemap_model
 from ..preview import scene_light
 from ..preview.raytrace import V
 
@@ -50,6 +51,10 @@ JOINT_COLOR = QColor(220, 120, 255)
 DETECTOR_LIT = QColor(120, 255, 160)
 DETECTOR_DARK = QColor(110, 110, 120)
 GHOST = QColor(255, 255, 255, 90)
+TILE_GRID = QColor(255, 255, 255, 28)
+TILE_BOUNDS = QColor(120, 200, 255, 160)
+TILE_HOVER = QColor(255, 170, 60, 70)
+TILE_HOVER_EDGE = QColor(255, 170, 60)
 
 # Matches Libraries/renderer/debug_light_renderer.lua.
 MIRROR_COLOR = QColor(230, 230, 50)
@@ -88,6 +93,7 @@ class Viewport(QWidget):
     selectionChanged = pyqtSignal()
     placementFinished = pyqtSignal()
     statusMessage = pyqtSignal(str)
+    tilePicked = pyqtSignal(int)      # eyedropper result, for the tile panel
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -105,6 +111,7 @@ class Viewport(QWidget):
         self.pan = QPointF(0.0, 0.0)
 
         self.show_grid = True
+        self.show_tiles = True
         self.show_sprites = True
         self.show_bodies = True
         self.show_segments = True
@@ -120,6 +127,14 @@ class Viewport(QWidget):
 
         self.placement_prefab = None       # armed from the palette
 
+        # Tile painting. `tile_target` is the object being painted into; it is
+        # set from the tile panel rather than from whatever happens to be
+        # selected, so clicking a lamp mid-stroke does not redirect the brush.
+        self.tile_mode = False
+        self.tile_target = None
+        self.tile_tool = "brush"
+        self.tile_id = 1
+
         self._light = None
         self._light_dirty = True
         self._detectors = []
@@ -133,13 +148,19 @@ class Viewport(QWidget):
         self._marquee = None
         self._last_mouse = QPoint()
         self._pixmap_cache = {}
+        self._tileset_cache = {}
         self._cursor_world = V(0.0, 0.0)
+        self._tile_stroke = None           # the tool driving the drag, or None
+        self._tile_erasing = False
+        self._tile_rect_origin = None
+        self._tile_hover = None
 
     # -- external API ------------------------------------------------------
 
     def set_project(self, project):
         self.project = project
         self._pixmap_cache.clear()
+        self._tileset_cache.clear()
         if project is not None:
             self.screen_size = project.screen_size()
         self.mark_light_dirty()
@@ -163,7 +184,8 @@ class Viewport(QWidget):
         the object list, re-running the checks, re-serializing to test the
         modified flag -- which would otherwise run on every mouse move.
         """
-        return bool(self._dragging or self._active_handle or self._panning)
+        return bool(self._dragging or self._active_handle or self._panning
+                    or self._tile_stroke)
 
     def mark_light_dirty(self):
         self._light_dirty = True
@@ -274,6 +296,10 @@ class Viewport(QWidget):
 
         light = self._light_solution() if self.show_light else None
 
+        if self.show_tiles:
+            for obj in self.level.objects:
+                self._draw_tilemap(painter, obj)
+
         if self.show_sprites:
             for obj in self.level.objects:
                 self._draw_sprite(painter, obj)
@@ -314,6 +340,9 @@ class Viewport(QWidget):
 
         if self._marquee is not None:
             self._draw_marquee(painter)
+
+        if self.tile_mode:
+            self._draw_tile_overlay(painter)
 
         self._draw_handles(painter)
         self._draw_hud(painter)
@@ -364,6 +393,138 @@ class Viewport(QWidget):
             sy = self.world_to_screen(V(0, y)).y()
             painter.drawLine(QPointF(0, sy), QPointF(self.width(), sy))
             y += step
+
+    # -- tilemaps ----------------------------------------------------------
+
+    def tile_binding(self, obj):
+        """The tile view of an object, or None when it is not a tilemap."""
+        if self.library is None or obj is None:
+            return None
+        binding = tilemap_model.TilemapBinding(obj, self.library)
+        return binding if binding else None
+
+    def _tileset_pixmap(self, binding):
+        """The whole sheet, cached by path.
+
+        One pixmap per tileset rather than one per tile: a map draws from a few
+        dozen distinct ids, but cutting each into its own QPixmap would allocate
+        per id and lose nothing, since drawPixmap takes a source rectangle.
+        """
+        path = binding.tileset
+        if not path or self.project is None:
+            return None
+        absolute = self.project.resolve(path)
+        if not absolute or not os.path.exists(absolute):
+            return None
+        if absolute in self._tileset_cache:
+            return self._tileset_cache[absolute]
+        pixmap = QPixmap(absolute)
+        if pixmap.isNull():
+            pixmap = None
+        self._tileset_cache[absolute] = pixmap
+        return pixmap
+
+    def _draw_tilemap(self, painter, obj):
+        binding = self.tile_binding(obj)
+        if binding is None or binding.width <= 0 or binding.height <= 0:
+            return
+        pixmap = self._tileset_pixmap(binding)
+        if pixmap is None:
+            return
+        columns = tilemap_model.tileset_columns(binding, self.project)
+        if not columns:
+            return
+
+        tiles = binding.tiles
+        tile_w, tile_h = binding.tile_width, binding.tile_height
+        scale = obj.world_scale() or 1.0
+        step_x, step_y = tile_w * scale, tile_h * scale
+
+        # Cull to what is actually on screen. Without this a 200x200 map costs
+        # 40 000 drawPixmap calls per repaint, and repaints happen on every
+        # mouse move.
+        top_left = self.screen_to_world(QPointF(0, 0))
+        bottom_right = self.screen_to_world(QPointF(self.width(), self.height()))
+        first_col = max(0, int((top_left.x - obj.x) // step_x))
+        last_col = min(binding.width - 1, int((bottom_right.x - obj.x) // step_x) + 1)
+        first_row = max(0, int((top_left.y - obj.y) // step_y))
+        last_row = min(binding.height - 1, int((bottom_right.y - obj.y) // step_y) + 1)
+        if first_col > last_col or first_row > last_row:
+            return
+
+        colour = binding.get("color")
+        alpha = float(colour[3]) if isinstance(colour, list) and len(colour) > 3 else 1.0
+
+        painter.save()
+        painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform, False)
+        painter.setOpacity(max(0.0, min(1.0, alpha)))
+        for row in range(first_row, last_row + 1):
+            for col in range(first_col, last_col + 1):
+                tile_id = tiles[row * binding.width + col]
+                if tile_id <= 0:
+                    continue
+                index = tile_id - 1
+                source = QRectF((index % columns) * tile_w,
+                                (index // columns) * tile_h, tile_w, tile_h)
+                origin = self.world_to_screen(V(obj.x + col * step_x,
+                                                obj.y + row * step_y))
+                target = QRectF(origin.x(), origin.y(),
+                                step_x * self.zoom, step_y * self.zoom)
+                painter.drawPixmap(target, pixmap, source)
+        painter.restore()
+
+    def _draw_tile_overlay(self, painter):
+        binding = self.tile_binding(self.tile_target)
+        if binding is None:
+            painter.setPen(QPen(QColor(220, 140, 140)))
+            painter.drawText(10, 20, "Tile mode: no tilemap selected")
+            return
+
+        x, y, width, height = binding.world_rect()
+        top_left = self.world_to_screen(V(x, y))
+        bottom_right = self.world_to_screen(V(x + width, y + height))
+        bounds = QRectF(top_left, bottom_right)
+
+        scale = self.tile_target.world_scale() or 1.0
+        step_x = binding.tile_width * scale * self.zoom
+        step_y = binding.tile_height * scale * self.zoom
+
+        # The cell grid is only legible past a few pixels a cell, and below that
+        # it turns into a grey wash that hides the tiles underneath it.
+        if step_x >= 4 and step_y >= 4:
+            painter.setPen(QPen(TILE_GRID, 1))
+            for col in range(binding.width + 1):
+                sx = bounds.left() + col * step_x
+                painter.drawLine(QPointF(sx, bounds.top()),
+                                 QPointF(sx, bounds.bottom()))
+            for row in range(binding.height + 1):
+                sy = bounds.top() + row * step_y
+                painter.drawLine(QPointF(bounds.left(), sy),
+                                 QPointF(bounds.right(), sy))
+
+        painter.setPen(QPen(TILE_BOUNDS, 1.5, Qt.PenStyle.DashLine))
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+        painter.drawRect(bounds)
+
+        if self._tile_rect_origin is not None and self._tile_hover is not None:
+            col0, row0 = self._tile_rect_origin
+            col1, row1 = self._tile_hover
+            left, right = sorted((col0, col1))
+            top, bottom = sorted((row0, row1))
+            self._fill_cells(painter, bounds, step_x, step_y,
+                             left, top, right - left + 1, bottom - top + 1)
+        elif self._tile_hover is not None:
+            col, row = self._tile_hover
+            if binding.in_bounds(col, row):
+                self._fill_cells(painter, bounds, step_x, step_y, col, row, 1, 1)
+
+    def _fill_cells(self, painter, bounds, step_x, step_y, col, row, cols, rows):
+        rect = QRectF(bounds.left() + col * step_x, bounds.top() + row * step_y,
+                      cols * step_x, rows * step_y)
+        painter.setPen(QPen(TILE_HOVER_EDGE, 1.2))
+        painter.setBrush(QBrush(TILE_HOVER))
+        painter.drawRect(rect)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
 
     # -- sprites -----------------------------------------------------------
 
@@ -733,6 +894,14 @@ class Viewport(QWidget):
         button = event.button()
         position = event.position()
 
+        # Tile mode owns the left and right buttons: right-drag erases, which
+        # is worth more during a paint session than right-drag panning. Middle
+        # still pans, so there is always a way to move the view.
+        if self.tile_mode and button in (Qt.MouseButton.LeftButton,
+                                         Qt.MouseButton.RightButton):
+            self._tile_press(event)
+            return
+
         if button == Qt.MouseButton.MiddleButton or (
                 button == Qt.MouseButton.RightButton
                 and self.placement_prefab is None):
@@ -787,6 +956,11 @@ class Viewport(QWidget):
         position = event.position()
         self._cursor_world = self.screen_to_world(position)
 
+        if self.tile_mode and not self._panning:
+            self._tile_move()
+            if self._tile_stroke is not None:
+                return
+
         if self._panning:
             current = position.toPoint()
             delta = current - self._last_mouse
@@ -828,6 +1002,10 @@ class Viewport(QWidget):
             self.update()
 
     def mouseReleaseEvent(self, event):
+        if self._tile_stroke is not None:
+            self._tile_release()
+            return
+
         if self._panning:
             self._panning = False
             self.setCursor(Qt.CursorShape.ArrowCursor)
@@ -895,6 +1073,96 @@ class Viewport(QWidget):
             return
 
         super().keyPressEvent(event)
+
+    # -- tile painting -----------------------------------------------------
+
+    def set_tile_target(self, obj):
+        self.tile_target = obj
+        self.update()
+
+    def _tile_press(self, event):
+        binding = self.tile_binding(self.tile_target)
+        if binding is None:
+            self.statusMessage.emit(
+                "Tile mode is on but no tilemap is selected -- pick one in the "
+                "Tiles panel.")
+            return
+
+        world = self.screen_to_world(event.position())
+        cell = binding.cell_at_world_unclamped(world.x, world.y)
+        self._tile_hover = cell
+
+        alt = bool(event.modifiers() & Qt.KeyboardModifier.AltModifier)
+        erasing = event.button() == Qt.MouseButton.RightButton
+
+        if alt or self.tile_tool == "picker":
+            if binding.in_bounds(*cell):
+                self.tilePicked.emit(binding.tile_at(*cell))
+            self.update()
+            return
+
+        tool = "eraser" if erasing else self.tile_tool
+        self._tile_erasing = erasing or tool == "eraser"
+
+        if tool == "rect":
+            # Nothing is written until the release, so a rectangle can be
+            # cancelled by dragging back to a degenerate size and no undo
+            # snapshot is spent on the preview.
+            self._tile_stroke = "rect"
+            self._tile_rect_origin = cell
+            self.update()
+            return
+
+        # One snapshot for the whole drag, pushed before the first cell
+        # changes: a stroke is one action to undo, not forty.
+        self.editStarted.emit()
+        self._tile_stroke = tool
+
+        if tool == "fill":
+            if binding.flood_fill(cell[0], cell[1], self._stroke_id()):
+                self.modelChanged.emit()
+            self._tile_stroke = None
+            self.update()
+            return
+
+        self._tile_paint_cell(binding, cell)
+
+    def _tile_move(self):
+        binding = self.tile_binding(self.tile_target)
+        if binding is None:
+            return
+        cell = binding.cell_at_world_unclamped(self._cursor_world.x,
+                                               self._cursor_world.y)
+        if cell != self._tile_hover:
+            self._tile_hover = cell
+            self.update()
+
+        if self._tile_stroke in ("brush", "eraser"):
+            self._tile_paint_cell(binding, cell)
+
+    def _tile_release(self):
+        binding = self.tile_binding(self.tile_target)
+        if self._tile_stroke == "rect" and binding is not None \
+                and self._tile_rect_origin is not None and self._tile_hover is not None:
+            self.editStarted.emit()
+            col0, row0 = self._tile_rect_origin
+            col1, row1 = self._tile_hover
+            if binding.fill_rect(col0, row0, col1, row1, self._stroke_id()):
+                self.modelChanged.emit()
+
+        self._tile_stroke = None
+        self._tile_rect_origin = None
+        self._tile_erasing = False
+        self.modelChanged.emit()
+        self.update()
+
+    def _stroke_id(self):
+        return 0 if self._tile_erasing else int(self.tile_id)
+
+    def _tile_paint_cell(self, binding, cell):
+        if binding.paint(cell[0], cell[1], self._stroke_id()):
+            self.modelChanged.emit()
+        self.update()
 
     # -- mutations ---------------------------------------------------------
 

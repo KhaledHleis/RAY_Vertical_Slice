@@ -22,6 +22,7 @@ from ..model import schema
 from ..model.level import (ExtraComponent, Level, LevelObject, level_from_table,
                            orphan_overrides, resolve)
 from ..model.library import library_from_table
+from ..model.tilemap import TilemapBinding
 from ..model.project import Project
 from ..preview import scene_light
 from ..preview.raytrace import V
@@ -328,6 +329,144 @@ def test_real_file_round_trip(project):
         check_equal(first, second, f"{os.path.basename(path)} round trips")
 
 
+# -- tilemaps ----------------------------------------------------------------
+
+
+def _tilemap_object(library, width=4, height=3, tiles=None):
+    obj = LevelObject("Tilemap", Vec2(0.0, 0.0, Vec2.TABLE), object_id="tiles")
+    binding = TilemapBinding(obj, library)
+    binding.set("tileWidth", 16)
+    binding.set("tileHeight", 16)
+    binding.set("width", width)
+    binding.set("height", height)
+    binding.set("tiles", tiles if tiles is not None else [0] * (width * height))
+    return obj, binding
+
+
+def test_tilemap_paint(library):
+    if library.find("Tilemap") is None:
+        return
+    _obj, binding = _tilemap_object(library)
+    check(binding.paint(1, 2, 7), "painting an empty cell reports a change")
+    check_equal(binding.tile_at(1, 2), 7, "the painted cell holds the tile")
+    check(not binding.paint(1, 2, 7), "repainting the same value is a no-op")
+    check(not binding.paint(99, 99, 7), "painting outside the map is refused")
+    check_equal(binding.tile_at(0, 0), 0, "neighbouring cells are untouched")
+
+
+def test_tilemap_row_major(library):
+    """The editor and `Tilemap:GetTile` must agree on the index formula."""
+    if library.find("Tilemap") is None:
+        return
+    _obj, binding = _tilemap_object(library, width=4, height=3)
+    binding.paint(3, 0, 5)
+    # row * width + col, 0-based, so (3, 0) is the fourth entry.
+    check_equal(binding.tiles[3], 5, "column 3 of row 0 is index 3")
+    binding.paint(0, 1, 6)
+    check_equal(binding.tiles[4], 6, "column 0 of row 1 is index width")
+
+
+def test_tilemap_resize_keeps_the_top_left(library):
+    if library.find("Tilemap") is None:
+        return
+    _obj, binding = _tilemap_object(library, width=3, height=2,
+                                    tiles=[1, 2, 3, 4, 5, 6])
+    binding.resize(4, 3)
+    check_equal(binding.tile_at(0, 0), 1, "the origin tile survives a grow")
+    check_equal(binding.tile_at(2, 1), 6, "the far corner keeps its tile")
+    check_equal(binding.tile_at(3, 2), 0, "new cells are empty")
+    binding.resize(2, 2)
+    check_equal(binding.tile_at(1, 1), 5, "shrinking keeps what still fits")
+    check_equal(len(binding.tiles), 4, "the array matches the new size")
+
+
+def test_tilemap_flood_fill(library):
+    if library.find("Tilemap") is None:
+        return
+    _obj, binding = _tilemap_object(library, width=3, height=3,
+                                    tiles=[0, 1, 0,
+                                           0, 1, 0,
+                                           0, 1, 0])
+    binding.flood_fill(0, 0, 4)
+    check_equal(binding.tiles[:3], [4, 1, 0], "the fill stops at the wall")
+    check_equal(binding.tile_at(2, 0), 0, "the far side is not reached")
+
+
+def test_tilemap_normalises_a_short_array(library):
+    """A hand-edited file with too few values still reads as a rectangle."""
+    if library.find("Tilemap") is None:
+        return
+    _obj, binding = _tilemap_object(library, width=4, height=2, tiles=[1, 2])
+    check_equal(len(binding.tiles), 8, "the grid is padded to width * height")
+    check_equal(binding.tile_at(0, 1), 0, "the padding is empty")
+
+
+def test_tilemap_cell_at_world(library):
+    """The editor's hit test must match `Tilemap:CellAt`: top-left origin."""
+    if library.find("Tilemap") is None:
+        return
+    obj, binding = _tilemap_object(library, width=4, height=3)
+    obj.position = Vec2(32.0, 16.0, Vec2.TABLE)
+    check_equal(binding.cell_at_world(32.0, 16.0), (0, 0),
+                "the object position is the corner of cell (0, 0)")
+    check_equal(binding.cell_at_world(47.9, 16.0), (0, 0),
+                "a point inside the first cell stays in it")
+    check_equal(binding.cell_at_world(48.0, 32.0), (1, 1),
+                "one tile right and down is cell (1, 1)")
+    check(binding.cell_at_world(0.0, 0.0) is None,
+          "a point before the origin is off the map")
+
+
+def test_tilemap_writes_rows(library):
+    """The grid is emitted one source line per map row, with its size."""
+    if library.find("Tilemap") is None:
+        return
+    obj, binding = _tilemap_object(library, width=3, height=2,
+                                   tiles=[1, 2, 3, 4, 5, 6])
+    binding.set("tileset", "Resources/tilesets/cave.png")
+    text = level_writer.write_level(Level([obj]))
+    check("1, 2, 3," in text, "the first row is one line")
+    check("4, 5, 6," in text, "the second row is the next line")
+    check("-- 3 x 2" in text, "the dimensions are noted in the file")
+
+
+def test_tilemap_round_trip(library):
+    """Tile data must survive write -> parse -> write unchanged."""
+    if library.find("Tilemap") is None:
+        return
+    obj, binding = _tilemap_object(library, width=4, height=2,
+                                   tiles=[0, 1, 2, 3, 4, 5, 6, 0])
+    binding.set("tileset", "Resources/tilesets/cave.png")
+    first = level_writer.write_level(Level([obj]))
+    second = level_writer.write_level(level_from_table(reader.parse(first)))
+    check_equal(first, second, "a tilemap round trips")
+
+    reloaded = TilemapBinding(level_from_table(reader.parse(first)).objects[0],
+                              library)
+    check_equal(reloaded.tiles, [0, 1, 2, 3, 4, 5, 6, 0],
+                "the grid survives the round trip")
+    check_equal(reloaded.width, 4, "so does the width")
+
+
+def test_lint_tilemap_missing_tileset(library):
+    if library.find("Tilemap") is None:
+        return
+    obj, _binding = _tilemap_object(library)
+    issues = lint.lint_level(Level([obj]), library)
+    check(any("no tileset" in i.message for i in issues),
+          "a tilemap with no tileset is reported")
+
+
+def test_lint_tilemap_size_mismatch(library):
+    if library.find("Tilemap") is None:
+        return
+    obj, binding = _tilemap_object(library, width=4, height=4)
+    binding.set("tiles", [1, 2, 3])
+    issues = lint.lint_level(Level([obj]), library)
+    check(any("tile array holds" in i.message for i in issues),
+          "a short tile array is reported")
+
+
 # -- runner ------------------------------------------------------------------
 
 
@@ -366,6 +505,16 @@ def main(argv=None):
         test_lint_fractional_position(library)
         test_lint_clean_demo(project, library)
         test_real_file_round_trip(project)
+        test_tilemap_paint(library)
+        test_tilemap_row_major(library)
+        test_tilemap_resize_keeps_the_top_left(library)
+        test_tilemap_flood_fill(library)
+        test_tilemap_normalises_a_short_array(library)
+        test_tilemap_cell_at_world(library)
+        test_tilemap_writes_rows(library)
+        test_tilemap_round_trip(library)
+        test_lint_tilemap_missing_tileset(library)
+        test_lint_tilemap_size_mismatch(library)
 
     if FAILURES:
         print(f"{len(FAILURES)} of {CHECKS[0]} checks failed:\n")

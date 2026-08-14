@@ -13,6 +13,7 @@ import math
 
 from ..model import level as level_model
 from ..model import schema
+from ..model import tilemap as tilemap_model
 
 ERROR = "error"
 WARNING = "warning"
@@ -56,6 +57,7 @@ def lint_level(level, library=None, project=None):
         _check_extra_components(level, obj, index, library, registered, issues)
         _check_bounds(obj, index, screen, issues)
         _check_parent(level, obj, index, library, issues)
+        _check_tilemap(obj, index, library, project, issues)
 
         resolved = level_model.resolve(obj, library) if library else None
         if resolved is not None:
@@ -253,6 +255,74 @@ def _check_hinge(level, obj, index, extra, library, issues):
                 index, obj,
                 hint="The anchor is in world pixels, not local. This far out the "
                      "body will swing from off-screen.",
+            ))
+
+
+def _check_tilemap(obj, index, library, project, issues):
+    """Rules for a Tilemap object.
+
+    The expensive one is the tileset path: `Tilemap.new` calls
+    `love.graphics.newImage` straight from the argument, so a path that is
+    merely wrong takes the game down on load rather than drawing nothing.
+    """
+    binding = tilemap_model.TilemapBinding(obj, library) if library else None
+    if not binding:
+        return
+
+    if not binding.tileset:
+        issues.append(Issue(
+            WARNING, "tilemap has no tileset", index, obj,
+            hint="Tilemap:Draw returns early without an image, so the grid "
+                 "is invisible and the cells you paint go nowhere.",
+        ))
+    elif project is not None:
+        import os
+        absolute = project.resolve(binding.tileset)
+        if not absolute or not os.path.exists(absolute):
+            issues.append(Issue(
+                ERROR, f"tileset '{binding.tileset}' is not on disk", index, obj,
+                hint="Tilemap.new passes the path straight to "
+                     "love.graphics.newImage, which errors on a missing file.",
+            ))
+
+    if binding.width <= 0 or binding.height <= 0:
+        issues.append(Issue(
+            INFO, f"tilemap is {binding.width} x {binding.height} cells",
+            index, obj, hint="An empty grid draws nothing. Set the map size "
+                             "in the Tiles panel.",
+        ))
+        return
+
+    declared = binding.width * binding.height
+    raw = binding.get("tiles") or []
+    if len(raw) != declared:
+        issues.append(Issue(
+            WARNING,
+            f"tile array holds {len(raw)} values for a {binding.width} x "
+            f"{binding.height} grid ({declared} cells)",
+            index, obj,
+            hint="The editor pads or trims on read, so saving will rewrite "
+                 "the array to match. Check the map size is the one you meant.",
+        ))
+
+    if obj.rotation:
+        issues.append(Issue(
+            WARNING, "tilemap has a rotation", index, obj,
+            hint="The engine rotates the batch, but neither Tilemap:CellAt nor "
+                 "the editor's brush accounts for it, so painting will land in "
+                 "the wrong cells.",
+        ))
+
+    count = tilemap_model.tileset_tile_count(binding, project)
+    if count:
+        highest = max(binding.tiles) if binding.tiles else 0
+        if highest > count:
+            issues.append(Issue(
+                WARNING,
+                f"tile id {highest} is past the end of a {count}-tile sheet",
+                index, obj,
+                hint="_quadFor builds a quad outside the image, which draws "
+                     "as a transparent or smeared cell depending on the driver.",
             ))
 
 

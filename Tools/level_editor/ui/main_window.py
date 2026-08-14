@@ -21,16 +21,18 @@ import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QAction, QKeySequence
 from PyQt6.QtWidgets import (QCheckBox, QComboBox, QDialog, QDialogButtonBox,
-                             QDoubleSpinBox, QFileDialog, QHBoxLayout, QLabel,
-                             QListWidget, QListWidgetItem, QMainWindow,
-                             QMessageBox, QPlainTextEdit, QPushButton,
-                             QSpinBox, QSplitter, QToolBar, QTreeWidget,
-                             QTreeWidgetItem, QVBoxLayout, QWidget)
+                             QDockWidget, QDoubleSpinBox, QFileDialog,
+                             QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
+                             QMainWindow, QMessageBox, QPlainTextEdit,
+                             QPushButton, QSpinBox, QSplitter, QToolBar,
+                             QTreeWidget, QTreeWidgetItem, QVBoxLayout,
+                             QWidget)
 
 from ..luaio.types import LuaSyntaxError
 from ..model.document import Document
 from ..validate import lint
 from .inspector import Inspector
+from .tileset_panel import TilesetPanel
 from .viewport import Viewport
 
 SEVERITY_COLOR = {lint.ERROR: "#e06a6a", lint.WARNING: "#e0b46a",
@@ -151,6 +153,27 @@ class MainWindow(QMainWindow):
         self.lint_tree.setColumnWidth(2, 420)
         self.lint_tree.itemActivated.connect(self._on_lint_activated)
 
+        self.tiles_panel = TilesetPanel()
+        self.tiles_panel.set_context(self.project, None, None)
+        self.tiles_panel.editStarted.connect(self._begin_edit)
+        self.tiles_panel.modelChanged.connect(self._on_model_changed)
+        self.tiles_panel.targetChanged.connect(self._on_tile_target)
+        self.tiles_panel.toolChanged.connect(self._on_tile_tool)
+        self.tiles_panel.tileChanged.connect(self._on_tile_id)
+        self.tiles_panel.newTilemapRequested.connect(self.new_tilemap)
+        self.tiles_panel.statusMessage.connect(
+            lambda text: self.statusBar().showMessage(text, 4000))
+        self.viewport.tilePicked.connect(self.tiles_panel.set_tile_id)
+
+        self.tiles_dock = QDockWidget("Tiles", self)
+        self.tiles_dock.setWidget(self.tiles_panel)
+        self.tiles_dock.setAllowedAreas(Qt.DockWidgetArea.RightDockWidgetArea
+                                        | Qt.DockWidgetArea.LeftDockWidgetArea)
+        self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.tiles_dock)
+        # Hidden until asked for: most level work is object placement, and a
+        # tileset palette taking a third of the window would be in the way.
+        self.tiles_dock.hide()
+
         centre = QSplitter(Qt.Orientation.Vertical)
         centre.addWidget(self.viewport)
         centre.addWidget(self.lint_tree)
@@ -213,7 +236,16 @@ class MainWindow(QMainWindow):
         bar.addWidget(self.snap_spin)
         bar.addSeparator()
 
+        self.tile_mode_check = QCheckBox("Tile mode")
+        self.tile_mode_check.setToolTip(
+            "Paint into the selected tilemap. Left paints, right erases, "
+            "Alt-click picks a tile, middle-drag still pans.")
+        self.tile_mode_check.toggled.connect(self._on_tile_mode)
+        bar.addWidget(self.tile_mode_check)
+        bar.addSeparator()
+
         for label, attribute, default in (
+                ("Tiles", "show_tiles", True),
                 ("Sprites", "show_sprites", True),
                 ("Bodies", "show_bodies", True),
                 ("Segments", "show_segments", True),
@@ -265,6 +297,9 @@ class MainWindow(QMainWindow):
         edit_menu.addSeparator()
         add(edit_menu, "Select &all", self.select_all, "Ctrl+A")
 
+        add(edit_menu, "New &tilemap", self.new_tilemap)
+
+        view_menu.addAction(self.tiles_dock.toggleViewAction())
         add(view_menu, "&Frame screen", self.viewport.frame_screen, "Ctrl+0")
         add(view_menu, "Frame &selection", self.viewport.frame_selection, "F")
         add(view_menu, "Run &checks", self.run_lint, "Ctrl+L")
@@ -324,6 +359,7 @@ class MainWindow(QMainWindow):
         self.viewport.set_level(document.level, self.library)
         self.inspector.set_context(self.project, document.level, self.library)
         self.inspector.set_object(None)
+        self.tiles_panel.set_context(self.project, document.level, self.library)
         self.refresh_level_box()
         self.refresh_hierarchy()
         self.viewport.frame_screen()
@@ -341,6 +377,7 @@ class MainWindow(QMainWindow):
         self.viewport.set_level(self.document.level, self.library)
         self.inspector.set_context(self.project, self.document.level, self.library)
         self.inspector.set_object(None)
+        self.tiles_panel.set_context(self.project, self.document.level, self.library)
         self.refresh_hierarchy()
         self.viewport.frame_screen()
         self.run_lint()
@@ -523,6 +560,10 @@ class MainWindow(QMainWindow):
 
     def _on_viewport_selection(self):
         self.inspector.set_object(self.viewport.selected())
+        # Selecting a tilemap aims the brush at it. The reverse is not true:
+        # the panel's target is not forced into the selection, so you can paint
+        # while a mirror stays selected in the inspector.
+        self.tiles_panel.set_target(self.viewport.selected())
         self._suspend_selection = True
         selected = set(id(o) for o in self.viewport.selection)
         for index in range(self.hierarchy.topLevelItemCount()):
@@ -572,6 +613,7 @@ class MainWindow(QMainWindow):
             return
         self.refresh_hierarchy()
         self.inspector.refresh()
+        self.tiles_panel.refresh()
         self.run_lint()
         self._touch()
 
@@ -580,6 +622,7 @@ class MainWindow(QMainWindow):
         self.refresh_hierarchy()
         self.inspector.set_context(self.project, self.document.level, self.library)
         self.inspector.set_object(self.viewport.selected())
+        self.tiles_panel.set_context(self.project, self.document.level, self.library)
         self.run_lint()
         self._touch()
 
@@ -597,6 +640,9 @@ class MainWindow(QMainWindow):
         self.viewport.set_level(self.document.level, self.library)
         self.inspector.set_context(self.project, self.document.level, self.library)
         self.inspector.set_object(None)
+        # Undo replaces the whole level object graph, so the panel's target is
+        # now a dangling reference into the discarded copy.
+        self.tiles_panel.set_context(self.project, self.document.level, self.library)
         self.refresh_hierarchy()
         self.run_lint()
         self._touch()
@@ -620,6 +666,75 @@ class MainWindow(QMainWindow):
                 self.refresh_level_box()
                 return
             self.load_level(path)
+
+    def _on_tile_mode(self, state):
+        self.viewport.tile_mode = state
+        if state:
+            self.tiles_dock.show()
+            self.tiles_panel.refresh_targets()
+            if self.tiles_panel.target is None:
+                self.statusBar().showMessage(
+                    "No tilemap in this level yet -- press New in the Tiles "
+                    "panel to add one.", 6000)
+            else:
+                self.statusBar().showMessage(
+                    "Tile mode: left paints, right erases, Alt-click picks, "
+                    "middle-drag pans.", 8000)
+        self.viewport.setCursor(Qt.CursorShape.CrossCursor if state
+                                else Qt.CursorShape.ArrowCursor)
+        self.viewport.update()
+
+    def _on_tile_target(self, obj):
+        self.viewport.set_tile_target(obj)
+
+    def _on_tile_tool(self, tool):
+        self.viewport.tile_tool = tool
+
+    def _on_tile_id(self, tile_id):
+        self.viewport.tile_id = tile_id
+
+    def new_tilemap(self):
+        """Add a Tilemap object covering the screen, behind everything else."""
+        from ..luaio.types import Vec2
+        from ..model.level import LevelObject
+        from ..model.tilemap import TilemapBinding
+
+        if self.document.level is None:
+            return
+        if self.library is None or self.library.find("Tilemap") is None:
+            QMessageBox.information(
+                self, "New tilemap",
+                "definitions.lua has no `Tilemap` prefab. Add one with a "
+                "single Tilemap component, then try again.")
+            return
+
+        self._begin_edit()
+        obj = LevelObject("Tilemap", Vec2(0.0, 0.0, Vec2.TABLE),
+                          object_id=self.document.level.unique_id("tiles"))
+
+        tile_size = 16
+        screen_w, screen_h = (self.project.screen_size() if self.project
+                              else (320, 240))
+        binding = TilemapBinding(obj, self.library)
+        binding.set("tileWidth", tile_size)
+        binding.set("tileHeight", tile_size)
+        binding.resize(-(-screen_w // tile_size), -(-screen_h // tile_size))
+        if self.tiles_panel.binding() is not None:
+            # Inherit the tileset already in use, which is almost always what a
+            # second layer in the same room wants.
+            binding.set("tileset", self.tiles_panel.binding().tileset)
+
+        # Index 0, so it draws first and everything else paints on top of it.
+        # A background layer added on top of the player would be invisible and
+        # the reason why would not be obvious.
+        self.document.level.add(obj, 0)
+        self.viewport.set_selection([obj])
+        self.tiles_panel.set_context(self.project, self.document.level, self.library)
+        self.tiles_panel.set_target(obj)
+        self._on_structure_changed()
+        self.statusBar().showMessage(
+            f"Added tilemap '{obj.id}' at draw index 0 "
+            f"({binding.width} x {binding.height} cells)", 6000)
 
     def _on_screen_size(self):
         self.viewport.set_screen_size(self.width_spin.value(),

@@ -57,6 +57,33 @@ def format_color(channels):
     return "{" + ", ".join(format_number(c) for c in channels) + "}"
 
 
+def format_tiles(lines, key, tiles, indent, row_width=None):
+    """Emit a tile grid as one source line per map row.
+
+    A flat run of a few hundred integers is the same Lua either way, but a
+    row per line is what makes a diff show *where* the map changed rather
+    than reporting that the whole array is different.
+    """
+    values = [int(t) for t in (tiles or [])]
+    if not values:
+        lines.append(f"{indent}{key} = {{}},")
+        return
+
+    stride = int(row_width) if row_width else 0
+    if stride < 1:
+        stride = 20
+    inner = indent + INDENT
+
+    lines.append(f"{indent}{key} = {{")
+    if row_width:
+        rows = (len(values) + stride - 1) // stride
+        lines.append(f"{inner}-- {stride} x {rows}, row-major, 0 = empty")
+    for start in range(0, len(values), stride):
+        row = values[start:start + stride]
+        lines.append(f"{inner}" + ", ".join(str(v) for v in row) + ",")
+    lines.append(f"{indent}}},")
+
+
 def _emit_comment(lines, comment, indent):
     if not comment:
         return
@@ -151,6 +178,8 @@ def _emit_args(lines, component, indent):
         kind = field_spec.kind if field_spec else None
         if kind == schema.SEGMENTS:
             _emit_segments(lines, value, inner)
+        elif kind == schema.TILES:
+            format_tiles(lines, name, value, inner, component.args.get("width"))
         elif kind == schema.STRING_LIST:
             items = ", ".join(format_string(item) for item in value)
             lines.append(f"{inner}{name} = {{ {items} }}," if items

@@ -79,6 +79,90 @@ layering control the engine has. An object with overrides is marked `*`.
 `Object:AddComponent` keys `self.components` by `tostring(component)` and
 `Object:Draw` iterates with `pairs`.)
 
+## Tiles
+
+Turn on **Tile mode** in the toolbar. The Tiles dock opens on the right: pick
+the map to paint into, pick a tool, click a tile in the sheet, and paint.
+
+    left drag      paint the selected tile
+    right drag     erase (tile 0), whatever tool is active
+    Alt + click    adopt the tile under the cursor
+    middle drag    pan, as always
+
+Tools are brush, rect (drawn as a preview, written on release), flood fill,
+eraser and picker. A whole drag is **one** undo step, not one per cell.
+
+Press **New** in the panel to add a tilemap. It lands at draw index 0 — first in
+the list, so everything else paints on top of it — sized to cover the screen.
+
+### The one thing to know about the origin
+
+A tilemap's `position` is the **top-left corner of cell (0, 0)**, not the centre.
+Every other object in RAY is centred on its transform; this one is not, because a
+map anchored at its centre would move every tile in it — and every collider you
+had placed over those tiles — each time you widened the grid. Resizing therefore
+grows right and down and never disturbs what you have already painted.
+
+### It is scenery
+
+`Tilemap` registers nothing with `World` and nothing with `LightWorld`. Painting
+a wall does not make it solid and does not make it reflect. Put `RigidBody` and
+`LightCollider` objects over the tiles by hand, exactly as before.
+
+This is deliberate rather than unfinished. `LightWorld.raycast` walks its segment
+list linearly for every ray of every bounce, so four segments per painted cell
+would put a few thousand in front of every ray on a screen-sized room. Hand
+placement is also what lets one collider cover a twenty-tile floor.
+
+### How it is stored
+
+Not a new kind of entry. A tilemap is an ordinary object whose prefab carries a
+`Tilemap` component, and the grid lives in the same `components` override bucket
+every other per-instance edit uses:
+
+```lua
+{
+    id = "ground",
+    prefab = "Tilemap",
+    position = { x = 0, y = 0 },
+    components = {
+        Tilemap = {
+            tileset = "Resources/tilesets/debug_tiles.png",
+            tileWidth = 16,
+            tileHeight = 16,
+            width = 20,
+            height = 15,
+            tiles = {
+                -- 20 x 15, row-major, 0 = empty
+                0, 0, 3, 3, 0, ...
+            },
+        },
+    },
+},
+```
+
+Tile ids are 1-based indices into the sheet, read left to right then top to
+bottom; **0 means empty** and is skipped entirely, so a sparse map costs nothing
+in the batch. The array is row-major and flat, written one source line per map
+row so a diff shows *where* the map changed rather than that the whole array is
+different.
+
+Because it is an ordinary override, undo, the save diff, and the round-trip
+guarantees all apply to tile data without knowing tiles exist.
+
+`Frontend/levels/tiletest.lua` is a worked example, and
+`Resources/tilesets/debug_tiles.png` is a 16-tile debug sheet whose tiles carry
+dot counts for their own id — handy for confirming the editor and the engine
+agree about what tile 7 is. Delete both once you have real art.
+
+### Checks
+
+Bad tile data is mostly quiet at runtime, so the linter carries the noisy part:
+a missing tileset file is an **error**, because `Tilemap.new` hands the path
+straight to `love.graphics.newImage` and takes the game down on load. A tile
+array that does not match the declared size, a tile id past the end of the sheet,
+and a rotated tilemap are warnings.
+
 ## Joints
 
 `HingeJoint` is the one component that belongs in the level rather than in a
@@ -193,6 +277,8 @@ preview/raytrace.py   engine-parity light propagation
 preview/scene_light.py whole-level solve
 ui/viewport.py        canvas, placement, selection, gizmos
 ui/inspector.py       transform, overrides, extra components
+ui/tileset_panel.py   the tile palette and its tools
+model/tilemap.py      the tile grid, bound to an object's overrides
 ui/main_window.py     layout and actions
 validate/lint.py      the checks
 tests/run_tests.py    self-tests
@@ -202,6 +288,11 @@ tests/run_tests.py    self-tests
 
 Multi-select edits the transform of every selected object but shows the
 inspector for the first one only.
+
+The tile brush does not autotile and has no terrain or Wang rules — every cell
+is placed by hand. It also cannot paint into a rotated tilemap: neither
+`Tilemap:CellAt` nor the brush accounts for rotation, and the linter warns rather
+than guessing.
 
 There is no level metadata — no name, spawn point, or bounds — because
 `Level.load` reads a bare array and adding a wrapper table would break it. If

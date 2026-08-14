@@ -338,5 +338,25 @@ return {
                 autoPlay = "CoinSpin"
             }
         }}
+    },
+
+    -- Scenery only. The grid draws as one SpriteBatch and registers nothing
+    -- with the physics world or LightWorld -- put RigidBody and LightCollider
+    -- objects over the tiles by hand, which is what makes a wall a wall.
+    --
+    -- Everything here is a placeholder: the tileset, the map size and the tile
+    -- data all arrive as per-instance overrides from the level editor, because
+    -- two rooms sharing one prefab must not share one grid.
+    Tilemap = {
+        components = {{
+            type = "Tilemap",
+            args = {
+                tileWidth = 16,
+                tileHeight = 16,
+                width = 0,
+                height = 0,
+                tiles = {}
+            }
+        }}
     }
 }

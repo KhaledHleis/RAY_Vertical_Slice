@@ -22,7 +22,7 @@ import shutil
 from ..model import schema
 from .types import LuaTable, Num, Vec2, num_src
 from .writer import (INDENT, format_color, format_number, format_string,
-                     format_vec2)
+                     format_tiles, format_vec2)
 
 HEADER = """-- Level definition, loaded by Level.load('Frontend.levels.<name>', scene).
 --
@@ -99,9 +99,18 @@ def format_segment(segment):
     return "{ " + ", ".join(parts) + " }"
 
 
-def emit_value(lines, key, value, indent, field_spec=None):
-    """Write `key = value,` at `indent`, recursing into tables."""
+def emit_value(lines, key, value, indent, field_spec=None, row_width=None):
+    """Write `key = value,` at `indent`, recursing into tables.
+
+    `row_width` only matters for a TILES field: the grid is stored flat, so the
+    map width has to be handed down from the sibling key for the writer to know
+    where to break the lines.
+    """
     kind = field_spec.kind if field_spec else None
+
+    if kind == schema.TILES:
+        format_tiles(lines, key, value, indent, row_width)
+        return
 
     if kind == schema.SEGMENTS or (field_spec is None and _is_segment_list(value)):
         if not value:
@@ -158,6 +167,19 @@ def _emit_lua_table(lines, table, indent):
         emit_value(lines, key, item, indent)
 
 
+def _prefab_component(obj, component_type):
+    """The prefab's own component, when the level model has a library to ask.
+
+    Levels are written without one in the tests, so this stays optional and
+    silently gives up rather than making the writer depend on the library.
+    """
+    library = getattr(getattr(obj, "level", None), "library", None)
+    if library is None:
+        return None
+    definition = library.find(obj.prefab)
+    return definition.find(component_type) if definition else None
+
+
 def _emit_overrides(lines, obj, indent):
     if not obj.overrides:
         return
@@ -172,10 +194,18 @@ def _emit_overrides(lines, obj, indent):
         keys = [k for k in order if k in values]
         keys += [k for k in values if k not in order]
 
+        # The tile grid is flat, so the row width it should be broken at lives
+        # in a sibling key. Prefer the instance override; fall back to the
+        # prefab's own value when only the tiles were overridden.
+        row_width = values.get("width")
+        if row_width is None and spec is not None:
+            definition = _prefab_component(obj, component_type)
+            row_width = definition.args.get("width") if definition else None
+
         lines.append(f"{inner}{component_type} = {{")
         for name in keys:
             emit_value(lines, name, values[name], inner + INDENT,
-                       field_map.get(name))
+                       field_map.get(name), row_width)
         lines.append(f"{inner}}},")
     lines.append(f"{indent}}},")
 
@@ -206,7 +236,7 @@ def _emit_extra_components(lines, obj, indent):
             lines.append(f"{body}args = {{")
             for name in keys:
                 emit_value(lines, name, extra.args[name], body + INDENT,
-                           field_map.get(name))
+                           field_map.get(name), extra.args.get("width"))
             lines.append(f"{body}}},")
         lines.append(f"{inner}}},")
     lines.append(f"{indent}}},")
