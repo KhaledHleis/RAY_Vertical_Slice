@@ -10,10 +10,10 @@ return {
     {
         id = "floor",
         prefab = "Box",
-        position = { x = 160, y = 220 },
+        position = { x = 160, y = 224 },
         components = {
             SpriteRenderer = {
-                scale = { x = 20, y = 2 },
+                scale = { x = 19.5, y = 1 },
             },
             RigidBody = {
                 bodyType = "static",
@@ -35,7 +35,7 @@ return {
         -- Hold down + jump to drop through this one.
         id = "ledge",
         prefab = "OneWayPlatform",
-        position = Vector.new(60, 170),
+        position = Vector.new(96, 192),
     },
 
     {
@@ -71,7 +71,7 @@ return {
         id = "mirror",
         prefab = "Mirror",
         position = Vector.new(200, 40),
-        rotation = math.pi / 6,
+        rotation = 0,
     },
 
     {
@@ -82,5 +82,35 @@ return {
     {
         prefab = "SmallBox",
         position = { x = 80, y = 16 },
+    },
+
+    {
+        -- Spins on its own from the moment it spawns; nothing drives it.
+        -- scale is the transform's uniform scale, so the 16x16 sheet draws at
+        -- 32x32; the sprite is centred, hence y = 192 to sit on the floor.
+        id = "coin",
+        prefab = "AnimatedCoin",
+        position = { x = 56, y = 192 },
+        scale = 2,
+    },
+
+    {
+        -- Parented to the lamp, which swings on its HingeJoint. position and
+        -- rotation are LOCAL, so this cone sits 32px below the lamp's origin
+        -- pointing down and stays there as the lamp swings.
+        --
+        -- Legal because LightCone has no RigidBody. A prefab that did could
+        -- not be a child -- Box2D would fight the parent for the transform --
+        -- and Level.load would assert on it.
+        id = "lamp_glow",
+        prefab = "LightCone",
+        position = { x = 0, y = 32 },
+        rotation = math.pi / 2,
+        parent = "lamp",
+    },
+
+    {
+        prefab = "switch",
+        position = { x = 232, y = 192 },
     },
 }

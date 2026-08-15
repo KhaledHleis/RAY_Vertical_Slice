@@ -13,7 +13,7 @@ return {
         position = { x = 160, y = 224 },
         components = {
             SpriteRenderer = {
-                scale = { x = 20, y = 2 },
+                scale = { x = 19.5, y = 1 },
             },
             RigidBody = {
                 bodyType = "static",
@@ -21,14 +21,6 @@ return {
                 height = 32,
             },
         },
-    },
-
-    {
-        -- Spawn point is wherever the object starts; falling off the bottom of
-        -- the screen returns you here.
-        id = "player",
-        prefab = "Player",
-        position = Vector.new(24, 192),
     },
 
     {
@@ -71,7 +63,7 @@ return {
         id = "mirror",
         prefab = "Mirror",
         position = Vector.new(200, 40),
-        rotation = math.pi / 6,
+        rotation = 0,
     },
 
     {
@@ -107,5 +99,18 @@ return {
         position = { x = 0, y = 32 },
         rotation = math.pi / 2,
         parent = "lamp",
+    },
+
+    {
+        prefab = "switch",
+        position = { x = 232, y = 192 },
+    },
+
+    {
+        -- Spawn point is wherever the object starts; falling off the bottom of
+        -- the screen returns you here.
+        id = "player",
+        prefab = "Player",
+        position = Vector.new(24, 192),
     },
 }

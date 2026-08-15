@@ -12,8 +12,10 @@ Three rules keep the output reviewable in a diff:
 
 from __future__ import annotations
 
+import re
+
 from ..model import schema
-from .types import Num, Vec2, num_src
+from .types import LuaTable, Num, Vec2, num_src
 
 INDENT = "    "
 
@@ -149,6 +151,67 @@ def _emit_segments(lines, segments, indent):
     lines.append(f"{indent}}},")
 
 
+_IDENT = re.compile(r"^[A-Za-z_]\w*$")
+
+
+def _format_scalar(value):
+    """A one-line Lua literal, or None when the value needs a table body."""
+    if isinstance(value, Vec2):
+        return format_vec2(value)
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, str):
+        return format_string(value)
+    if isinstance(value, (int, float, Num)):
+        return format_number(value)
+    return None
+
+
+def _key_prefix(key):
+    if isinstance(key, str) and _IDENT.match(key):
+        return f"{key} = "
+    if isinstance(key, str):
+        return f"[{format_string(key)}] = "
+    return f"[{format_number(key)}] = "
+
+
+def _emit_entry(lines, prefix, value, indent):
+    """Write any reader-produced value; `prefix` is `name = ` or `` for items.
+
+    The typed emitters above cover the shapes the schema knows about. This is
+    the fallback for everything else the reader can hand back -- an animation
+    map, a nested config table, a list of strings -- which used to raise and
+    make the file unsavable.
+    """
+    scalar = _format_scalar(value)
+    if scalar is not None:
+        lines.append(f"{indent}{prefix}{scalar},")
+        return
+
+    if isinstance(value, LuaTable):
+        items = list(value.array)
+        keys = [(k, value.hash[k])
+                for k in (value.key_order or list(value.hash))]
+    elif isinstance(value, dict):
+        items, keys = [], list(value.items())
+    elif isinstance(value, (list, tuple)):
+        items, keys = list(value), []
+    else:
+        raise ValueError(f"cannot serialize {prefix}{value!r}")
+
+    if not items and not keys:
+        lines.append(f"{indent}{prefix}{{}},")
+        return
+
+    lines.append(f"{indent}{prefix}{{")
+    inner = indent + INDENT
+    for item in items:
+        _emit_entry(lines, "", item, inner)
+    for key, item in keys:
+        _emit_entry(lines, _key_prefix(key), item, inner)
+    lines.append(f"{indent}}},")
+
+
 def _emit_args(lines, component, indent):
     spec = component.spec()
     field_map = spec.field_map() if spec else {}
@@ -195,7 +258,7 @@ def _emit_args(lines, component, indent):
         elif isinstance(value, (int, float, Num)):
             lines.append(f"{inner}{name} = {format_number(value)},")
         else:
-            raise ValueError(f"cannot serialize {name} = {value!r}")
+            _emit_entry(lines, f"{name} = ", value, inner)
     lines.append(f"{indent}}},")
 
 

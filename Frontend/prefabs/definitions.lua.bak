@@ -13,8 +13,8 @@ return {
             {
                 type = "SpriteRenderer",
                 args = {
-                    path = "Resources/sprites/test/box.png",
-                    scale = { x = 4, y = 4 },
+                    path = "Resources/sprites/physics_objects/box.png",
+                    scale = { x = 2, y = 2 },
                 },
             },
             {
@@ -46,18 +46,14 @@ return {
 
     -- RigidBody must come first: PlayerController grabs it in OnAttach, and
     -- prefab components are attached in declaration order.
-    --
-    -- The player is 6x12 at 8px-tile scale, which is what the Tune defaults
-    -- were dialled in against. Density is well above the crates' so pushing
-    -- actually moves them; friction is forced to 0 by the controller.
     Player = {
         components = {
             {
                 type = "RigidBody",
                 args = {
                     bodyType = "dynamic",
-                    width = 6,
-                    height = 12,
+                    width = 32,
+                    height = 32,
                     density = 10,
                     friction = 0,
                     restitution = 0,
@@ -72,17 +68,30 @@ return {
             },
             {
                 type = "PlayerRenderer",
-                args = {},
+                args = {
+                    animations = {
+                        idle = "PlayerIdle",
+                        run = "PlayerRun",
+                        jump = "PlayerJump",
+                        fall = "PlayerFall",
+                    },
+                },
+            },
+            {
+                type = "AnimationPlayer",
+                args = {
+                    target = "PlayerRenderer",
+                },
             },
             {
                 type = "LightCollider",
                 args = {
                     dynamic = true,
                     segments = {
-                        { a = Vector.new(-3, -6), b = Vector.new(3, -6), absorption = 1 },
-                        { a = Vector.new(3, -6), b = Vector.new(3, 6), absorption = 1 },
-                        { a = Vector.new(3, 6), b = Vector.new(-3, 6), absorption = 1 },
-                        { a = Vector.new(-3, 6), b = Vector.new(-3, -6), absorption = 1 },
+                        { a = Vector.new(-16, -16), b = Vector.new(16, -16), absorption = 1 },
+                        { a = Vector.new(16, -16), b = Vector.new(16, 16), absorption = 1 },
+                        { a = Vector.new(16, 16), b = Vector.new(-16, 16), absorption = 1 },
+                        { a = Vector.new(-16, 16), b = Vector.new(-16, -16), absorption = 1 },
                     },
                 },
             },
@@ -168,17 +177,18 @@ return {
             {
                 type = "SpriteRenderer",
                 args = {
-                    path = "Resources/sprites/test/mirror.png",
-                    scale = { x = 2, y = 0.5 },
-                    color = {0.75, 0.9, 1, 1},
+                    path = "Resources/sprites/physics_objects/mirror.png",
+                    scale = { x = 1, y = 1 },
+                    color = {1, 1, 1, 1},
                 },
             },
             {
                 type = "RigidBody",
                 args = {
                     bodyType = "dynamic",
-                    width = 64,
-                    height = 8,
+                    width = 32,
+                    height = 32,
+                    offset = { x = 0, y = 0 },
                     density = 2.5,
                     friction = 0.3,
                     restitution = 0.1,
@@ -190,7 +200,10 @@ return {
                 args = {
                     dynamic = true,
                     segments = {
-                        { a = Vector.new(-32, 0), b = Vector.new(32, 0), reflective = 1.0, absorption = 0 },
+                        { a = Vector.new(0, -9), b = Vector.new(8, 11), reflective = 1.0, absorption = 0 },
+                        { a = Vector.new(2, -16), b = Vector.new(-16, -16), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-16, 16), b = Vector.new(-16, -16), reflective = 0, absorption = 1 },
+                        { a = Vector.new(16, 16), b = Vector.new(-16, 16), reflective = 0, absorption = 1 },
                     },
                 },
             },
@@ -230,6 +243,99 @@ return {
                 args = {
                     path = "Resources/sprites/test/mirror.png",
                     scale = { x = 0.5, y = 0.5 },
+                },
+            },
+        },
+    },
+
+    SmallBox = {
+        components = {
+            {
+                type = "SpriteRenderer",
+                args = {
+                    path = "Resources/sprites/physics_objects/box.png",
+                    offset = { x = 0, y = 0 },
+                    scale = { x = 0.5, y = 0.5 },
+                },
+            },
+            {
+                type = "RigidBody",
+                args = {
+                    bodyType = "dynamic",
+                    width = 16,
+                    height = 16,
+                    offset = { x = 0, y = 0 },
+                    friction = 0,
+                },
+            },
+            {
+                type = "CollisionRenderer",
+                args = {},
+            },
+            {
+                type = "LightCollider",
+                args = {
+                    dynamic = true,
+                    segments = {
+                        { a = Vector.new(-8, -8), b = Vector.new(8, -8), reflective = 0, refractiveIndex = 1, absorption = 1 },
+                        { a = Vector.new(-8, -8), b = Vector.new(-8, 8), reflective = 0, refractiveIndex = 1, absorption = 1 },
+                        { a = Vector.new(-8, 8), b = Vector.new(8, 8), reflective = 0, refractiveIndex = 1, absorption = 1 },
+                        { a = Vector.new(8, 8), b = Vector.new(8, -8), reflective = 0, refractiveIndex = 1, absorption = 1 },
+                    },
+                },
+            },
+        },
+    },
+
+    -- SpriteRenderer first: AnimationPlayer looks its target up in OnAttach,
+    -- and prefab components attach in declaration order. The renderer needs
+    -- no path or frame size -- the clip supplies both on the first frame.
+    AnimatedCoin = {
+        components = {
+            {
+                type = "SpriteRenderer",
+                args = {
+                    scale = { x = 1, y = 1 },
+                },
+            },
+            {
+                type = "AnimationPlayer",
+                args = {
+                    clips = { "CoinSpin" },
+                    autoPlay = "CoinSpin",
+                },
+            },
+        },
+    },
+
+    -- Scenery only. The grid draws as one SpriteBatch and registers nothing
+    -- with the physics world or LightWorld -- put RigidBody and LightCollider
+    -- objects over the tiles by hand, which is what makes a wall a wall.
+    --
+    -- Everything here is a placeholder: the tileset, the map size and the tile
+    -- data all arrive as per-instance overrides from the level editor, because
+    -- two rooms sharing one prefab must not share one grid.
+    Tilemap = {
+        components = {
+            {
+                type = "Tilemap",
+                args = {
+                    tileWidth = 16,
+                    tileHeight = 16,
+                    width = 0,
+                    height = 0,
+                    tiles = {},
+                },
+            },
+        },
+    },
+
+    switch = {
+        components = {
+            {
+                type = "SpriteRenderer",
+                args = {
+                    path = "Resources/sprites/switch/switch_up.png",
                 },
             },
         },
