@@ -19,10 +19,18 @@ local function noop() end
 local function newImage(path)
     liveImages = liveImages + 1
     local image = {}
-    -- Real dimensions for the splash sheet so frame maths is exercised.
+    -- Real dimensions for any sheet whose frame maths a test depends on. Clip
+    -- maps flat frame indices through floor(imageWidth / frameWidth), so a
+    -- stubbed 64x64 collapses every sheet into a single column and quietly
+    -- rewrites the animation out from under the assertion.
     local w, h = 64, 64
-    if tostring(path):find("venus_animation") then w, h = 2352, 24 end
-    if tostring(path):find("Name") then w, h = 65, 7 end
+    local name = tostring(path)
+    if name:find("venus_animation") then w, h = 2352, 24 end
+    if name:find("Name") then w, h = 65, 7 end
+    if name:find("door/door") then w, h = 384, 64 end
+    if name:find("sprites/detector") then w, h = 36, 32 end
+    if name:find("ray_walk") then w, h = 192, 32 end
+    if name:find("ray_idle") then w, h = 96, 32 end
     function image:getDimensions() return w, h end
     function image:getWidth() return w end
     function image:getHeight() return h end
@@ -30,9 +38,17 @@ local function newImage(path)
     return image
 end
 
+-- The viewport is tracked for real: SpriteRenderer:SetImage re-derives the
+-- current cell from it when swapping sheets, so a stub that forgot it would
+-- silently pass a test that the game fails.
 local quad = {}
 quad.__index = quad
-function quad.setViewport() end
+function quad:setViewport(x, y, w, h)
+    self.x, self.y, self.w, self.h = x, y, w, h
+end
+function quad:getViewport()
+    return self.x or 0, self.y or 0, self.w or 0, self.h or 0
+end
 function quad.release() end
 
 -- Counted, because Tilemap allocates one batch per map and LevelManager's
@@ -53,10 +69,13 @@ end
 
 local graphics = {
     newImage = newImage,
-    newQuad = function() return setmetatable({}, quad) end,
+    newQuad = function(x, y, w, h)
+        return setmetatable({ x = x or 0, y = y or 0, w = w or 0, h = h or 0 }, quad)
+    end,
     newSpriteBatch = newSpriteBatch,
     newFont = function() return { getHeight = function() return 8 end,
-                                  getWidth = function() return 8 end } end,
+                                  getWidth = function() return 8 end,
+                                  release = noop } end,
     newCanvas = function() return { setFilter = noop } end,
     newMesh = function() return { setVertices = noop } end,
     setDefaultFilter = noop, setLineStyle = noop, setLineWidth = noop,
@@ -119,14 +138,14 @@ function physics.newRectangleShape() return {} end
 function physics.newCircleShape() return {} end
 
 function physics.newFixture(body)
-    local fixture = { userData = nil }
+    local fixture = { userData = nil, sensor = false }
     function fixture:getBody() return body end
     function fixture:setUserData(d) self.userData = d end
     function fixture:getUserData() return self.userData end
     function fixture:setFriction() end
     function fixture:setRestitution() end
-    function fixture:setSensor() end
-    function fixture:isSensor() return false end
+    function fixture:setSensor(v) self.sensor = v and true or false end
+    function fixture:isSensor() return self.sensor end
     function fixture:setDensity() end
     return fixture
 end

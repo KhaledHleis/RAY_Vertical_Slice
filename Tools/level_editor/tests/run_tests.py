@@ -199,7 +199,13 @@ def test_resolution(library):
 
     sprite = resolved.find("SpriteRenderer")
     check(sprite is not None, "un-overridden components come from the prefab")
-    check_equal(float(sprite.get("scale").x), 4.0, "prefab value is untouched")
+    # Read the expectation out of the library rather than hardcoding it. What
+    # is under test is that resolution passes an un-overridden value through
+    # unchanged, not what the Box happens to be scaled to this week -- pinning
+    # the literal here just means retuning art breaks an unrelated test.
+    expected_scale = float(library.find("Box").find("SpriteRenderer").get("scale").x)
+    check_equal(float(sprite.get("scale").x), expected_scale,
+                "prefab value is untouched")
 
     check(resolve(LevelObject("NoSuchPrefab"), library) is None,
           "an unknown prefab resolves to None")

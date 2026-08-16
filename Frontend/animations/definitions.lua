@@ -68,9 +68,25 @@ return {
         row = 0, count = 1, mode = "once",
     },
 
+    -- door.png is 384x64: one row of six 64x64 cells, shut on the left and
+    -- fully open on the right. `once` holds the last frame rather than
+    -- snapping back, which is exactly what a door that stays open needs, and
+    -- the "finished" event is what Door waits for before letting the player
+    -- through -- so the count has to be right or the door reports itself open
+    -- while still drawn shut.
     DoorOpen = {
         path = "Resources/sprites/door/door.png",
         frameWidth = 64, frameHeight = 64,
-        row = 0, mode = "once",
-    }
+        fps = 12, row = 0, count = 6, mode = "once",
+    },
+
+    -- The same six cells walked backwards. A pingpong clip would loop the two
+    -- together forever; this is a separate one-shot so Door can play either
+    -- direction on demand.
+    DoorClose = {
+        path = "Resources/sprites/door/door.png",
+        frameWidth = 64, frameHeight = 64,
+        fps = 12, mode = "once",
+        frames = { 5, 4, 3, 2, 1, 0 },
+    },
 }

@@ -20,6 +20,25 @@ _SCREEN_W_RE = re.compile(r"Screen\.WIDTH\s*=\s*([0-9]+)")
 _SCREEN_H_RE = re.compile(r"Screen\.HEIGHT\s*=\s*([0-9]+)")
 _REGISTRY_RE = re.compile(r"^\s*(\w+)\s*=\s*require\(", re.MULTILINE)
 
+# The four hooks LevelManager calls on a script level, plus the constructor it
+# uses to tell a script class from a ready instance. See level_manager.lua --
+# this deliberately mirrors its `levelKind`, so a module the engine treats as a
+# script is one the editor leaves alone, and the two can never disagree about
+# what demo.lua is.
+_SCRIPT_HOOK_RE = re.compile(
+    r"^\s*function\s+[\w.]+[.:](new|init|update|draw|cleanup)\s*\(",
+    re.MULTILINE,
+)
+
+
+def is_script_level(path):
+    """True for a self-driving level module, False for an array of prefabs."""
+    try:
+        with open(path, encoding="utf-8") as handle:
+            return _SCRIPT_HOOK_RE.search(handle.read()) is not None
+    except OSError:
+        return False
+
 
 class Project:
     def __init__(self, root):
@@ -93,13 +112,21 @@ class Project:
         return DEFAULT_SCREEN_SIZE
 
     def level_files(self):
-        """Every .lua directly under Frontend/levels, as absolute paths."""
+        """Every *data* level directly under Frontend/levels, as absolute paths.
+
+        Script levels are skipped. They live in the same folder and load through
+        the same LevelManager.load call, but they are Lua modules that drive
+        themselves rather than arrays of prefab entries -- there is no object
+        list to put on a canvas, and handing one to the data-level reader is a
+        syntax error on the first `<` or `function` it meets.
+        """
         try:
             names = sorted(n for n in os.listdir(self.levels_path)
                            if n.endswith(".lua"))
         except OSError:
             return []
-        return [os.path.join(self.levels_path, n) for n in names]
+        paths = [os.path.join(self.levels_path, n) for n in names]
+        return [p for p in paths if not is_script_level(p)]
 
     def level_module(self, path):
         """`Frontend/levels/demo.lua` -> `Frontend.levels.demo`, for Level.load."""

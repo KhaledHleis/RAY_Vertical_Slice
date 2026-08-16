@@ -317,6 +317,14 @@ def _check_sprite(prefab, sprite, body, project, issues, animated=False):
     if body.get("shape", "rectangle") == "circle":
         return
 
+    # A sensor is a region of interest, not the physical extent of the art, so
+    # it has no reason to match the sprite -- a doorway trigger is deliberately
+    # narrower than the door frame, a checkpoint is usually far bigger than its
+    # flag. Warning here would train the author to ignore the rule in the cases
+    # where it does mean something.
+    if body.get("sensor"):
+        return
+
     body_w = float(body.get("width", 0) or 0)
     body_h = float(body.get("height", 0) or 0)
     if body_w <= 0 or body_h <= 0:
@@ -394,6 +402,77 @@ def _check_cross_component(prefab, body, light, source, issues):
                 "the body to exist first.",
                 component="HingeJoint",
             ))
+
+    _check_door(prefab, body, types, issues)
+    _check_detector_sprites(prefab, types, issues)
+
+
+def _check_door(prefab, body, types, issues):
+    """Door's failure modes are all silent -- it just never opens or never fires."""
+    if "Door" not in types:
+        return
+
+    door = prefab.find("Door")
+    animator = door.get("animator", "AnimationPlayer")
+
+    if animator not in types:
+        issues.append(Issue(
+            WARNING, prefab.name,
+            f"Door has no {animator} to play its clips, so it snaps open with no "
+            "animation.",
+            component="Door",
+        ))
+    elif types.index(animator) > types.index("Door"):
+        issues.append(Issue(
+            ERROR, prefab.name,
+            f"{animator} is ordered after Door; Door resolves it by name in "
+            "OnAttach and would find nothing.",
+            component="Door",
+        ))
+
+    # Entry is driven by sensor contacts, so a Door with a destination but no
+    # trigger volume opens correctly and then simply never lets you through.
+    if door.get("nextLevel"):
+        if body is None:
+            issues.append(Issue(
+                WARNING, prefab.name,
+                "Door has a nextLevel but no RigidBody, so nothing ever reports "
+                "the player entering the doorway.",
+                component="Door",
+            ))
+        elif not body.get("sensor"):
+            issues.append(Issue(
+                WARNING, prefab.name,
+                "Door's RigidBody is not a sensor, so it blocks the player "
+                "instead of detecting them walking in.",
+                component="RigidBody",
+            ))
+
+
+def _check_detector_sprites(prefab, types, issues):
+    """A lit sprite with nothing to draw it into is a no-op, not an error."""
+    if "LightDetector" not in types:
+        return
+
+    detector = prefab.find("LightDetector")
+    if not (detector.get("litSprite") or detector.get("unlitSprite")):
+        return
+
+    renderer = detector.get("renderer", "SpriteRenderer")
+    if renderer not in types:
+        issues.append(Issue(
+            WARNING, prefab.name,
+            f"LightDetector names a sprite to swap but there is no {renderer} "
+            "to swap it into.",
+            component="LightDetector",
+        ))
+    elif types.index(renderer) > types.index("LightDetector"):
+        issues.append(Issue(
+            ERROR, prefab.name,
+            f"{renderer} is ordered after LightDetector; the renderer is "
+            "resolved in OnAttach and would not exist yet.",
+            component="LightDetector",
+        ))
 
 
 def _image_size(path):

@@ -190,6 +190,9 @@ COMPONENTS = {
                   label="Restitution", tooltip="Bounciness. 0 is a dead stop."),
             Field("fixedRotation", BOOLEAN, False, label="Fixed rotation",
                   tooltip="Locks the angle permanently. No torque can ever turn it."),
+            Field("sensor", BOOLEAN, False, label="Sensor",
+                  tooltip="A trigger volume: overlaps are reported on the EventBus "
+                          "but never solved, so nothing is pushed and nothing stops."),
         ],
     ),
     "LightCollider": ComponentSpec(
@@ -217,9 +220,52 @@ COMPONENTS = {
     ),
     "LightDetector": ComponentSpec(
         name="LightDetector",
-        doc="Fires OnHit/OnLost when the owner's light segments are struck.",
+        doc=("Fires OnHit/OnLost when the owner's light segments are struck, and "
+             "swaps the sibling renderer between a dark and a lit sprite. Declare "
+             "the SpriteRenderer first -- the target is resolved on attach."),
         gizmos=[GIZMO_DETECTOR],
-        fields=[],
+        fields=[
+            Field("channel", STRING, None, label="Channel",
+                  tooltip="Name other systems filter on. A Door with the same "
+                          "channel opens for this detector; a Door with no "
+                          "channel opens for any of them."),
+            Field("litSprite", PATH, None, label="Lit sprite",
+                  tooltip="Swapped in while light is landing on this object."),
+            Field("unlitSprite", PATH, None, label="Unlit sprite",
+                  tooltip="Swapped back in when the light is lost. Defaults to "
+                          "whatever the SpriteRenderer already draws."),
+            Field("litColor", COLOR, None, label="Lit tint", optional=True),
+            Field("unlitColor", COLOR, None, label="Unlit tint", optional=True),
+        ],
+    ),
+    "Door": ComponentSpec(
+        name="Door",
+        doc=("Opens when a matching LightDetector lights up, and loads the next "
+             "level when the player walks into the open doorway. Needs a sibling "
+             "AnimationPlayer declared before it, and a sensor RigidBody for the "
+             "doorway trigger."),
+        fields=[
+            Field("channel", STRING, None, label="Channel",
+                  tooltip="Only detectors carrying this channel open the door. "
+                          "Empty means any detector will."),
+            Field("openClip", STRING, "DoorOpen", label="Open clip"),
+            Field("closeClip", STRING, None, label="Close clip",
+                  tooltip="Played on closing. With none, closing snaps back to "
+                          "the first frame of the open clip."),
+            Field("autoClose", BOOLEAN, False, label="Auto close",
+                  tooltip="Shut again when the last matching detector goes dark."),
+            Field("startsOpen", BOOLEAN, False, label="Starts open"),
+            Field("nextLevel", STRING, None, label="Next level",
+                  tooltip="Module path loaded on entry, e.g. "
+                          "Frontend.levels.level_complete. Empty for a door that "
+                          "is only a gate."),
+            Field("requireInput", BOOLEAN, False, label="Require up",
+                  tooltip="Wait for up/W instead of firing on contact."),
+            Field("trigger", STRING, "PlayerController", label="Trigger component",
+                  tooltip="Component that marks an object as 'the player'."),
+            Field("animator", STRING, "AnimationPlayer", label="Animator",
+                  tooltip="Sibling component playing the door clips."),
+        ],
     ),
     "GodrayRenderer": ComponentSpec(
         name="GodrayRenderer",

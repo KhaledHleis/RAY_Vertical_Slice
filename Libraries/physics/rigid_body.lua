@@ -27,6 +27,13 @@ function RigidBody.new(args)
     self.bullet = args.bullet or false
     -- Only stops bodies arriving from above. Honoured by World's preSolve.
     self.oneWay = args.oneWay or false
+    -- A trigger volume: Box2D reports overlaps through beginContact and
+    -- endContact -- which World republishes as "physics:collisionBegin" and
+    -- "physics:collisionEnd" -- but never solves them, so nothing is pushed
+    -- and nothing stops. This is what a doorway, a checkpoint or a kill zone
+    -- wants. Note that preSolve is not called for sensor contacts, so a
+    -- oneWay sensor is a contradiction and the oneWay flag is simply ignored.
+    self.sensor = args.sensor or false
 
     self.body = nil
     self.fixture = nil
@@ -75,6 +82,7 @@ function RigidBody:OnAttach(object)
     self.fixture = love.physics.newFixture(self.body, self.shapeObj, self.density)
     self.fixture:setFriction(self.friction)
     self.fixture:setRestitution(self.restitution)
+    self.fixture:setSensor(self.sensor)
     self.fixture:setUserData(object)
 end
 

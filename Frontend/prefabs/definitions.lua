@@ -376,12 +376,15 @@ return {
         },
     },
 
+    -- SpriteRenderer first: LightDetector resolves it by name in OnAttach to
+    -- swap the lens between its dark and lit states, the same ordering rule
+    -- AnimationPlayer follows.
     detector = {
         components = {
             {
                 type = "SpriteRenderer",
                 args = {
-                    path = "Resources/craftpix/3 Objects/Monitors/4.png",
+                    path = "Resources/sprites/detector/detector_off.png",
                     color = {1, 1, 1, 1},
                 },
             },
@@ -402,11 +405,24 @@ return {
             },
             {
                 type = "LightDetector",
-                args = {},
+                args = {
+                    litSprite = "Resources/sprites/detector/detector_on.png",
+                    unlitSprite = "Resources/sprites/detector/detector_off.png",
+                },
             },
         },
     },
 
+    -- Opens when any detector lights up (no channel = listen to all of them),
+    -- and hands the level over once the player walks into the open doorway.
+    --
+    -- Order is load-bearing twice over: AnimationPlayer needs the
+    -- SpriteRenderer to already exist, and Door needs the AnimationPlayer.
+    --
+    -- The RigidBody is a sensor, so it is a doorway rather than a wall -- the
+    -- player walks straight through it and Box2D just reports the overlap. It
+    -- is deliberately narrower and shorter than the 64x64 sprite: the trigger
+    -- should be the gap you step into, not the frame around it.
     door = {
         components = {
             {
@@ -420,7 +436,24 @@ return {
             {
                 type = "AnimationPlayer",
                 args = {
-                    clips = { "DoorOpen" },
+                    clips = { "DoorOpen", "DoorClose" },
+                },
+            },
+            {
+                type = "RigidBody",
+                args = {
+                    bodyType = "static",
+                    sensor = true,
+                    width = 28,
+                    height = 56,
+                },
+            },
+            {
+                type = "Door",
+                args = {
+                    openClip = "DoorOpen",
+                    closeClip = "DoorClose",
+                    nextLevel = "Frontend.levels.level_complete",
                 },
             },
         },

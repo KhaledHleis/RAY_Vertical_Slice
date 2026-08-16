@@ -134,6 +134,28 @@ function AnimationPlayer:CurrentFrame()
     return self.playhead.index
 end
 
+function AnimationPlayer:FrameCount()
+    return self.playhead:FrameCount()
+end
+
+-- Jumps to a 1-based position in the current clip and pushes that frame to
+-- the target immediately, without waiting for an Update. Holds there unless
+-- keepPlaying is true.
+--
+-- This is the "snap to a pose" primitive: a door that should start already
+-- open, a level editor scrubbing a clip, a cutscene skip. Frame events are
+-- deliberately not fired -- the frames in between were never played, so a
+-- footstep or a sound cue on them would be a lie.
+function AnimationPlayer:Seek(index, keepPlaying)
+    local playhead = self.playhead
+    if not playhead.clip then return end
+
+    playhead:SetClip(playhead.clip, index)
+    playhead.playing = keepPlaying == true
+    self:_apply()
+    playhead.dirty = false
+end
+
 function AnimationPlayer:NormalizedTime()
     return self.playhead:NormalizedTime()
 end

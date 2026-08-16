@@ -3,12 +3,35 @@ local Component = require('Libraries.universal.component')
 local SpriteRenderer = setmetatable({}, { __index = Component })
 SpriteRenderer.__index = SpriteRenderer
 
+-- One love Image per path, shared by every renderer that names it. Images are
+-- immutable here, so sharing is free, and it means a component that swaps
+-- between two sprites (LightDetector lit/unlit, a switch flipping) can do so
+-- every frame without reuploading a texture.
+--
+-- The cache deliberately outlives a level switch, exactly like Clip's -- see
+-- clip.lua. Call ClearImages after replacing art on disk.
+local imageCache = {}
+
+function SpriteRenderer.Load(path)
+    if not path then return nil end
+    local image = imageCache[path]
+    if not image then
+        image = love.graphics.newImage(path)
+        imageCache[path] = image
+    end
+    return image
+end
+
+function SpriteRenderer.ClearImages()
+    imageCache = {}
+end
+
 function SpriteRenderer.new(args)
     args = args or {}
     local self = Component.new()
     self = setmetatable(self, SpriteRenderer)
 
-    self.image = args.image or (args.path and love.graphics.newImage(args.path))
+    self.image = args.image or SpriteRenderer.Load(args.path)
     self.offset = args.offset or { x = 0, y = 0 }
     self.scale = args.scale or { x = 1, y = 1 }
     self.color = args.color or { 1, 1, 1, 1 }
@@ -48,6 +71,37 @@ function SpriteRenderer:SetSheet(image, frameWidth, frameHeight)
     self.frameWidth = frameWidth
     self.frameHeight = frameHeight
     self.quad = love.graphics.newQuad(0, 0, frameWidth, frameHeight, image:getDimensions())
+end
+
+-- Swaps the image while keeping the frame layout. This is the two-state
+-- sibling of SetSheet: SetSheet is for an animation clip handing over a new
+-- atlas *and* a new frame size, this is for a component flipping between two
+-- stills of the same shape -- a detector going lit, a switch flipping -- where
+-- a one-frame clip each way would be ceremony for nothing.
+function SpriteRenderer:SetImage(image)
+    if not image or self.image == image then return end
+
+    -- The current cell has to be re-derived: a quad's reference dimensions are
+    -- baked in at creation, so a new image always means a new quad, and
+    -- rebuilding at 0,0 would silently snap an atlas back to its first frame.
+    local col, row = 0, 0
+    if self.quad and self.frameWidth and self.frameHeight then
+        local viewportX, viewportY = self.quad:getViewport()
+        col = math.floor(viewportX / self.frameWidth)
+        row = math.floor(viewportY / self.frameHeight)
+    end
+
+    self.image = image
+
+    if self.frameWidth and self.frameHeight then
+        self.quad = love.graphics.newQuad(
+            col * self.frameWidth, row * self.frameHeight,
+            self.frameWidth, self.frameHeight,
+            image:getDimensions()
+        )
+    else
+        self.quad = nil
+    end
 end
 
 function SpriteRenderer:SetFrame(col, row)

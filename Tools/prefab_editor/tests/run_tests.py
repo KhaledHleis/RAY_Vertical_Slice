@@ -233,6 +233,57 @@ def test_lint_rules():
     check("lint: duplicate component type flagged",
           any("overwrites" in i.message for i in issues))
 
+    # Door and LightDetector both resolve a sibling by name in OnAttach and
+    # both fail silently when it is missing or ordered after them -- the door
+    # simply never opens, the detector never changes sprite. Nothing crashes,
+    # which is exactly why these need to be caught at author time.
+    def door_prefab(*, sensor=True, with_body=True, animator_last=False):
+        sprite = Component.create("SpriteRenderer")
+        animation = Component.create("AnimationPlayer")
+        door = Component.create("Door")
+        door.set("nextLevel", "Frontend.levels.level_complete")
+        components = [sprite]
+        if not animator_last:
+            components.append(animation)
+        if with_body:
+            body = Component.create("RigidBody")
+            body.set("bodyType", "static")
+            body.set("sensor", sensor)
+            components.append(body)
+        components.append(door)
+        if animator_last:
+            components.append(animation)
+        return Prefab("TestDoor", components)
+
+    issues = lint.lint_prefab(door_prefab())
+    check("lint: a correct door is clean",
+          not any(i.component == "Door" for i in issues))
+
+    issues = lint.lint_prefab(door_prefab(sensor=False))
+    check("lint: non-sensor door body flagged",
+          any("not a sensor" in i.message for i in issues))
+
+    issues = lint.lint_prefab(door_prefab(with_body=False))
+    check("lint: door with nowhere to detect entry flagged",
+          any("no RigidBody" in i.message for i in issues))
+
+    issues = lint.lint_prefab(door_prefab(animator_last=True))
+    check("lint: animator ordered after Door is an error",
+          any("ordered after Door" in i.message and i.severity == lint.ERROR
+              for i in issues))
+
+    # A sensor is a region of interest, not the extent of the art, so the
+    # sprite/collider size rule must not fire on one.
+    issues = lint.lint_prefab(door_prefab())
+    check("lint: sensor size mismatch is not warned about",
+          not any("but the collider is" in i.message for i in issues))
+
+    detector = Component.create("LightDetector")
+    detector.set("litSprite", "Resources/sprites/detector/detector_on.png")
+    issues = lint.lint_prefab(Prefab("Blind", [detector]))
+    check("lint: lit sprite with no renderer flagged",
+          any("swap it into" in i.message for i in issues))
+
 
 def test_generators():
     body = Component.create("RigidBody")

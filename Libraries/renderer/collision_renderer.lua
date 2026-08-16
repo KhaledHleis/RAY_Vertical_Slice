@@ -26,7 +26,13 @@ function CollisionRenderer:drawRigidBody(object)
     love.graphics.push()
     love.graphics.translate(x, y)
     love.graphics.rotate(angle)
-    love.graphics.setColor(0, 1, 0, 1)
+    -- Sensors are amber: they occupy space on screen but never stop anything,
+    -- and telling the two apart at a glance is the whole point of an overlay.
+    if rigidBody.sensor then
+        love.graphics.setColor(1, 0.75, 0.2, 1)
+    else
+        love.graphics.setColor(0, 1, 0, 1)
+    end
     love.graphics.setLineWidth(1)
 
     if rigidBody.shape == "circle" then
