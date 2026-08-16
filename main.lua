@@ -10,7 +10,7 @@ local LevelManager = require('Libraries.universal.level_manager')
 -- The boot chain. The splash is a script level that hands over to whatever
 -- nextLevel it is given, so changing the first playable level is one string.
 local SPLASH_LEVEL = 'Libraries.splash_screen.splash_level'
-local FIRST_LEVEL  = 'Frontend.levels.demo'
+local FIRST_LEVEL  = 'Frontend.levels.level'
 
 local tuneFont
 

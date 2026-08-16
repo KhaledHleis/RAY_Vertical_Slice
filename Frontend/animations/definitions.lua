@@ -66,5 +66,11 @@ return {
         path = "Resources/sprites/player/ray_jump.png",
         frameWidth = 32, frameHeight = 32,
         row = 0, count = 1, mode = "once",
+    },
+
+    DoorOpen = {
+        path = "Resources/sprites/door/door.png",
+        frameWidth = 64, frameHeight = 64,
+        row = 0, mode = "once",
     }
 }

@@ -10,8 +10,8 @@ function love.conf(t)
     t.console  = true
 
     t.window.title      = "RAY"
-    t.window.width      = isDesktop and GAME_W * 3 or GAME_W
-    t.window.height     = isDesktop and GAME_H * 3 or GAME_H
+    t.window.width      = isDesktop and GAME_W or GAME_W
+    t.window.height     = isDesktop and GAME_H or GAME_H
     t.window.resizable  = isDesktop
     t.window.fullscreen = not isDesktop
     t.window.vsync      = 1

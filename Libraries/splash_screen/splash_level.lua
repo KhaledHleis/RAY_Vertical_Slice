@@ -75,6 +75,7 @@ function SplashLevel:init(manager)
         self.image:setFilter("nearest", "nearest")
 
         local imageWidth, imageHeight = self.image:getDimensions()
+        imageWidth,imageHeight = imageWidth*2,imageHeight*2
         local frameWidth  = config.frameWidth or imageHeight
         local frameHeight = imageHeight
         local count = math.max(1, math.floor(imageWidth / frameWidth))

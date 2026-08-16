@@ -110,10 +110,6 @@ return {
                     oneWay = true,
                 },
             },
-            {
-                type = "CollisionRenderer",
-                args = {},
-            },
         },
     },
 
@@ -200,16 +196,13 @@ return {
                 args = {
                     dynamic = true,
                     segments = {
-                        { a = Vector.new(0, -9), b = Vector.new(8, 11), reflective = 1.0, absorption = 0 },
-                        { a = Vector.new(2, -16), b = Vector.new(-16, -16), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-7, -10), b = Vector.new(14, 10), reflective = 1.0, absorption = 0 },
                         { a = Vector.new(-16, 16), b = Vector.new(-16, -16), reflective = 0, absorption = 1 },
                         { a = Vector.new(16, 16), b = Vector.new(-16, 16), reflective = 0, absorption = 1 },
+                        { a = Vector.new(16, 16), b = Vector.new(14, 10), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-16, -16), b = Vector.new(-7, -10), reflective = 0, absorption = 1 },
                     },
                 },
-            },
-            {
-                type = "CollisionRenderer",
-                args = {},
             },
         },
     },
@@ -265,7 +258,7 @@ return {
                     width = 16,
                     height = 16,
                     offset = { x = 0, y = 0 },
-                    friction = 0,
+                    friction = 0.3,
                 },
             },
             {
@@ -337,6 +330,79 @@ return {
                 args = {
                     path = "Resources/sprites/switch/switch_up.png",
                 },
+            },
+        },
+    },
+
+    invisible_collider = {
+        components = {
+            {
+                type = "RigidBody",
+                args = {},
+            },
+        },
+    },
+
+    barrel = {
+        components = {
+            {
+                type = "SpriteRenderer",
+                args = {
+                    path = "Resources/craftpix/3 Objects/Barrel/2.png",
+                },
+            },
+            {
+                type = "RigidBody",
+                args = {
+                    width = 22,
+                    height = 25,
+                    offset = { x = 0, y = 0 },
+                },
+            },
+            {
+                type = "LightCollider",
+                args = {
+                    dynamic = true,
+                    segments = {
+                        { a = Vector.new(-11, -9), b = Vector.new(-3, -13), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-11, -9), b = Vector.new(-10, 13), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-10, 13), b = Vector.new(11, 13), reflective = 0, absorption = 1 },
+                        { a = Vector.new(10, -10), b = Vector.new(11, 13), reflective = 0, absorption = 1 },
+                        { a = Vector.new(10, -10), b = Vector.new(7, -13), reflective = 0, absorption = 1 },
+                        { a = Vector.new(7, -13), b = Vector.new(-3, -13), reflective = 0, absorption = 1 },
+                    },
+                },
+            },
+        },
+    },
+
+    detector = {
+        components = {
+            {
+                type = "SpriteRenderer",
+                args = {
+                    path = "Resources/craftpix/3 Objects/Monitors/4.png",
+                    color = {1, 1, 1, 1},
+                },
+            },
+            {
+                type = "LightCollider",
+                args = {
+                    segments = {
+                        { a = Vector.new(-4, -12), b = Vector.new(4, -12), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-13, -3), b = Vector.new(-4, -12), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-13, 3), b = Vector.new(-13, -3), reflective = 0, absorption = 1 },
+                        { a = Vector.new(-5, 12), b = Vector.new(-13, 3), reflective = 0, absorption = 1 },
+                        { a = Vector.new(4, 12), b = Vector.new(-5, 12), reflective = 0, absorption = 1 },
+                        { a = Vector.new(4, 12), b = Vector.new(12, 3), reflective = 0, absorption = 1 },
+                        { a = Vector.new(12, -3), b = Vector.new(12, 3), reflective = 0, absorption = 1 },
+                        { a = Vector.new(12, -3), b = Vector.new(4, -12), reflective = 0, absorption = 1 },
+                    },
+                },
+            },
+            {
+                type = "LightDetector",
+                args = {},
             },
         },
     },

@@ -1,6 +1,6 @@
 local Screen = {}
-Screen.WIDTH = 320
-Screen.HEIGHT = 240
+Screen.WIDTH = 320*2
+Screen.HEIGHT = 240*2
 
 local canvas = nil
 local scale = 1
